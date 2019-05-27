@@ -9,29 +9,29 @@ class NewTalent extends React.Component {
   state = {
     status: "write" /* ou read */,
     picture: null,
-    firstName: "",
-    lastName: "",
-    linkedIn: "",
-    email: "",
-    phone: "",
-    wage: "",
-    curCompany: "",
-    sector: "",
-    curPosition: "",
-    desPosition: "",
-    availability: 0,
-    idealFirm: "",
-    idealRole: "",
-    idealEnvironment: "",
-    ambitions: "",
-    hardSkills: "",
-    softSkills: ""
+    firstName: "toty",
+    lastName: "dsds",
+    linkedIn: "fsfsdfs",
+    email: "fsfsfsfdad",
+    phone: "szszs",
+    wage: "20000",
+    curCompany: "ggg",
+    sector: "ererere",
+    curPosition: "zzzzz",
+    desPosition: "ffegeg",
+    availability: 2,
+    idealFirm: "dsfdgsgs",
+    idealRole: "sdgdgdsg",
+    idealEnvironment: "gdgdgdg",
+    ambitions: "sgdgsg",
+    hardSkills: "ggggggggg",
+    softSkills: "dfdfdff"
   };
 
   onClick = () => {
     const hardSkillsArray = this.state.hardSkills.split(" ");
     const softSkillsArray = this.state.softSkills.split(" ");
-    console.log("cliqué");
+
     axios
       .post("https://ernest-server.herokuapp.com/talent/create", {
         informations: {
@@ -59,7 +59,7 @@ class NewTalent extends React.Component {
       })
       .then(response => {
         console.log("before");
-        this.props.getId(response.data._id);
+        /*   this.props.getId(response.data._id); */
         console.log("ok");
         /* return <Redirect to={`/talent/${response.data._id}`} />; */
       });
