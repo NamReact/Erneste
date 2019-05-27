@@ -10,7 +10,7 @@ class App extends React.Component {
     firstName: "",
     lastName: "",
     linkedIn: "",
-    eamil: "",
+    email: "",
     phone: "",
     wage: "",
     curCompany: "",
@@ -29,23 +29,23 @@ class App extends React.Component {
   onClick = () => {
     axios.post("https://ernest-server.herokuapp.com/talent/create", {
       informations: {
-        firstName: String,
-        lastName: String,
-        phoneNumber: String,
-        actualCompany: String,
-        mobility: String,
-        actualTitle: String,
-        wantedTitle: String
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        phoneNumber: this.state.phone,
+        actualCompany: this.state.curCompany,
+        mobility: this.state.availability,
+        actualTitle: this.state.curPosition,
+        wantedTitle: this.state.desPosition
       },
       description: {
-        idealCompany: String,
-        idealRole: String,
-        workingEnvironment: String,
-        development: String
+        idealCompany: this.state.idealFirm,
+        idealRole: this.state.idealRole,
+        workingEnvironment: this.state.idealEnvironment,
+        development: this.state.ambitions
       },
       skills: {
-        soft: Array,
-        hard: Array
+        soft: this.state.softSkills,
+        hard: this.state.hardSkills
       }
     });
   };
@@ -61,10 +61,6 @@ class App extends React.Component {
       <div className="content">
         {/* left section */}
         <div className="leftContainer">
-          {/*    <img
-            src="https://images.pexels.com/photos/1520760/pexels-photo-1520760.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=50&w=50"
-            alt="portrait of talent"
-          /> */}
           <div>
             <ReactFileReader
               fileTypes={[".png", ".jpg"]}
