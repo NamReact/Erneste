@@ -1,33 +1,56 @@
-.App {
-  text-align: center;
+.content {
+  display: flex;
+  flex-direction: row;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+/* Left side of the page */
+.leftContainer {
+  width: 15%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.talentDetails {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* 4 dots */
+.availability {
+  display: flex;
+  flex-direction: row;
+}
+.availability div {
+  width: 10px;
+  height: 10px;
+  margin-right: 10px;
+  border: 1px solid grey;
+  border-radius: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Right side of the page */
+.allWishes {
+  display: flex;
+  flex-direction: row;
+}
+
+/* ideal environment and ambitions */
+.wishes {
+  display: flex;
+  flex-direction: column;
+}
+
+.skills {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons {
+  display: flex;
+}
+
+.cancel,
+.validate {
+  width: 40px;
+  height: 20px;
+  border: 1px solid black;
+  margin-left: 10px;
 }
