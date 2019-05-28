@@ -1,0 +1,8 @@
+/* Delete button */
+.deleteButton {
+  display: flex;
+  align-items: center;
+}
+.deleteButton:hover {
+  cursor: pointer;
+}

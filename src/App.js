@@ -10,6 +10,7 @@ import {
 
 import Talent from "./components/Talent";
 import NewTalent from "./components/NewTalent";
+import TalentListPage from "./components/TalentList/TalentListPage";
 
 class App extends React.Component {
   state = {
@@ -34,6 +35,7 @@ class App extends React.Component {
             path="/talent/:id"
             component={props => <Talent match={props.match} />}
           />
+          <Route path="/admin/talent" component={TalentListPage} />
         </Switch>
       </Router>
     );

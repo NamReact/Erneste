@@ -1,0 +1,32 @@
+.talentList-right-block-title {
+  display: flex;
+  flex-direction: row;
+}
+
+.talentList-right-block-name {
+  flex: 3;
+}
+
+.talentList-right-block-actualTitle {
+  flex: 3;
+}
+
+.talentList-right-block-actualCompany {
+  flex: 3;
+}
+
+.talentList-right-block-wantedTitle {
+  flex: 2;
+}
+
+.talentList-right-block-validated {
+  flex: 1;
+}
+
+.talentList-right-block-status {
+  flex: 1;
+}
+
+.talentList-right-block-lastUpdate {
+  flex: 2;
+}
