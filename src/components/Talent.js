@@ -226,40 +226,40 @@ class Talent extends React.Component {
           </form>
           <div className="availability">
             <div
-              /*  onClick={() => {
+              onClick={() => {
                 this.setState({ availability: 1 });
-              }} */
+              }}
               style={{
                 backgroundColor: informations.status === "1" ? "red" : "white"
               }}
             />
             <div
-              /* onClick={() => {
+              onClick={() => {
                 this.setState({ availability: 2 });
-              }} */
+              }}
               style={{
                 backgroundColor: informations.status === "2" ? "blue" : "white"
               }}
             />
             <div
-              /* onClick={() => {
+              onClick={() => {
                 this.setState({ availability: 3 });
-              }} */
+              }}
               style={{
                 backgroundColor: informations.status === "3" ? "black" : "white"
               }}
             />
             <div
-              /* onClick={() => {
+              onClick={() => {
                 this.setState({ availability: 4 });
-              }} */
+              }}
               style={{
                 backgroundColor: informations.status === "4" ? "green" : "white"
               }}
             />
           </div>
           <div>
-            <div>Client 1</div>
+            <div>Client 1</div> {/* link to clients attibuted to talent */}
             <div>Client 2</div>
             <div>Client 3</div>
             <div>Client 4</div>

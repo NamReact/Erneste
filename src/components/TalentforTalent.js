@@ -2,17 +2,89 @@ import React from "react";
 import axios from "axios";
 import ReactFileReader from "react-file-reader";
 
+/* Fiche qui apparait pour le Talent : il ne peut modifier que certains éléments de la description */
+
 class TalentforTalent extends React.Component {
-  /* Fiche qui apparait pour le Talent : il ne peut modifier que certains éléments de la description */
   state = {
-    /*  permission: null, */
     informations: null,
-    /*  description: null,
+    description: null,
     skills: null,
-   
-    lastUpdate: null, */
+    lastUpdate: null,
     isLoading: true,
     validated: null
+  };
+
+  /* Function to save picture */
+  handleFiles = files => {
+    const informations = { ...this.state.informations };
+    informations.photo = { ...informations.photo };
+    informations.photo = files.base64;
+    this.setState({
+      informations: informations
+    });
+  };
+
+  /* Function to save changes when clicking outside the input */
+  onClick = async e => {
+    if (this.state.changing === null) {
+      this.setState({ changing: e.target.id });
+      return;
+    }
+    if (this.state.changing !== e.target.id) {
+      this.setState({ changing: e.target.id });
+      await axios.post("https://ernest-server.herokuapp.com/talent/update", {
+        id: this.state.id,
+        informations: this.state.informations,
+        description: this.state.description,
+        skills: this.state.skills
+      });
+      console.log("posted");
+    } else {
+      console.log("same");
+    }
+  };
+
+  /* Function to render the status */
+
+  currentStatus = () => {
+    if (this.state.informations.status === String(1)) {
+      return (
+        <div>
+          <div style={{ backgroundColor: "red" }} />
+          <span>Embauché via Erneste</span>
+        </div>
+      );
+    }
+    if (this.state.informations.status === String(2)) {
+      return (
+        <div>
+          <div style={{ backgroundColor: "blue" }} />
+          <span>En recherche active</span>
+        </div>
+      );
+    }
+    if (this.state.informations.status === String(3)) {
+      return (
+        <div>
+          <div style={{ backgroundColor: "black" }} />
+          <span>Attentif au marché</span>
+        </div>
+      );
+    }
+    if (this.state.informations.status === String(4)) {
+      return (
+        <div>
+          <div style={{ backgroundColor: "green" }} />
+          <span>En poste</span>
+        </div>
+      );
+    }
+  };
+
+  /* Function to validate the profile by the talent */
+
+  onValidationButtonClick = e => {
+    this.setState({ validated: true });
   };
 
   render() {
@@ -20,14 +92,12 @@ class TalentforTalent extends React.Component {
       return <p>En cours de chargement...</p>;
     }
 
-    /* const permission = this.state.permission; */
     const informations = this.state.informations;
-    /* const description = this.state.description;
-    const skills = this.state.skills; */
-    const lastUpdate = this.state.lastUpdate;
+    const description = this.state.description;
+    const skills = this.state.skills;
 
     return (
-      <div className="content">
+      <div className="content" onClick={this.onClick}>
         <div className="leftContainer">
           <div>
             <ReactFileReader
@@ -39,7 +109,7 @@ class TalentforTalent extends React.Component {
               {this.state.picture !== null ? (
                 <span>
                   <img
-                    src={this.state.picture}
+                    src={informations.photo}
                     alt="portrait of talent"
                     className="talentPicture"
                   />
@@ -57,155 +127,117 @@ class TalentforTalent extends React.Component {
           </div>
 
           <form className="talentDetails">
-            <input name="First Name" value={informations.firstName} />
-            <input name="Last Name" value={informations.lastName} />
+            <input name="First Name" readOnly value={informations.firstName} />
+            <input name="Last Name" readOnly value={informations.lastName} />
+            {this.currentStatus}
             <input
+              id="LinkedIn Profil"
               name="LinkedIn Profil"
               value={informations.linkedIn}
-              onChange={async e => {
-                await this.setState({
-                  informations: { linkedIn: e.target.value }
+              onChange={e => {
+                const informations = { ...this.state.informations };
+                informations.linkedIn = { ...informations.linkedIn };
+                informations.linkedIn = e.target.value;
+                this.setState({
+                  informations: informations
                 });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: { linkedIn: this.state.informations.linkedIn }
-                  }
-                );
               }}
             />
 
             <input
+              id="email"
               name="email"
               value={informations.email}
-              onChange={async e => {
-                await this.setState({
-                  informations: { email: e.target.value }
+              onChange={e => {
+                const informations = { ...this.state.informations };
+                informations.email = { ...informations.email };
+                informations.email = e.target.value;
+                this.setState({
+                  informations: informations
                 });
-
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: { email: this.state.informations.email }
-                  }
-                );
               }}
             />
 
             <input
+              id="phone number"
               name="phone number"
               value={informations.phoneNumber}
-              onChange={async e => {
-                await this.setState({
-                  informations: { phoneNumber: e.target.value }
+              onChange={e => {
+                const informations = { ...this.state.informations };
+                informations.phoneNumber = { ...informations.phoneNumber };
+                informations.phoneNumber = e.target.value;
+                this.setState({
+                  informations: informations
                 });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: {
-                      phoneNumber: this.state.informations.phoneNumber
-                    }
-                  }
-                );
               }}
             />
 
-            <input name="Wage" value={informations.salary} />
+            <input name="Wage" readOnly value={informations.salary} />
 
             <input
+              id="Current company"
               name="Current company"
               value={informations.actualCompany}
-              onChange={async e => {
-                await this.setState({
-                  informations: { actualCompany: e.target.value }
+              onChange={e => {
+                const informations = { ...this.state.informations };
+                informations.actualCompany = { ...informations.actualCompany };
+                informations.actualCompany = e.target.value;
+                this.setState({
+                  informations: informations
                 });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: {
-                      lastName: this.state.informations.actualCompany
-                    }
-                  }
-                );
               }}
             />
-
-            <input name="Desired sector" value={informations.wantedSector} />
 
             <input
+              name="Desired sector"
+              readOnly
+              value={informations.wantedSector}
+            />
+
+            <input
+              id="Current position"
               name="Current position"
               value={informations.actualTitle}
-              onChange={async e => {
-                await this.setState({
-                  informations: { actualTitle: e.target.value }
+              onChange={e => {
+                const informations = { ...this.state.informations };
+                informations.actualTitle = { ...informations.actualTitle };
+                informations.actualTitle = e.target.value;
+                this.setState({
+                  informations: informations
                 });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: {
-                      actualTitle: this.state.informations.actualTitle
-                    }
-                  }
-                );
               }}
             />
 
-            <input name="Desired Position" value={informations.wantedTitle} />
+            <input
+              name="Desired Position"
+              readOnly
+              value={informations.wantedTitle}
+            />
           </form>
-          <div className="availability">
-            <div
-              /*  onClick={() => {
-                this.setState({ availability: 1 });
-              }} */
-              style={{
-                backgroundColor: informations.status === "1" ? "red" : "white"
-              }}
-            />
-            <div
-              /* onClick={() => {
-                this.setState({ availability: 2 });
-              }} */
-              style={{
-                backgroundColor: informations.status === "2" ? "blue" : "white"
-              }}
-            />
-            <div
-              /* onClick={() => {
-                this.setState({ availability: 3 });
-              }} */
-              style={{
-                backgroundColor: informations.status === "3" ? "black" : "white"
-              }}
-            />
-            <div
-              /* onClick={() => {
-                this.setState({ availability: 4 });
-              }} */
-              style={{
-                backgroundColor: informations.status === "4" ? "green" : "white"
-              }}
-            />
-          </div>
-          <div>
-            <div>Client 1</div>
-            <div>Client 2</div>
-            <div>Client 3</div>
-            <div>Client 4</div>
-          </div>
-
-          <div>{lastUpdate}</div>
         </div>
 
         <div>
+          <div
+            style={{ display: this.state.validated === true ? "none" : "flex" }}
+          >
+            C'est votre première connexion ? Prenez le temps de lire les
+            informations que nous avons synthétisées lors de notre entretien et
+            validez votre profil. Si vous avez besoin d'y apporter des
+            modifications, contactez-nous.
+          </div>
+          <h2>Fiche de poste</h2>
           <form>
-            <textarea name="ideal firm" value={description.idealCompany} />
+            <textarea
+              name="ideal firm"
+              readOnly
+              value={description.idealCompany}
+            />
 
-            <textarea name="ideal role" value={description.idealRole} />
+            <textarea
+              name="ideal role"
+              readOnly
+              value={description.idealRole}
+            />
 
             <div className="allWishes">
               <div className="wishes">
@@ -214,33 +246,27 @@ class TalentforTalent extends React.Component {
                   value={description.workingEnvironment}
                 />
 
-                <textarea name="ambitions" value={description.development} />
+                <textarea
+                  name="ambitions"
+                  readOnly
+                  value={description.development}
+                />
               </div>
 
               <div className="skills">
-                <textarea
-                  name="hardskills"
-                  value={skills.hard}
-                  /* onChange={e => {
-                    this.setState({ hardSkills: e.target.value });
-                  }} */
-                />
-                <textarea
-                  name="softskills"
-                  value={skills.soft}
-                  /* onChange={e => {
-                    this.setState({ softSkills: e.target.value });
-                  }} */
-                />
+                <textarea name="hardskills" readOnly value={skills.hard} />
+                <textarea name="softskills" readOnly value={skills.soft} />
               </div>
             </div>
           </form>
-          {/* <div className="buttons">
-            <div className="cancel">X</div>
-            <div className="validate" onClick={this.onClick}>
-              Yes
-            </div>
-          </div> */}
+          <button
+            variant="primary"
+            size="lg"
+            onClick={this.onValidationButtonClick}
+            style={{ display: this.state.validated === true ? "none" : "flex" }}
+          >
+            Valider le profil
+          </button>
         </div>
       </div>
     );
@@ -253,7 +279,6 @@ class TalentforTalent extends React.Component {
 
     this.setState({
       isLoading: false,
-      /* permission: response.data.permission, */
       informations: response.data.informations,
       description: response.data.description,
       skills: response.data.skills,

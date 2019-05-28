@@ -45,7 +45,7 @@ class NewTalent extends React.Component {
           wantedSector: this.state.desSector,
           actualTitle: this.state.curPosition,
           wantedTitle: this.state.desPosition,
-          status: this.state.status
+          status: this.state.availability
         },
         description: {
           idealCompany: this.state.idealFirm,
