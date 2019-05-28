@@ -1,5 +1,6 @@
 import React from "react";
 import "./TalentLine.css";
+import { Link } from "react-router-dom";
 
 function TalentLine(props) {
   const { talent } = props;
@@ -32,9 +33,12 @@ function TalentLine(props) {
           />
         )}
       </div>
-      <div className="talentList-right-block-name">
+      <Link
+        to={`/admin/talent/${talent._id}`}
+        className="talentList-right-block-name"
+      >
         {`${talent.informations.firstName} ${talent.informations.lastName}`}
-      </div>
+      </Link>
       <div className="talentList-right-block-actualTitle">
         {talent.informations.actualTitle}
       </div>

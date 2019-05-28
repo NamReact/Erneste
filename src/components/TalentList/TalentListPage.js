@@ -63,36 +63,6 @@ class TalentListPage extends React.Component {
     }
   };
 
-  addTalent = async toto => {
-    for (let i = 0; i < 2; i++) {
-      await axios.post("https://ernest-server.herokuapp.com/talent/create", {
-        informations: {
-          photo: "hello",
-          firstName: "Johny",
-          lastName: "Englih",
-          linkedIn: "linkedin",
-          phoneNumber: "06 56 45 45 34",
-          salary: "1000",
-          actualCompany: "L'Oreal",
-          mobility: `String`,
-          actualTitle: "Director",
-          wantedTitle: "PDG",
-          status: `String`
-        },
-        description: {
-          idealCompany: `String`,
-          idealRole: `String`,
-          workingEnvironment: `String`,
-          development: `String`
-        },
-        skills: {
-          soft: [1, 2, 3],
-          hard: [4, 5, 6]
-        }
-      });
-    }
-    await this.getData();
-  };
   render() {
     /* Filtre sur le research input */
     // Copie du state

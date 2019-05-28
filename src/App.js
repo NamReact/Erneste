@@ -28,16 +28,16 @@ class App extends React.Component {
         <Switch>
           <Route
             exact={true}
-            path="/"
+            path="/admin/talent-create"
             component={() => <NewTalent getId={this.getId} />}
           />
           <Route
             exact={true}
-            path="/talent/:id"
+            path="/admin/talent/:id"
             component={props => <Talent match={props.match} />}
           />
-          <Route path="/admin/talent" component={TalentListPage} />
-          <Route path="/admin/client" component={ClientList} />
+          <Route path="/admin/talent-list" component={TalentListPage} />
+          <Route path="/admin/client-list" component={ClientList} />
         </Switch>
       </Router>
     );

@@ -1,16 +1,11 @@
 import React from "react";
 import "./AddTalent.css";
+import { Link } from "react-router-dom";
 
 function AddTalent(props) {
   return (
     <div>
-      <button
-        onClick={() => {
-          props.addTalent();
-        }}
-      >
-        Ajouter un talent
-      </button>
+      <Link to={`/admin/talent-create`}>Ajouter un talent</Link>
     </div>
   );
 }

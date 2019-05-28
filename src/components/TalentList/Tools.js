@@ -14,7 +14,7 @@ function Tools(props) {
           props.searchType(event);
         }}
       />
-      <AddTalent addTalent={props.addTalent} />
+      <AddTalent />
       {props.delete === true && (
         <DeleteButton deleteClick={props.deleteClick} />
       )}
