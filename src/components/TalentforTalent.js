@@ -9,9 +9,10 @@ class TalentforTalent extends React.Component {
     informations: null,
     /*  description: null,
     skills: null,
-    validated: null,
+   
     lastUpdate: null, */
-    isLoading: true
+    isLoading: true,
+    validated: null
   };
 
   render() {
@@ -133,7 +134,7 @@ class TalentforTalent extends React.Component {
               }}
             />
 
-            <input name="Desired sector" value={informations.mobility} />
+            <input name="Desired sector" value={informations.wantedSector} />
 
             <input
               name="Current position"

@@ -16,7 +16,7 @@ class NewTalent extends React.Component {
     phone: "szszs",
     wage: "20000",
     curCompany: "ggg",
-    sector: "ererere",
+    desSector: "ererere",
     curPosition: "zzzzz",
     desPosition: "ffegeg",
     availability: 2,
@@ -41,7 +41,7 @@ class NewTalent extends React.Component {
           phoneNumber: this.state.phone,
           salary: this.state.wage,
           actualCompany: this.state.curCompany,
-          mobility: this.state.availability,
+          wantedSector: this.state.desSector,
           actualTitle: this.state.curPosition,
           wantedTitle: this.state.desPosition,
           status: this.state.status
@@ -162,10 +162,10 @@ class NewTalent extends React.Component {
             />
             <input
               name="Desired sector"
-              value={this.state.sector}
+              value={this.state.desSector}
               placeholder="Secteur Souhaité"
               onChange={e => {
-                this.setState({ sector: e.target.value });
+                this.setState({ desSector: e.target.value });
               }}
             />
             <input

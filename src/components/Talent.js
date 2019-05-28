@@ -2,15 +2,46 @@ import React from "react";
 import axios from "axios";
 import ReactFileReader from "react-file-reader";
 
+/* admin talent : on peut tout modifier */
+
 class Talent extends React.Component {
   state = {
+    id: null,
     permission: null,
     informations: null,
     description: null,
     skills: null,
     validated: null,
     lastUpdate: null,
-    isLoading: true
+    isLoading: true,
+    changing: null
+  };
+
+  handleFiles = files => {
+    let informations = { ...this.state.informations };
+    informations.photo = files.base64;
+    this.setState({
+      informations: { photo: informations.photo }
+    });
+  };
+
+  onClick = async e => {
+    if (this.state.changing === null) {
+      this.setState({ changing: e.target.id });
+      return;
+    }
+    if (this.state.changing !== e.target.id) {
+      this.setState({ changing: e.target.id });
+      await axios.post("https://ernest-server.herokuapp.com/talent/update", {
+        id: this.state.id,
+        informations: this.state.informations,
+        description: this.state.description,
+        skills: this.state.skills
+      });
+      console.log("posted");
+    } else {
+      console.log("same");
+    }
   };
 
   render() {
@@ -25,10 +56,15 @@ class Talent extends React.Component {
     const lastUpdate = this.state.lastUpdate;
 
     return (
-      <div className="content">
+      <div className="content" onClick={this.onClick}>
         <div className="leftContainer">
-          <div>
-            {this.state.picture !== null ? (
+          <ReactFileReader
+            fileTypes={[".png", ".jpg"]}
+            base64={true}
+            multipleFiles={false}
+            handleFiles={this.handleFiles}
+          >
+            {informations.photo !== null ? (
               <span>
                 <img
                   src={informations.photo}
@@ -45,185 +81,144 @@ class Talent extends React.Component {
                 }}
               />
             )}
-          </div>
+          </ReactFileReader>
 
           <form className="talentDetails">
             <input
+              id="First Name"
               name="First Name"
               value={informations.firstName}
-              onChange={async e => {
-                await this.setState({
-                  informations: { firstName: e.target.value }
+              onChange={e => {
+                const informations = { ...this.state.informations };
+                informations.firstName = { ...informations.firstName };
+                informations.firstName = e.target.value;
+                this.setState({
+                  informations: informations
                 });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: {
-                      firstName: this.state.informations.firstName
-                    }
-                  }
-                );
               }}
             />
             <input
+              id="Last Name"
               name="Last Name"
               value={informations.lastName}
-              onChange={async e => {
-                await this.setState({
-                  informations: { lastName: e.target.value }
+              onChange={e => {
+                const informations = { ...this.state.informations };
+                informations.lastName = { ...informations.lastName };
+                informations.lastName = e.target.value;
+                this.setState({
+                  informations: informations
                 });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: { lastName: this.state.informations.lastName }
-                  }
-                );
               }}
             />
             <input
+              id="LinkedIn Profil"
               name="LinkedIn Profil"
               value={informations.linkedIn}
-              onChange={async e => {
-                await this.setState({
-                  informations: { linkedIn: e.target.value }
+              onChange={e => {
+                const informations = { ...this.state.informations };
+                informations.linkedIn = { ...informations.linkedIn };
+                informations.linkedIn = e.target.value;
+                this.setState({
+                  informations: informations
                 });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: { linkedIn: this.state.informations.linkedIn }
-                  }
-                );
               }}
             />
 
             <input
+              id="email"
               name="email"
               value={informations.email}
-              onChange={async e => {
-                await this.setState({
-                  informations: { email: e.target.value }
+              onChange={e => {
+                const informations = { ...this.state.informations };
+                informations.email = { ...informations.email };
+                informations.email = e.target.value;
+                this.setState({
+                  informations: informations
                 });
-
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: { email: this.state.informations.email }
-                  }
-                );
               }}
             />
 
             <input
+              id="phone number"
               name="phone number"
               value={informations.phoneNumber}
-              onChange={async e => {
-                await this.setState({
-                  informations: { phoneNumber: e.target.value }
+              onChange={e => {
+                const informations = { ...this.state.informations };
+                informations.phoneNumber = { ...informations.phoneNumber };
+                informations.phoneNumber = e.target.value;
+                this.setState({
+                  informations: informations
                 });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: {
-                      phoneNumber: this.state.informations.phoneNumber
-                    }
-                  }
-                );
               }}
             />
 
             <input
+              id="Wage"
               name="Wage"
               value={informations.salary}
-              onChange={async e => {
-                await this.setState({
-                  informations: { salary: e.target.value }
+              onChange={e => {
+                const informations = { ...this.state.informations };
+                informations.salary = { ...informations.salary };
+                informations.salary = e.target.value;
+                this.setState({
+                  informations: informations
                 });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: { salary: this.state.informations.salary }
-                  }
-                );
               }}
             />
 
             <input
+              id="Current company"
               name="Current company"
               value={informations.actualCompany}
-              onChange={async e => {
-                await this.setState({
-                  informations: { actualCompany: e.target.value }
+              onChange={e => {
+                const informations = { ...this.state.informations };
+                informations.actualCompany = { ...informations.actualCompany };
+                informations.actualCompany = e.target.value;
+                this.setState({
+                  informations: informations
                 });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: {
-                      lastName: this.state.informations.actualCompany
-                    }
-                  }
-                );
               }}
             />
 
             <input
+              id="Desired sector"
               name="Desired sector"
-              value={informations.mobility}
-              onChange={async e => {
-                await this.setState({
-                  informations: { mobility: e.target.value }
+              value={informations.wantedSector}
+              onChange={e => {
+                const informations = { ...this.state.informations };
+                informations.wantedSector = { ...informations.wantedSector };
+                informations.wantedSector = e.target.value;
+                this.setState({
+                  informations: informations
                 });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: { mobility: this.state.informations.mobility }
-                  }
-                );
               }}
             />
 
             <input
+              id="Current position"
               name="Current position"
               value={informations.actualTitle}
-              onChange={async e => {
-                await this.setState({
-                  informations: { actualTitle: e.target.value }
+              onChange={e => {
+                const informations = { ...this.state.informations };
+                informations.actualTitle = { ...informations.actualTitle };
+                informations.actualTitle = e.target.value;
+                this.setState({
+                  informations: informations
                 });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: {
-                      actualTitle: this.state.informations.actualTitle
-                    }
-                  }
-                );
               }}
             />
 
             <input
+              id="Desired Position"
               name="Desired Position"
               value={informations.wantedTitle}
-              onChange={async e => {
-                await this.setState({
-                  informations: { wantedTitle: e.target.value }
+              onChange={e => {
+                const informations = { ...this.state.informations };
+                informations.wantedTitle = { ...informations.wantedTitle };
+                informations.wantedTitle = e.target.value;
+                this.setState({
+                  informations: informations
                 });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: {
-                      wantedTitle: this.state.informations.wantedTitle
-                    }
-                  }
-                );
               }}
             />
           </form>
@@ -274,81 +269,62 @@ class Talent extends React.Component {
         <div>
           <form>
             <textarea
+              id="ideal firm"
               name="ideal firm"
               value={description.idealCompany}
-              onChange={async e => {
-                await this.setState({
-                  description: { idealCompany: e.target.value }
+              onChange={e => {
+                const informations = { ...this.state.description };
+                description.idealCompany = { ...description.idealCompany };
+                description.idealCompany = e.target.value;
+                this.setState({
+                  description: description
                 });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    description: {
-                      idealCompany: this.state.description.idealCompany
-                    }
-                  }
-                );
               }}
             />
 
             <textarea
+              id="ideal role"
               name="ideal role"
               value={description.idealRole}
-              onChange={async e => {
-                await this.setState({
-                  description: { idealRole: e.target.value }
+              onChange={e => {
+                const description = { ...this.state.description };
+                description.idealRole = { ...description.idealRole };
+                description.idealRole = e.target.value;
+                this.setState({
+                  description: description
                 });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    description: {
-                      idealRole: this.state.description.idealRole
-                    }
-                  }
-                );
               }}
             />
 
             <div className="allWishes">
               <div className="wishes">
                 <textarea
+                  id="ideal environment"
                   name="ideal environment"
                   value={description.workingEnvironment}
-                  onChange={async e => {
-                    await this.setState({
-                      description: { workingEnvironment: e.target.value }
+                  onChange={e => {
+                    const description = { ...this.state.description };
+                    description.workingEnvironment = {
+                      ...description.workingEnvironment
+                    };
+                    description.workingEnvironment = e.target.value;
+                    this.setState({
+                      description: description
                     });
-                    axios.post(
-                      "https://ernest-server.herokuapp.com/talent/update",
-                      {
-                        id: this.props.match.params.id,
-                        description: {
-                          workingEnvironment: this.state.description
-                            .workingEnvironment
-                        }
-                      }
-                    );
                   }}
                 />
 
                 <textarea
+                  id="ambitions"
                   name="ambitions"
                   value={description.development}
-                  onChange={async e => {
-                    await this.setState({
-                      description: { development: e.target.value }
+                  onChange={e => {
+                    const description = { ...this.state.description };
+                    description.development = { ...description.development };
+                    description.development = e.target.value;
+                    this.setState({
+                      description: description
                     });
-                    axios.post(
-                      "https://ernest-server.herokuapp.com/talent/update",
-                      {
-                        id: this.props.match.params.id,
-                        description: {
-                          development: this.state.description.development
-                        }
-                      }
-                    );
                   }}
                 />
               </div>
@@ -389,6 +365,7 @@ class Talent extends React.Component {
 
     this.setState({
       isLoading: false,
+      id: this.props.match.params.id,
       /* permission: response.data.permission, */
       informations: response.data.informations,
       description: response.data.description,
