@@ -2,14 +2,15 @@ import React from "react";
 import axios from "axios";
 import ReactFileReader from "react-file-reader";
 
-class Talent extends React.Component {
+class TalentforTalent extends React.Component {
+  /* Fiche qui apparait pour le Talent : il ne peut modifier que certains éléments de la description */
   state = {
-    permission: null,
+    /*  permission: null, */
     informations: null,
-    description: null,
+    /*  description: null,
     skills: null,
     validated: null,
-    lastUpdate: null,
+    lastUpdate: null, */
     isLoading: true
   };
 
@@ -20,68 +21,43 @@ class Talent extends React.Component {
 
     /* const permission = this.state.permission; */
     const informations = this.state.informations;
-    const description = this.state.description;
-    const skills = this.state.skills;
+    /* const description = this.state.description;
+    const skills = this.state.skills; */
     const lastUpdate = this.state.lastUpdate;
 
     return (
       <div className="content">
         <div className="leftContainer">
           <div>
-            {this.state.picture !== null ? (
-              <span>
-                <img
-                  src={informations.photo}
-                  alt="portrait of talent"
-                  className="talentPicture"
+            <ReactFileReader
+              fileTypes={[".png", ".jpg"]}
+              base64={true}
+              multipleFiles={false}
+              handleFiles={this.handleFiles}
+            >
+              {this.state.picture !== null ? (
+                <span>
+                  <img
+                    src={this.state.picture}
+                    alt="portrait of talent"
+                    className="talentPicture"
+                  />
+                </span>
+              ) : (
+                <div
+                  style={{
+                    height: "100px",
+                    width: "75px",
+                    backgroundColor: "grey"
+                  }}
                 />
-              </span>
-            ) : (
-              <div
-                style={{
-                  height: "100px",
-                  width: "75px",
-                  backgroundColor: "grey"
-                }}
-              />
-            )}
+              )}
+            </ReactFileReader>
           </div>
 
           <form className="talentDetails">
-            <input
-              name="First Name"
-              value={informations.firstName}
-              onChange={async e => {
-                await this.setState({
-                  informations: { firstName: e.target.value }
-                });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: {
-                      firstName: this.state.informations.firstName
-                    }
-                  }
-                );
-              }}
-            />
-            <input
-              name="Last Name"
-              value={informations.lastName}
-              onChange={async e => {
-                await this.setState({
-                  informations: { lastName: e.target.value }
-                });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: { lastName: this.state.informations.lastName }
-                  }
-                );
-              }}
-            />
+            <input name="First Name" value={informations.firstName} />
+            <input name="Last Name" value={informations.lastName} />
             <input
               name="LinkedIn Profil"
               value={informations.linkedIn}
@@ -136,22 +112,7 @@ class Talent extends React.Component {
               }}
             />
 
-            <input
-              name="Wage"
-              value={informations.salary}
-              onChange={async e => {
-                await this.setState({
-                  informations: { salary: e.target.value }
-                });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: { salary: this.state.informations.salary }
-                  }
-                );
-              }}
-            />
+            <input name="Wage" value={informations.salary} />
 
             <input
               name="Current company"
@@ -172,22 +133,7 @@ class Talent extends React.Component {
               }}
             />
 
-            <input
-              name="Desired sector"
-              value={informations.mobility}
-              onChange={async e => {
-                await this.setState({
-                  informations: { mobility: e.target.value }
-                });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: { mobility: this.state.informations.mobility }
-                  }
-                );
-              }}
-            />
+            <input name="Desired sector" value={informations.mobility} />
 
             <input
               name="Current position"
@@ -208,24 +154,7 @@ class Talent extends React.Component {
               }}
             />
 
-            <input
-              name="Desired Position"
-              value={informations.wantedTitle}
-              onChange={async e => {
-                await this.setState({
-                  informations: { wantedTitle: e.target.value }
-                });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    informations: {
-                      wantedTitle: this.state.informations.wantedTitle
-                    }
-                  }
-                );
-              }}
-            />
+            <input name="Desired Position" value={informations.wantedTitle} />
           </form>
           <div className="availability">
             <div
@@ -273,84 +202,18 @@ class Talent extends React.Component {
 
         <div>
           <form>
-            <textarea
-              name="ideal firm"
-              value={description.idealCompany}
-              onChange={async e => {
-                await this.setState({
-                  description: { idealCompany: e.target.value }
-                });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    description: {
-                      idealCompany: this.state.description.idealCompany
-                    }
-                  }
-                );
-              }}
-            />
+            <textarea name="ideal firm" value={description.idealCompany} />
 
-            <textarea
-              name="ideal role"
-              value={description.idealRole}
-              onChange={async e => {
-                await this.setState({
-                  description: { idealRole: e.target.value }
-                });
-                axios.post(
-                  "https://ernest-server.herokuapp.com/talent/update",
-                  {
-                    id: this.props.match.params.id,
-                    description: {
-                      idealRole: this.state.description.idealRole
-                    }
-                  }
-                );
-              }}
-            />
+            <textarea name="ideal role" value={description.idealRole} />
 
             <div className="allWishes">
               <div className="wishes">
                 <textarea
                   name="ideal environment"
                   value={description.workingEnvironment}
-                  onChange={async e => {
-                    await this.setState({
-                      description: { workingEnvironment: e.target.value }
-                    });
-                    axios.post(
-                      "https://ernest-server.herokuapp.com/talent/update",
-                      {
-                        id: this.props.match.params.id,
-                        description: {
-                          workingEnvironment: this.state.description
-                            .workingEnvironment
-                        }
-                      }
-                    );
-                  }}
                 />
 
-                <textarea
-                  name="ambitions"
-                  value={description.development}
-                  onChange={async e => {
-                    await this.setState({
-                      description: { development: e.target.value }
-                    });
-                    axios.post(
-                      "https://ernest-server.herokuapp.com/talent/update",
-                      {
-                        id: this.props.match.params.id,
-                        description: {
-                          development: this.state.description.development
-                        }
-                      }
-                    );
-                  }}
-                />
+                <textarea name="ambitions" value={description.development} />
               </div>
 
               <div className="skills">
@@ -399,4 +262,4 @@ class Talent extends React.Component {
   }
 }
 
-export default Talent;
+export default TalentforTalent;

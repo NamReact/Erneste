@@ -16,6 +16,7 @@ import ClientList from "./components/ClientList/ClientList";
 class App extends React.Component {
   state = {
     id: null
+    /* mettre dans le state un token qui permet d'identifeir qui consulte la fiche, donc qui peut modifier quoi*/
   };
 
   /* getId = id => {
