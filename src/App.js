@@ -1,12 +1,7 @@
 import React from "react";
 /* import axios from "axios"; */
 /* import ReactFileReader from "react-file-reader"; */
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Talent from "./components/Talent";
 import NewTalent from "./components/NewTalent";

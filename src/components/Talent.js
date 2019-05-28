@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import ReactFileReader from "react-file-reader";
 
-/* admin talent : on peut tout modifier */
+/* page admin talent : on peut tout modifier */
 
 class Talent extends React.Component {
   state = {
@@ -17,14 +17,17 @@ class Talent extends React.Component {
     changing: null
   };
 
+  /* Function to save picture */
   handleFiles = files => {
-    let informations = { ...this.state.informations };
+    const informations = { ...this.state.informations };
+    informations.photo = { ...informations.photo };
     informations.photo = files.base64;
     this.setState({
-      informations: { photo: informations.photo }
+      informations: informations
     });
   };
 
+  /* Function to save changes when clicking outside the input */
   onClick = async e => {
     if (this.state.changing === null) {
       this.setState({ changing: e.target.id });
@@ -49,7 +52,6 @@ class Talent extends React.Component {
       return <p>En cours de chargement...</p>;
     }
 
-    /* const permission = this.state.permission; */
     const informations = this.state.informations;
     const description = this.state.description;
     const skills = this.state.skills;
@@ -273,7 +275,7 @@ class Talent extends React.Component {
               name="ideal firm"
               value={description.idealCompany}
               onChange={e => {
-                const informations = { ...this.state.description };
+                const description = { ...this.state.description };
                 description.idealCompany = { ...description.idealCompany };
                 description.idealCompany = e.target.value;
                 this.setState({
@@ -332,17 +334,17 @@ class Talent extends React.Component {
               <div className="skills">
                 <textarea
                   name="hardskills"
-                  value={skills.hard}
-                  /* onChange={e => {
+                  value={skills.hard.join(" ")}
+                  onChange={e => {
                     this.setState({ hardSkills: e.target.value });
-                  }} */
+                  }}
                 />
                 <textarea
                   name="softskills"
-                  value={skills.soft}
-                  /* onChange={e => {
+                  value={skills.soft.join(" ")}
+                  onChange={e => {
                     this.setState({ softSkills: e.target.value });
-                  }} */
+                  }}
                 />
               </div>
             </div>

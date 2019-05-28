@@ -1,9 +1,10 @@
 import React from "react";
 import axios from "axios";
 import ReactFileReader from "react-file-reader";
-import { Redirect } from "react-router-dom";
 
 import "./newTalent.css";
+
+/* page creation nouveau talent */
 
 class NewTalent extends React.Component {
   state = {
