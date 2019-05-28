@@ -1,0 +1,79 @@
+/* HEADER CLIENT LIST */
+.headerTab {
+  display: flex;
+  border: grey;
+  border-style: solid;
+  border-width: 1px;
+  padding: 4px;
+}
+.headerTab li {
+  list-style-type: none;
+  cursor: pointer;
+  margin-right: 2.4rem;
+}
+/* title  page : Clients & view  */
+
+.titlePage {
+  display: flex;
+  flex-direction: column;
+}
+
+.titlePage p {
+  margin: 0;
+}
+
+/* Search bar & button */
+/* .boxSearchBarAndButton {
+    display: flex;
+    flex-direction: column;
+  } */
+
+.searchbar {
+  width: 350;
+}
+
+/* Clientlist array box */
+.clientListBox {
+  width: 90%;
+  margin: 5;
+  /* border: red;
+    border-style: dotted; */
+  display: flex;
+  flex-direction: column;
+}
+
+/* clientArrayEntries*/
+.clientArrayEntries {
+  width: 95%;
+}
+.clientArrayEntries ul {
+  list-style-type: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-around;
+  /* border: purple;
+    border-style: dotted; */
+}
+/* clientList array item*/
+
+/* box fulllength */
+.clientListItemContainer {
+  display: flex;
+  flex-direction: column;
+  /* border-width: 1px;
+    border: grey;
+    border-style: dotted; */
+}
+
+.clientListItem {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+  /* border: green;
+    border-style: dotted; */
+}
+.clientListItem li {
+  display: flex;
+  justify-content: flex-start;
+  width: 150px;
+}

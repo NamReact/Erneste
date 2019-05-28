@@ -11,6 +11,7 @@ import {
 import Talent from "./components/Talent";
 import NewTalent from "./components/NewTalent";
 import TalentListPage from "./components/TalentList/TalentListPage";
+import ClientList from "./components/ClientList/ClientList";
 
 class App extends React.Component {
   state = {
@@ -36,6 +37,7 @@ class App extends React.Component {
             component={props => <Talent match={props.match} />}
           />
           <Route path="/admin/talent" component={TalentListPage} />
+          <Route path="/admin/client" component={ClientList} />
         </Switch>
       </Router>
     );
