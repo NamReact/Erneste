@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import ReactFileReader from "react-file-reader";
 import TagList from "./TagList";
+import { Link, Redirect } from "react-router-dom";
 
 import "./newTalent.css";
 
@@ -11,27 +12,28 @@ class CreateNewTalent extends React.Component {
   state = {
     informations: {
       photo: null,
-      firstName: "hihihih",
-      lastName: "gygygy",
-      linkedIn: "plplpl",
-      email: "popopo",
-      phoneNumber: "ioioioi",
-      salary: "ppppp",
-      actualCompany: "kokoko",
-      wantedSector: "uououo",
-      actualTitle: "pjpjpj",
-      wantedTitle: "kklklk",
-      status: ""
+      firstName: "",
+      lastName: "",
+      linkedIn: "",
+      email: "",
+      phoneNumber: "",
+      salary: "",
+      actualCompany: "",
+      wantedSector: "",
+      actualTitle: "",
+      wantedTitle: "",
+      status: "0"
     },
     description: {
-      idealCompany: "jhjhj",
-      idealRole: "uuuuu",
-      workingEnvironment: "ooooo",
-      development: "ppppp"
+      idealCompany: "",
+      idealRole: "",
+      workingEnvironment: "",
+      development: ""
     },
     skills: [],
-
-    tagList: false
+    tagList: false,
+    redirect: false,
+    idTalentCreated: null
   };
 
   /* Function to save picture */
@@ -61,12 +63,15 @@ class CreateNewTalent extends React.Component {
     const skills = this.state.skills.map(tag => {
       return tag._id;
     });
-    await axios.post("https://ernest-server.herokuapp.com/talent/create", {
-      id: this.state.id,
-      informations: this.state.informations,
-      description: this.state.description,
-      skills: skills
-    });
+    const response = await axios.post(
+      "https://ernest-server.herokuapp.com/talent/create",
+      {
+        informations: this.state.informations,
+        description: this.state.description,
+        skills: skills
+      }
+    );
+    this.setState({ idTalentCreated: response.data._id, redirect: true });
   };
 
   render() {
@@ -83,6 +88,9 @@ class CreateNewTalent extends React.Component {
 
     return (
       <div className="content" onClick={this.onClick}>
+        {this.state.redirect && (
+          <Redirect to={"/admin/talent/" + this.state.idTalentCreated} />
+        )}
         <div className="leftContainer">
           <ReactFileReader
             fileTypes={[".png", ".jpg"]}
@@ -367,8 +375,11 @@ class CreateNewTalent extends React.Component {
         {this.state.tagList === true ? <TagList setTag={this.setTag} /> : null}
 
         <div className="buttons">
-          <div className="cancel">X</div>
+          <Link to={"/admin/talent-list"}>
+            <div className="cancel">X</div>
+          </Link>
           {/* lien à faire vers liste des talents */}
+
           <div className="validate" onClick={this.createTalent}>
             {/* lien à faire vers page talent validée */}
             Yes

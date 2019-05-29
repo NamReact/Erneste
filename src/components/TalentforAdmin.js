@@ -88,7 +88,7 @@ class TalentforAdmin extends React.Component {
             multipleFiles={false}
             handleFiles={this.handleFiles}
           >
-            {informations.photo.length > 20 ? (
+            {informations.photo !== null ? (
               <span>
                 <img
                   src={informations.photo}
