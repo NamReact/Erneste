@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import ReactFileReader from "react-file-reader";
+import TagList from "./TagList";
 
 /* page admin talent : on peut tout modifier */
 
@@ -10,11 +11,12 @@ class Talent extends React.Component {
     permission: null,
     informations: null,
     description: null,
-    skills: null,
+    skills: [],
     validated: null,
     lastUpdate: null,
     isLoading: true,
-    changing: null
+    changing: null,
+    tagList: false
   };
 
   /* Function to save picture */
@@ -35,16 +37,30 @@ class Talent extends React.Component {
     }
     if (this.state.changing !== e.target.id) {
       this.setState({ changing: e.target.id });
+      const skills = this.state.skills.map(tag => {
+        return tag._id;
+      });
       await axios.post("https://ernest-server.herokuapp.com/talent/update", {
         id: this.state.id,
         informations: this.state.informations,
         description: this.state.description,
-        skills: this.state.skills
+        skills: skills
       });
       console.log("posted");
     } else {
       console.log("same");
     }
+  };
+
+  setTag = tag => {
+    console.log(tag);
+    const tagArray = this.state.skills;
+    tagArray.push(tag);
+    this.setState({ skills: tagArray });
+  };
+
+  showTagList = () => {
+    this.setState({ tagList: !this.state.tagList });
   };
 
   render() {
@@ -56,6 +72,12 @@ class Talent extends React.Component {
     const description = this.state.description;
     const skills = this.state.skills;
     const lastUpdate = this.state.lastUpdate;
+
+    const skillsArray = skills
+      .map(tag => {
+        return tag.name;
+      })
+      .join(" ");
 
     return (
       <div className="content" onClick={this.onClick}>
@@ -332,20 +354,8 @@ class Talent extends React.Component {
               </div>
 
               <div className="skills">
-                <textarea
-                  name="hardskills"
-                  value={skills.hard.join(" ")}
-                  onChange={e => {
-                    this.setState({ hardSkills: e.target.value });
-                  }}
-                />
-                <textarea
-                  name="softskills"
-                  value={skills.soft.join(" ")}
-                  onChange={e => {
-                    this.setState({ softSkills: e.target.value });
-                  }}
-                />
+                <textarea name="hardskills" value={skillsArray} />
+                <div onClick={this.showTagList}>Show tag list</div>
               </div>
             </div>
           </form>
@@ -356,6 +366,7 @@ class Talent extends React.Component {
             </div>
           </div> */}
         </div>
+        {this.state.tagList === true ? <TagList setTag={this.setTag} /> : null}
       </div>
     );
   }
