@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 function AddTalent(props) {
   return (
-    <div>
-      <Link to={`/admin/talent-create`}>Ajouter un talent</Link>
-    </div>
+    <Link to={`/admin/talent-create`}>
+      <div className="toolsAddTalent">Ajouter un talent</div>
+    </Link>
   );
 }
 

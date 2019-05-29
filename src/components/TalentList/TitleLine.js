@@ -102,7 +102,8 @@ function TitleLine(props) {
 
   return (
     <div className="talentList-right-block-title">
-      <div className="talentList-delete-block" />
+      <div className="deleteBox deleteUncheck" />
+      {/* NAME */}
       <div className="talentList-right-block-name">
         {titleArray[0].value}
         <i
@@ -154,7 +155,11 @@ function TitleLine(props) {
               return (
                 <div key={index} className="filter-line">
                   <div
-                    className={clicked ? "blue" : "red"}
+                    className={
+                      clicked
+                        ? "deleteBox deleteCheck"
+                        : "deleteBox deleteUncheck"
+                    }
                     onClick={() => {
                       props.filterCheckBox("actualTitle", element);
                     }}
@@ -188,7 +193,11 @@ function TitleLine(props) {
               return (
                 <div key={index} className="filter-line">
                   <div
-                    className={clicked ? "blue" : "red"}
+                    className={
+                      clicked
+                        ? "deleteBox deleteCheck"
+                        : "deleteBox deleteUncheck"
+                    }
                     onClick={() => {
                       props.filterCheckBox("actualCompany", element);
                     }}
@@ -222,7 +231,11 @@ function TitleLine(props) {
               return (
                 <div key={index} className="filter-line">
                   <div
-                    className={clicked ? "blue" : "red"}
+                    className={
+                      clicked
+                        ? "deleteBox deleteCheck"
+                        : "deleteBox deleteUncheck"
+                    }
                     onClick={() => {
                       props.filterCheckBox("wantedTitle", element);
                     }}
@@ -256,7 +269,11 @@ function TitleLine(props) {
               return (
                 <div key={index} className="filter-line">
                   <div
-                    className={clicked ? "blue" : "red"}
+                    className={
+                      clicked
+                        ? "deleteBox deleteCheck"
+                        : "deleteBox deleteUncheck"
+                    }
                     onClick={() => {
                       props.filterCheckBox("validated", element);
                     }}
@@ -290,7 +307,11 @@ function TitleLine(props) {
               return (
                 <div key={index} className="filter-line">
                   <div
-                    className={clicked ? "blue" : "red"}
+                    className={
+                      clicked
+                        ? "deleteBox deleteCheck"
+                        : "deleteBox deleteUncheck"
+                    }
                     onClick={() => {
                       props.filterCheckBox("status", element);
                     }}
@@ -325,7 +346,11 @@ function TitleLine(props) {
               return (
                 <div key={index} className="filter-line">
                   <div
-                    className={clicked ? "blue" : "red"}
+                    className={
+                      clicked
+                        ? "deleteBox deleteCheck"
+                        : "deleteBox deleteUncheck"
+                    }
                     onClick={() => {
                       props.filterCheckBox("lastUpdate", element);
                     }}

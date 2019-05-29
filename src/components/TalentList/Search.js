@@ -3,11 +3,12 @@ import "./Search.css";
 
 function Search(props) {
   return (
-    <div>
-      <div className="talentList-delete-block" />
+    <div className="tools-search">
+      <i class="fas fa-search" />
       <input
+        className="tools-search-input"
         value={props.searchInput}
-        placeholder="recherche un profil"
+        placeholder="Rechercher un profil"
         onChange={event => {
           props.searchType(event.target.value);
         }}

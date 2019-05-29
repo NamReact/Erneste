@@ -1,6 +1,8 @@
 .talentList-right-block-title {
   display: flex;
   flex-direction: row;
+  padding-bottom: 10px;
+  border-bottom: 2px gray solid;
 }
 
 .talentList-right-block-name {
@@ -36,24 +38,13 @@
 }
 
 .chevron-filter {
-  background-color: yellow;
+  background-color: white;
   width: 200px;
   position: absolute;
+  border: 2px solid lightgray;
 }
 
 .filter-line {
   display: flex;
   margin-bottom: 10px;
-}
-
-.blue {
-  height: 30px;
-  width: 30px;
-  background-color: blue;
-}
-
-.red {
-  height: 30px;
-  width: 30px;
-  background-color: red;
 }

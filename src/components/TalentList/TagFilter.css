@@ -1,10 +1,19 @@
 .tagList {
-  background-color: yellow;
   min-height: 50px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  border: 2px solid lightgray;
 }
-
+.tagList-input-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.tagList-input {
+  outline: none;
+  border: none;
+}
 .tagList-tagShown {
   margin: 10px 10px;
   padding: 5px 10px;
@@ -20,9 +29,11 @@
 }
 
 .tagList-proposition {
-  background-color: orange;
+  background-color: white;
   display: flex;
   flex-direction: column;
   width: 150px;
   height: 120px;
+  border: 2px solid lightgray;
+  position: fixed;
 }

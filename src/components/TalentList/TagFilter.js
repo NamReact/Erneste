@@ -33,30 +33,33 @@ function TagFilter(props) {
             </div>
           );
         })}
-        <input
-          value={tagFilterInputValue}
-          placeholder="filtres à écrire"
-          onChange={event => handleChangeTagFilterInput(event.target.value)}
-        />
-        {tagFilterInputValue !== "" && (
-          <div className="tagList-proposition">
-            {tagListCopieFilter.map(tag => {
-              console.log(tag);
-              // console.log(tag.name);
-              // console.log(tag.type);
-              return (
-                <div
-                  onClick={() => {
-                    handleClickTagFilter(tag);
-                  }}
-                  key={tag.name}
-                >
-                  {tag.name}
-                </div>
-              );
-            })}
-          </div>
-        )}
+        <div className="tagList-input-block">
+          <input
+            className="tagList-input"
+            value={tagFilterInputValue}
+            placeholder="Write your tag"
+            onChange={event => handleChangeTagFilterInput(event.target.value)}
+          />
+          {tagFilterInputValue !== "" && (
+            <div className="tagList-proposition">
+              {tagListCopieFilter.map(tag => {
+                console.log(tag);
+                // console.log(tag.name);
+                // console.log(tag.type);
+                return (
+                  <div
+                    onClick={() => {
+                      handleClickTagFilter(tag);
+                    }}
+                    key={tag.name}
+                  >
+                    {tag.name}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
       <div>
         <button>Filtrer</button>

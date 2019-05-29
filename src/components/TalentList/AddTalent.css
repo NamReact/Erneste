@@ -1,0 +1,10 @@
+.toolsAddTalent {
+  text-decoration: none;
+  outline: none;
+  background-color: #474d8b;
+  color: white;
+  padding: 15px;
+  font-size: 14px;
+  border-radius: 8px;
+  font-weight: 600;
+}

@@ -7,7 +7,6 @@ import "./Tools.css";
 function Tools(props) {
   return (
     <div className="talentList-right-block-researchLine">
-      <div className="talentList-delete-block" />
       <Search
         searchInput={props.searchInput}
         searchType={event => {

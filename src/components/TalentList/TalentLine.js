@@ -4,10 +4,13 @@ import { Link } from "react-router-dom";
 
 function TalentLine(props) {
   const { talent } = props;
+  let deleteCheckBoxStyle = talent.delete
+    ? "deleteBox deleteCheck"
+    : "deleteBox deleteUncheck";
   return (
     <div className="talentList-right-block-line">
       <div
-        className={talent.delete ? "blue" : "red"}
+        className={deleteCheckBoxStyle}
         onClick={() => {
           props.deleteCheckBox(talent._id);
         }}

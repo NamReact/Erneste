@@ -1,0 +1,15 @@
+.tools-search-input {
+  padding: 5px;
+  border: none;
+  text-decoration: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.tools-search {
+  border: 1px solid lightgray;
+  padding: 10px;
+  border-radius: 8px;
+  width: 25%;
+  margin-right: 10px;
+}
