@@ -28,25 +28,7 @@ class NewTalent extends React.Component {
       workingEnvironment: "ooooo",
       development: "ppppp"
     },
-    /* status: "write",
-    picture: null,
-    firstName: "toty",
-    lastName: "dsds",
-    linkedIn: "fsfsdfs",
-    email: "fsfsfsfdad",
-    phone: "szszs",
-    wage: "20000",
-    curCompany: "ggg",
-    desSector: "ererere",
-    curPosition: "zzzzz",
-    desPosition: "ffegeg",
-    availability: 2,
-    idealFirm: "dsfdgsgs",
-    idealRole: "sdgdgdsg",
-    idealEnvironment: "gdgdgdg",
-    ambitions: "sgdgsg", */
-    hardSkills: "ggggggggg",
-    softSkills: "dfdfdff"
+    skills: []
   };
 
   onClick = () => {
@@ -93,6 +75,8 @@ class NewTalent extends React.Component {
   };
 
   render() {
+    const informations = this.state.informations;
+    const description = this.state.description;
     return (
       <div className="content">
         {/* left section */}
@@ -107,7 +91,7 @@ class NewTalent extends React.Component {
               {this.state.photo !== null ? (
                 <span>
                   <img
-                    src={this.state.photo}
+                    src={informations.photo}
                     alt="portrait of talent"
                     className="talentPicture"
                   />
@@ -127,7 +111,7 @@ class NewTalent extends React.Component {
           <form className="talentDetails">
             <input
               name="First Name"
-              value={this.state.firstName}
+              value={informations.firstName}
               placeholder="Prénom"
               onChange={e => {
                 this.setState({ firstName: e.target.value });
@@ -135,7 +119,7 @@ class NewTalent extends React.Component {
             />
             <input
               name="Last Name"
-              value={this.state.lastName}
+              value={informations.lastName}
               placeholder="NOM"
               onChange={e => {
                 this.setState({ lastName: e.target.value });
@@ -143,7 +127,7 @@ class NewTalent extends React.Component {
             />
             <input
               name="LinkedIn Profil"
-              value={this.state.linkedIn}
+              value={informations.linkedIn}
               placeholder="Profil LinkedIn"
               onChange={e => {
                 this.setState({ linkedIn: e.target.value });
@@ -151,7 +135,7 @@ class NewTalent extends React.Component {
             />
             <input
               name="email"
-              value={this.state.email}
+              value={informations.email}
               placeholder="adresse@email.com"
               onChange={e => {
                 this.setState({ email: e.target.value });
@@ -159,7 +143,7 @@ class NewTalent extends React.Component {
             />
             <input
               name="phone number"
-              value={this.state.phoneNumber}
+              value={informations.phoneNumber}
               placeholder="0XXXXXXX"
               onChange={e => {
                 this.setState({ phoneNumber: e.target.value });
@@ -167,7 +151,7 @@ class NewTalent extends React.Component {
             />
             <input
               name="Wage"
-              value={this.state.salary}
+              value={informations.salary}
               placeholder="$$$$$$$$"
               onChange={e => {
                 this.setState({ salary: e.target.value });
@@ -175,7 +159,7 @@ class NewTalent extends React.Component {
             />
             <input
               name="Current company"
-              value={this.state.actualCompany}
+              value={informations.actualCompany}
               placeholder="Entreprise actuelle"
               onChange={e => {
                 this.setState({ actualCompany: e.target.value });
@@ -183,7 +167,7 @@ class NewTalent extends React.Component {
             />
             <input
               name="Desired sector"
-              value={this.state.wantedSector}
+              value={informations.wantedSector}
               placeholder="Secteur Souhaité"
               onChange={e => {
                 this.setState({ wantedSector: e.target.value });
@@ -191,7 +175,7 @@ class NewTalent extends React.Component {
             />
             <input
               name="Current position"
-              value={this.state.actualTitle}
+              value={informations.actualTitle}
               placeholder="Fonction actuelle"
               onChange={e => {
                 this.setState({ actualTitle: e.target.value });
@@ -199,7 +183,7 @@ class NewTalent extends React.Component {
             />
             <input
               name="Desired Position"
-              value={this.state.wantedTitle}
+              value={informations.wantedTitle}
               placeholder="Position souhaitée"
               onChange={e => {
                 this.setState({ wantedTitle: e.target.value });
@@ -212,7 +196,7 @@ class NewTalent extends React.Component {
                 this.setState({ status: 1 });
               }}
               style={{
-                backgroundColor: this.state.status === 1 ? "red" : "white"
+                backgroundColor: informations.status === 1 ? "red" : "white"
               }}
             />
             <div
@@ -220,7 +204,7 @@ class NewTalent extends React.Component {
                 this.setState({ status: 2 });
               }}
               style={{
-                backgroundColor: this.state.status === 2 ? "blue" : "white"
+                backgroundColor: informations.status === 2 ? "blue" : "white"
               }}
             />
             <div
@@ -228,7 +212,7 @@ class NewTalent extends React.Component {
                 this.setState({ status: 3 });
               }}
               style={{
-                backgroundColor: this.state.status === 3 ? "black" : "white"
+                backgroundColor: informations.status === 3 ? "black" : "white"
               }}
             />
             <div
@@ -236,7 +220,7 @@ class NewTalent extends React.Component {
                 this.setState({ status: 4 });
               }}
               style={{
-                backgroundColor: this.state.status === 4 ? "green" : "white"
+                backgroundColor: informations.status === 4 ? "green" : "white"
               }}
             />
           </div>
@@ -247,14 +231,14 @@ class NewTalent extends React.Component {
           <form>
             <textarea
               name="ideal firm"
-              value={this.state.idealCompany}
+              value={description.idealCompany}
               onChange={e => {
                 this.setState({ idealCompany: e.target.value });
               }}
             />
             <textarea
               name="ideal role"
-              value={this.state.idealRole}
+              value={description.idealRole}
               onChange={e => {
                 this.setState({ idealRole: e.target.value });
               }}
@@ -263,35 +247,35 @@ class NewTalent extends React.Component {
               <div className="wishes">
                 <textarea
                   name="ideal environment"
-                  value={this.state.workingEnvironment}
+                  value={description.workingEnvironment}
                   onChange={e => {
                     this.setState({ workingEnvironment: e.target.value });
                   }}
                 />
                 <textarea
                   name="ambitions"
-                  value={this.state.development}
+                  value={description.development}
                   onChange={e => {
                     this.setState({ development: e.target.value });
                   }}
                 />
               </div>
-              <div className="skills">
+              {/*    <div className="skills">
                 <textarea
                   name="hardskills"
-                  value={this.state.hardSkills}
+                  value={description.hardSkills}
                   onChange={e => {
                     this.setState({ hardSkills: e.target.value });
                   }}
                 />
                 <textarea
                   name="softskills"
-                  value={this.state.softSkills}
+                  value={description.softSkills}
                   onChange={e => {
                     this.setState({ softSkills: e.target.value });
                   }}
                 />
-              </div>
+              </div> */}
             </div>
           </form>
           <div className="buttons">
