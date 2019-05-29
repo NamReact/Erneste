@@ -40,6 +40,7 @@ class AddClientForm extends React.Component {
           email: this.state.mail
         }
       );
+      this.props.closePopup();
       return this.setState({ valid: true });
     }
   };
@@ -47,8 +48,9 @@ class AddClientForm extends React.Component {
     return (
       <div>
         <div className="addClientFormContainer">
-          <div className="formheader">
+          <div className="formHeader">
             <p>Ajouter un nouveau client</p>
+
             <button className="closingButton" onClick={this.props.closePopup}>
               X
             </button>

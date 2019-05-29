@@ -100,6 +100,9 @@ class ClientList extends React.Component {
             <ul>
               {/* <li>XXX</li> */}
               <li>
+                <button className="deleteAll" />
+              </li>
+              <li>
                 Note <span>▿</span>
               </li>
               <li>
@@ -126,10 +129,12 @@ class ClientList extends React.Component {
               {result.map((client, id) => {
                 return (
                   <ul key={client._id} className="clientListItem">
-                    {/* <li className="deleteBox">XXX</li> */}
-                    <li className="columnNote">
-                      {client.rating ? client.numberOfUser : "0"}
+
+                    <li>
+                      <button className="deleteAll" />
                     </li>
+                    <li>{client.rating ? client.numberOfUser : "0"}</li>
+
                     <li>
                       <a href="#">{client.name}</a>
                     </li>

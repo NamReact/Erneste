@@ -21,12 +21,14 @@
 .formHeader {
   display: flex;
   width: 300px;
+  flex-direction: row;
 }
 
 .closingButton {
   font-size: 15px;
   background: none;
   border: none;
+  display: flex;
 }
 
 .addClientFormContainer h1 {
