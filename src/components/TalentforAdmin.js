@@ -5,7 +5,7 @@ import TagList from "./TagList";
 
 /* page admin talent : on peut tout modifier */
 
-class Talent extends React.Component {
+class TalentforAdmin extends React.Component {
   state = {
     id: null,
     permission: null,
@@ -249,7 +249,9 @@ class Talent extends React.Component {
           <div className="availability">
             <div
               onClick={() => {
-                this.setState({ availability: 1 });
+                informations.status = { ...informations.status };
+                informations.status = "1";
+                this.setState({ informations });
               }}
               style={{
                 backgroundColor: informations.status === "1" ? "red" : "white"
@@ -257,7 +259,9 @@ class Talent extends React.Component {
             />
             <div
               onClick={() => {
-                this.setState({ availability: 2 });
+                informations.status = { ...informations.status };
+                informations.status = "2";
+                this.setState({ informations });
               }}
               style={{
                 backgroundColor: informations.status === "2" ? "blue" : "white"
@@ -265,7 +269,9 @@ class Talent extends React.Component {
             />
             <div
               onClick={() => {
-                this.setState({ availability: 3 });
+                informations.status = { ...informations.status };
+                informations.status = "3";
+                this.setState({ informations });
               }}
               style={{
                 backgroundColor: informations.status === "3" ? "black" : "white"
@@ -273,7 +279,9 @@ class Talent extends React.Component {
             />
             <div
               onClick={() => {
-                this.setState({ availability: 4 });
+                informations.status = { ...informations.status };
+                informations.status = "4";
+                this.setState({ informations });
               }}
               style={{
                 backgroundColor: informations.status === "4" ? "green" : "white"
@@ -359,12 +367,6 @@ class Talent extends React.Component {
               </div>
             </div>
           </form>
-          {/* <div className="buttons">
-            <div className="cancel">X</div>
-            <div className="validate" onClick={this.onClick}>
-              Yes
-            </div>
-          </div> */}
         </div>
         {this.state.tagList === true ? <TagList setTag={this.setTag} /> : null}
       </div>
@@ -375,7 +377,7 @@ class Talent extends React.Component {
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/talent/" + this.props.match.params.id
     );
-
+    console.log(response.data);
     this.setState({
       isLoading: false,
       id: this.props.match.params.id,
@@ -389,4 +391,4 @@ class Talent extends React.Component {
   }
 }
 
-export default Talent;
+export default TalentforAdmin;

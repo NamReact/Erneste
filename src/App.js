@@ -3,15 +3,13 @@ import React from "react";
 /* import ReactFileReader from "react-file-reader"; */
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import Talent from "./components/Talent";
-import NewTalent from "./components/NewTalent";
+import TalentforAdmin from "./components/TalentforAdmin";
+import CreateNewTalent from "./components/CreateNewTalent";
 import TalentListPage from "./components/TalentList/TalentListPage";
 import ClientList from "./components/ClientList/ClientList";
-
 import TalentforTalent from "./components/TalentforTalent";
 
 import Home from "./components/Home";
-
 
 class App extends React.Component {
   state = {
@@ -31,12 +29,12 @@ class App extends React.Component {
           <Route
             exact={true}
             path="/admin/talent-create"
-            component={() => <NewTalent getId={this.getId} />}
+            component={() => <CreateNewTalent getId={this.getId} />}
           />
           <Route
             exact={true}
             path="/admin/talent/:id"
-            component={props => <Talent match={props.match} />}
+            component={props => <TalentforAdmin match={props.match} />}
           />
           <Route
             exact={true}
