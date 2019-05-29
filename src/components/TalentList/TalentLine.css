@@ -31,3 +31,15 @@
 .talentList-right-block-lastUpdate {
   flex: 2;
 }
+
+.blue {
+  height: 30px;
+  width: 30px;
+  background-color: blue;
+}
+
+.red {
+  height: 30px;
+  width: 30px;
+  background-color: red;
+}
