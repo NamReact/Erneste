@@ -1,0 +1,59 @@
+.addClientFormContainer {
+  max-width: 500px;
+  max-height: 400px;
+  border: red;
+  border-style: dotted;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  z-index: auto;
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  top: 15%;
+  bottom: 15%;
+}
+
+/* HEADER */
+.formHeader {
+  display: flex;
+  width: 300px;
+}
+
+.closingButton {
+  font-size: 15px;
+  background: none;
+  border: none;
+}
+
+.addClientFormContainer h1 {
+  font-size: 20px;
+  display: flex;
+}
+/* FORM */
+.formContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.addClientFormContainer label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 5px;
+}
+.addClientFormContainer input {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  margin: 10px;
+}
+.submitButtons {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10;
+}

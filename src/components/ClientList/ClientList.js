@@ -1,24 +1,40 @@
 import React from "react";
 import axios from "axios";
+
+import Header from "../Header";
+import AddClientForm from "./AddClientForm";
+
 import "./ClientList.css";
 
 class ClientList extends React.Component {
   state = {
     clientListData: null,
     clientList: null,
-    clientNumber: "",
     searchFilter: "",
+    PopUpAddClient: false,
     isLoading: true
   };
   handleChange = event => {
     const value = event.target.value;
     this.setState({ searchFilter: value });
   };
+  togglePopup = () => {
+    this.setState({
+      PopUpAddClient: !this.state.PopUpAddClient
+    });
+  };
+
   render() {
     if (this.state.isLoading === true) {
       return <p>En cours de chargement ...</p>;
     }
+    {
+      /* copie des données pour filtre */
+    }
     let clientListArray = [...this.state.clientListData];
+    {
+      /*  filtre "size" , "name" et "field" */
+    }
     const result = clientListArray.filter(search => {
       return (
         search.size
@@ -32,16 +48,12 @@ class ClientList extends React.Component {
           .indexOf(this.state.searchFilter.toLowerCase()) !== -1
       );
     });
-    console.log(result);
+
     return (
       <div>
         {/* header  */}
         <div>
-          <ul className="headerTab">
-            <li>Talents</li>
-            <li>Clients</li>
-            <li>log out</li>
-          </ul>
+          <Header />
         </div>
         {/* header---end  */}
 
@@ -64,7 +76,20 @@ class ClientList extends React.Component {
             onChange={this.handleChange}
           />
           {/* 2-button */}
-          <button className="addClient"> ajouter un client</button>
+          <button onClick={this.togglePopup} className="addClientButton">
+            {" "}
+            ajouter un client
+          </button>
+          {/* 2-1 page ajout client */}
+          <div classeName="addClientPage">
+            {this.state.PopUpAddClient ? (
+              <AddClientForm
+                className="popUpWindow"
+                text="Close Me"
+                closePopup={this.togglePopup}
+              />
+            ) : null}
+          </div>
         </div>
         {/* Search bar & button---end */}
 
@@ -100,7 +125,7 @@ class ClientList extends React.Component {
               {result.map((client, id) => {
                 return (
                   <ul key={client._id} className="clientListItem">
-                    <li>{client.rating}</li>
+                    <li>{client.rating ? client.numberOfUser : "0"}</li>
                     <li>
                       <a href="#">{client.name}</a>
                     </li>
@@ -115,6 +140,7 @@ class ClientList extends React.Component {
           </div>
           {/* clientList array item---end*/}
         </div>
+
         {/* Clientlistarraybox fulllength--end*/}
         {/* page-end */}
       </div>
