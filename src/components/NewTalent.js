@@ -1,13 +1,34 @@
 import React from "react";
 import axios from "axios";
 import ReactFileReader from "react-file-reader";
-import { Redirect } from "react-router-dom";
 
 import "./newTalent.css";
 
+/* page creation nouveau talent */
+
 class NewTalent extends React.Component {
   state = {
-    status: "write" /* ou read */,
+    informations: {
+      photo: null,
+      firstName: "hihihih",
+      lastName: "gygygy",
+      linkedIn: "plplpl",
+      email: "popopo",
+      phoneNumber: "ioioioi",
+      salary: "ppppp",
+      actualCompany: "kokoko",
+      wantedSector: "uououo",
+      actualTitle: "pjpjpj",
+      wantedTitle: "kklklk",
+      status: "1"
+    },
+    description: {
+      idealCompany: "jhjhj",
+      idealRole: "uuuuu",
+      workingEnvironment: "ooooo",
+      development: "ppppp"
+    },
+    /* status: "write",
     picture: null,
     firstName: "toty",
     lastName: "dsds",
@@ -16,14 +37,14 @@ class NewTalent extends React.Component {
     phone: "szszs",
     wage: "20000",
     curCompany: "ggg",
-    sector: "ererere",
+    desSector: "ererere",
     curPosition: "zzzzz",
     desPosition: "ffegeg",
     availability: 2,
     idealFirm: "dsfdgsgs",
     idealRole: "sdgdgdsg",
     idealEnvironment: "gdgdgdg",
-    ambitions: "sgdgsg",
+    ambitions: "sgdgsg", */
     hardSkills: "ggggggggg",
     softSkills: "dfdfdff"
   };
@@ -37,20 +58,20 @@ class NewTalent extends React.Component {
         informations: {
           firstName: this.state.firstName,
           lastName: this.state.lastName,
-          photo: this.state.picture,
-          phoneNumber: this.state.phone,
-          salary: this.state.wage,
-          actualCompany: this.state.curCompany,
-          mobility: this.state.availability,
-          actualTitle: this.state.curPosition,
-          wantedTitle: this.state.desPosition,
+          photo: this.state.photo,
+          phoneNumber: this.state.phoneNumber,
+          salary: this.state.salary,
+          actualCompany: this.state.actualCompany,
+          wantedSector: this.state.wantedSector,
+          actualTitle: this.state.actualPosition,
+          wantedTitle: this.state.wantedPosition,
           status: this.state.status
         },
         description: {
-          idealCompany: this.state.idealFirm,
+          idealCompany: this.state.idealCompany,
           idealRole: this.state.idealRole,
-          workingEnvironment: this.state.idealEnvironment,
-          development: this.state.ambitions
+          workingEnvironment: this.state.workingEnvironment,
+          development: this.state.development
         },
         skills: {
           soft: softSkillsArray,
@@ -67,7 +88,7 @@ class NewTalent extends React.Component {
 
   handleFiles = files => {
     this.setState({
-      picture: files.base64
+      photo: files.base64
     });
   };
 
@@ -83,10 +104,10 @@ class NewTalent extends React.Component {
               multipleFiles={false}
               handleFiles={this.handleFiles}
             >
-              {this.state.picture !== null ? (
+              {this.state.photo !== null ? (
                 <span>
                   <img
-                    src={this.state.picture}
+                    src={this.state.photo}
                     alt="portrait of talent"
                     className="talentPicture"
                   />
@@ -138,87 +159,84 @@ class NewTalent extends React.Component {
             />
             <input
               name="phone number"
-              value={this.state.phone}
+              value={this.state.phoneNumber}
               placeholder="0XXXXXXX"
               onChange={e => {
-                this.setState({ phone: e.target.value });
+                this.setState({ phoneNumber: e.target.value });
               }}
             />
             <input
               name="Wage"
-              value={this.state.wage}
+              value={this.state.salary}
               placeholder="$$$$$$$$"
               onChange={e => {
-                this.setState({ wage: e.target.value });
+                this.setState({ salary: e.target.value });
               }}
             />
             <input
               name="Current company"
-              value={this.state.curCompany}
+              value={this.state.actualCompany}
               placeholder="Entreprise actuelle"
               onChange={e => {
-                this.setState({ curCompany: e.target.value });
+                this.setState({ actualCompany: e.target.value });
               }}
             />
             <input
               name="Desired sector"
-              value={this.state.sector}
+              value={this.state.wantedSector}
               placeholder="Secteur Souhaité"
               onChange={e => {
-                this.setState({ sector: e.target.value });
+                this.setState({ wantedSector: e.target.value });
               }}
             />
             <input
               name="Current position"
-              value={this.state.curPosition}
+              value={this.state.actualTitle}
               placeholder="Fonction actuelle"
               onChange={e => {
-                this.setState({ curPosition: e.target.value });
+                this.setState({ actualTitle: e.target.value });
               }}
             />
             <input
               name="Desired Position"
-              value={this.state.desPosition}
+              value={this.state.wantedTitle}
               placeholder="Position souhaitée"
               onChange={e => {
-                this.setState({ desPosition: e.target.value });
+                this.setState({ wantedTitle: e.target.value });
               }}
             />
           </form>
           <div className="availability">
             <div
               onClick={() => {
-                this.setState({ availability: 1 });
+                this.setState({ status: 1 });
               }}
               style={{
-                backgroundColor: this.state.availability === 1 ? "red" : "white"
+                backgroundColor: this.state.status === 1 ? "red" : "white"
               }}
             />
             <div
               onClick={() => {
-                this.setState({ availability: 2 });
+                this.setState({ status: 2 });
               }}
               style={{
-                backgroundColor:
-                  this.state.availability === 2 ? "blue" : "white"
+                backgroundColor: this.state.status === 2 ? "blue" : "white"
               }}
             />
             <div
               onClick={() => {
-                this.setState({ availability: 3 });
+                this.setState({ status: 3 });
               }}
               style={{
-                backgroundColor:
-                  this.state.availability === 3 ? "black" : "white"
+                backgroundColor: this.state.status === 3 ? "black" : "white"
               }}
             />
             <div
               onClick={() => {
-                this.setState({ availability: 4 });
+                this.setState({ status: 4 });
               }}
               style={{
-                backgroundColor:
-                  this.state.availability === 4 ? "green" : "white"
+                backgroundColor: this.state.status === 4 ? "green" : "white"
               }}
             />
           </div>
@@ -229,9 +247,9 @@ class NewTalent extends React.Component {
           <form>
             <textarea
               name="ideal firm"
-              value={this.state.idealFirm}
+              value={this.state.idealCompany}
               onChange={e => {
-                this.setState({ idealFirm: e.target.value });
+                this.setState({ idealCompany: e.target.value });
               }}
             />
             <textarea
@@ -245,16 +263,16 @@ class NewTalent extends React.Component {
               <div className="wishes">
                 <textarea
                   name="ideal environment"
-                  value={this.state.idealEnvironment}
+                  value={this.state.workingEnvironment}
                   onChange={e => {
-                    this.setState({ idealEnvironment: e.target.value });
+                    this.setState({ workingEnvironment: e.target.value });
                   }}
                 />
                 <textarea
                   name="ambitions"
-                  value={this.state.ambitions}
+                  value={this.state.development}
                   onChange={e => {
-                    this.setState({ ambitions: e.target.value });
+                    this.setState({ development: e.target.value });
                   }}
                 />
               </div>
