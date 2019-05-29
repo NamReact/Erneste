@@ -24,17 +24,31 @@ class TalentListPage extends React.Component {
       { value: "Dernière modif.", clicked: false }
     ],
     chevronClikedPosition: null,
-    chevronFilter: []
+    chevronFilter: [],
+    tagList: [],
+    tagFilterInputValue: "",
+    tagFilterShown: []
   };
 
   // Function to GET data from /talent
-  getData = async toto => {
+  getDataTalentList = async toto => {
+    this.setState({ isLoading: true });
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/talent/"
     );
     this.setState({
       isLoading: false,
       talentList: response.data
+    });
+  };
+
+  // Function GET data from /tag
+  getDataTagList = async toto => {
+    this.setState({ isLoading: true });
+    const response = await axios.get("https://ernest-server.herokuapp.com/tag");
+    this.setState({
+      isLoading: false,
+      tagList: response.data
     });
   };
 
@@ -58,7 +72,7 @@ class TalentListPage extends React.Component {
       this.setState({ isLoading: true });
       await this.deletePost(test[i]._id);
     }
-    await this.getData();
+    await this.getDataTalentList();
   };
 
   deleteCheckBox = async id => {
@@ -113,6 +127,23 @@ class TalentListPage extends React.Component {
     }
     this.setState({ chevronFilter: chevronFilterCopie });
   };
+  // ON gère l'input du TagFilter
+  handleChangeTagFilterInput = toto => {
+    this.setState({ tagFilterInputValue: toto });
+  };
+
+  handleClickTagFilter = tag => {
+    // On crée copie du tableau
+    let tagFilterShownCopie = [...this.state.tagFilterShown];
+    console.log("toto test:", tag);
+    tagFilterShownCopie.push(tag);
+
+    this.setState({
+      tagFilterShown: tagFilterShownCopie,
+      tagFilterInputValue: ""
+    });
+  };
+
   render() {
     /* Filtre sur le research input */
     // Copie du state
@@ -174,7 +205,13 @@ class TalentListPage extends React.Component {
         <div className="talentList-container">
           <div className="talentList-left-block">
             <Title talentList={talentListCopieFilter} />
-            <TagFilter />
+            <TagFilter
+              tagFilterInputValue={this.state.tagFilterInputValue}
+              tagList={this.state.tagList}
+              tagFilterShown={this.state.tagFilterShown}
+              handleChangeTagFilterInput={this.handleChangeTagFilterInput}
+              handleClickTagFilter={this.handleClickTagFilter}
+            />
           </div>
           <div className="talentList-right-block">
             <Tools
@@ -205,7 +242,8 @@ class TalentListPage extends React.Component {
   }
 
   async componentDidMount() {
-    this.getData();
+    this.getDataTalentList();
+    this.getDataTagList();
   }
 }
 

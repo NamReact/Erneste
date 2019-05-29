@@ -37,13 +37,13 @@
 
 .chevron-filter {
   background-color: yellow;
-  width: 400px;
-  height: 300px;
+  width: 200px;
   position: absolute;
 }
 
 .filter-line {
   display: flex;
+  margin-bottom: 10px;
 }
 
 .blue {

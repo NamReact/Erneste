@@ -1,0 +1,28 @@
+.tagList {
+  background-color: yellow;
+  min-height: 50px;
+  display: flex;
+  flex-direction: row;
+}
+
+.tagList-tagShown {
+  margin: 10px 10px;
+  padding: 5px 10px;
+  color: white;
+}
+
+.hardSkill {
+  background-color: #333366;
+}
+
+.softSkill {
+  background-color: #ff6666;
+}
+
+.tagList-proposition {
+  background-color: orange;
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  height: 120px;
+}

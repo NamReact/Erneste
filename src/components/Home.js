@@ -4,7 +4,7 @@ import "./Home.css";
 
 function Home(props) {
   return (
-    <div className="container">
+    <div className="containerBis">
       <div>
         <div className="title">Page Home provisoire</div>
         <Link to={`/admin/talent-list`} className="header-element">
