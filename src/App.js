@@ -7,7 +7,11 @@ import Talent from "./components/Talent";
 import NewTalent from "./components/NewTalent";
 import TalentListPage from "./components/TalentList/TalentListPage";
 import ClientList from "./components/ClientList/ClientList";
+
 import TalentforTalent from "./components/TalentforTalent";
+
+import Home from "./components/Home";
+
 
 class App extends React.Component {
   state = {
@@ -23,6 +27,7 @@ class App extends React.Component {
     return (
       <Router>
         <Switch>
+          <Route exact={true} path="/" component={Home} />
           <Route
             exact={true}
             path="/admin/talent-create"

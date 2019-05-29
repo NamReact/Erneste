@@ -6,33 +6,12 @@ function TalentLine(props) {
   const { talent } = props;
   return (
     <div className="talentList-right-block-line">
-      <div className="talentList-delete-block">
-        {talent.delete === undefined && (
-          <input
-            type="checkbox"
-            onChange={() => {
-              props.deleteCheckBox(talent._id);
-            }}
-          />
-        )}
-        {talent.delete === false && (
-          <input
-            type="checkbox"
-            onChange={() => {
-              props.deleteCheckBox(talent._id);
-            }}
-          />
-        )}
-        {talent.delete === true && (
-          <input
-            type="checkbox"
-            checked
-            onChange={() => {
-              props.deleteCheckBox(talent._id);
-            }}
-          />
-        )}
-      </div>
+      <div
+        className={talent.delete ? "blue" : "red"}
+        onClick={() => {
+          props.deleteCheckBox(talent._id);
+        }}
+      />
       <Link
         to={`/admin/talent/${talent._id}`}
         className="talentList-right-block-name"

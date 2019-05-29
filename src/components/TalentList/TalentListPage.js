@@ -13,7 +13,18 @@ class TalentListPage extends React.Component {
     talentList: [],
     isLoading: true,
     delete: false,
-    searchInput: ""
+    searchInput: "",
+    titleArray: [
+      { value: "Nom", clicked: false },
+      { value: "Fonction", clicked: false },
+      { value: "Entreprise", clicked: false },
+      { value: "Souhait", clicked: false },
+      { value: "Validé", clicked: false },
+      { value: "Statut", clicked: false },
+      { value: "Dernière modif.", clicked: false }
+    ],
+    chevronClikedPosition: null,
+    chevronFilter: []
   };
 
   // Function to GET data from /talent
@@ -44,7 +55,6 @@ class TalentListPage extends React.Component {
       return element.delete === true;
     });
     for (let i = 0; i < test.length; i++) {
-      console.log(test[i]._id);
       this.setState({ isLoading: true });
       await this.deletePost(test[i]._id);
     }
@@ -63,6 +73,46 @@ class TalentListPage extends React.Component {
     }
   };
 
+  chevronClick = toto => {
+    const titleArrayCopie = [...this.state.titleArray];
+    for (let i = 0; i < titleArrayCopie.length; i++) {
+      if (titleArrayCopie[i].value === toto) {
+        titleArrayCopie[i].clicked = !titleArrayCopie[i].clicked;
+        this.setState({ chevronClikedPosition: i });
+      } else {
+        titleArrayCopie[i].clicked = false;
+      }
+      this.setState({ titleArray: titleArrayCopie });
+    }
+  };
+
+  // On push dans le tableau de filtres si le filtre n'existe pas, sinon on le retire
+  filterCheckBox = (titleType, filter) => {
+    const chevronFilterCopie = [...this.state.chevronFilter];
+    let position = 0;
+    if (
+      chevronFilterCopie
+        .map(e => {
+          return e.value;
+        })
+        .indexOf(filter) === -1 ||
+      chevronFilterCopie
+        .map(e => {
+          return e.type;
+        })
+        .indexOf(titleType) === -1
+    ) {
+      chevronFilterCopie.push({ value: filter, type: titleType });
+    } else {
+      position = chevronFilterCopie
+        .map(e => {
+          return e.value;
+        })
+        .indexOf(filter);
+      chevronFilterCopie.splice(position, 1);
+    }
+    this.setState({ chevronFilter: chevronFilterCopie });
+  };
   render() {
     /* Filtre sur le research input */
     // Copie du state
@@ -73,7 +123,7 @@ class TalentListPage extends React.Component {
         talentListCopie[i] = this.state.talentList[i];
       }
 
-      // On crée le filtre
+      // On crée le filtre sur la barre de research
 
       // 1. On crée un tableau de key, pour pouvoir parcourir l'objet ensuite
 
@@ -87,12 +137,30 @@ class TalentListPage extends React.Component {
           element.informations.wantedTitle.toLowerCase().includes(filter)
         );
       });
-      console.log(
-        "test0 :",
-        talentListCopie[0].informations.firstName.toLowerCase()
-      );
-      console.log("test1 :", talentListCopieFilter);
-      console.log("test2 :", filter);
+
+      // On crée le filtre sur les chevrons, à  partir du tableau filtrer par les search
+      // const test = [];
+      // for (let i = 0; i < this.state.chevronFilter.length; i++) {
+      //   test.push([talentListCopieFilter]);
+      // }
+      for (let i = 0; i < this.state.chevronFilter.length; i++) {
+        talentListCopieFilter = talentListCopieFilter.filter(element => {
+          if (
+            this.state.chevronFilter[i].type === "validated" ||
+            this.state.chevronFilter[i].type === "lastUpdate"
+          ) {
+            return (
+              element[this.state.chevronFilter[i].type].toString() ===
+              this.state.chevronFilter[i].value
+            );
+          } else {
+            return (
+              element.informations[this.state.chevronFilter[i].type] ===
+              this.state.chevronFilter[i].value
+            );
+          }
+        });
+      }
     }
     /* Test du Loading */
 
@@ -118,12 +186,17 @@ class TalentListPage extends React.Component {
                 this.setState({ searchInput: event });
               }}
             />
-            <TitleLine />
+            <TitleLine
+              talentList={talentListCopieFilter}
+              titleArray={this.state.titleArray}
+              chevronClick={this.chevronClick}
+              chevronClickedPosition={this.state.chevronClikedPosition}
+              filterCheckBox={this.filterCheckBox}
+              chevronFilter={this.state.chevronFilter}
+            />
             <TalentList
               talentList={talentListCopieFilter}
-              deleteCheckBox={id => {
-                this.deleteCheckBox(id);
-              }}
+              deleteCheckBox={this.deleteCheckBox}
             />
           </div>
         </div>
