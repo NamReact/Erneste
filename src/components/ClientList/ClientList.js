@@ -98,6 +98,7 @@ class ClientList extends React.Component {
           {/* Clientlist array Entries--start */}
           <div className="clientArrayEntries">
             <ul>
+              {/* <li>XXX</li> */}
               <li>
                 Note <span>▿</span>
               </li>
@@ -125,7 +126,10 @@ class ClientList extends React.Component {
               {result.map((client, id) => {
                 return (
                   <ul key={client._id} className="clientListItem">
-                    <li>{client.rating ? client.numberOfUser : "0"}</li>
+                    {/* <li className="deleteBox">XXX</li> */}
+                    <li className="columnNote">
+                      {client.rating ? client.numberOfUser : "0"}
+                    </li>
                     <li>
                       <a href="#">{client.name}</a>
                     </li>
