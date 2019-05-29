@@ -4,7 +4,7 @@ import ReactFileReader from "react-file-reader";
 import TagList from "./TagList";
 import { Link, Redirect } from "react-router-dom";
 
-import "./newTalent.css";
+import "./CreateNewTalent.css";
 
 /* Page to create a talent */
 
@@ -91,259 +91,239 @@ class CreateNewTalent extends React.Component {
         {this.state.redirect && (
           <Redirect to={"/admin/talent/" + this.state.idTalentCreated} />
         )}
-        <div className="leftContainer">
-          <ReactFileReader
-            fileTypes={[".png", ".jpg"]}
-            base64={true}
-            multipleFiles={false}
-            handleFiles={this.handleFiles}
-          >
-            {informations.photo !== null ? (
-              <span>
-                <img
-                  src={informations.photo}
-                  alt="portrait of talent"
-                  className="talentPicture"
-                />
-              </span>
-            ) : (
-              <div
-                style={{
-                  height: "100px",
-                  width: "75px",
-                  backgroundColor: "grey"
+        <div className="body-container">
+          <div className="leftContainer">
+            <ReactFileReader
+              fileTypes={[".png", ".jpg"]}
+              base64={true}
+              multipleFiles={false}
+              handleFiles={this.handleFiles}
+            >
+              {informations.photo !== null ? (
+                <span>
+                  <img
+                    src={informations.photo}
+                    alt="portrait of talent"
+                    className="talentPicture"
+                  />
+                </span>
+              ) : (
+                <div className="empty-photo" />
+              )}
+            </ReactFileReader>
+
+            <form className="talentDetails">
+              <input
+                id="First Name"
+                name="First Name"
+                value={informations.firstName}
+                placeholder="Prénom"
+                onChange={e => {
+                  console.log("hello");
+                  informations.firstName = { ...informations.firstName };
+                  informations.firstName = e.target.value;
+                  this.setState({
+                    informations: informations
+                  });
                 }}
               />
-            )}
-          </ReactFileReader>
+              <input
+                id="Last Name"
+                name="Last Name"
+                value={informations.lastName}
+                placeholder="Nom"
+                onChange={e => {
+                  console.log(e.target.value);
+                  informations.lastName = { ...informations.lastName };
+                  informations.lastName = e.target.value;
+                  this.setState({
+                    informations: informations
+                  });
+                }}
+              />
+              <input
+                id="LinkedIn Profil"
+                name="LinkedIn Profil"
+                value={informations.linkedIn}
+                placeholder="LinkedIn"
+                onChange={e => {
+                  const informations = { ...this.state.informations };
+                  informations.linkedIn = { ...informations.linkedIn };
+                  informations.linkedIn = e.target.value;
+                  this.setState({
+                    informations: informations
+                  });
+                }}
+              />
 
-          <form className="talentDetails">
-            <input
-              id="First Name"
-              name="First Name"
-              value={informations.firstName}
-              onChange={e => {
-                console.log("hello");
-                informations.firstName = { ...informations.firstName };
-                informations.firstName = e.target.value;
-                this.setState({
-                  informations: informations
-                });
-              }}
-            />
-            <input
-              id="Last Name"
-              name="Last Name"
-              value={informations.lastName}
-              onChange={e => {
-                console.log(e.target.value);
-                informations.lastName = { ...informations.lastName };
-                informations.lastName = e.target.value;
-                this.setState({
-                  informations: informations
-                });
-              }}
-            />
-            <input
-              id="LinkedIn Profil"
-              name="LinkedIn Profil"
-              value={informations.linkedIn}
-              onChange={e => {
-                const informations = { ...this.state.informations };
-                informations.linkedIn = { ...informations.linkedIn };
-                informations.linkedIn = e.target.value;
-                this.setState({
-                  informations: informations
-                });
-              }}
-            />
+              <input
+                id="email"
+                name="email"
+                value={informations.email}
+                placeholder="email"
+                onChange={e => {
+                  const informations = { ...this.state.informations };
+                  informations.email = { ...informations.email };
+                  informations.email = e.target.value;
+                  this.setState({
+                    informations: informations
+                  });
+                }}
+              />
 
-            <input
-              id="email"
-              name="email"
-              value={informations.email}
-              onChange={e => {
-                const informations = { ...this.state.informations };
-                informations.email = { ...informations.email };
-                informations.email = e.target.value;
-                this.setState({
-                  informations: informations
-                });
-              }}
-            />
+              <input
+                id="phone number"
+                name="phone number"
+                value={informations.phoneNumber}
+                placeholder="numéro téléphone"
+                onChange={e => {
+                  const informations = { ...this.state.informations };
+                  informations.phoneNumber = { ...informations.phoneNumber };
+                  informations.phoneNumber = e.target.value;
+                  this.setState({
+                    informations: informations
+                  });
+                }}
+              />
 
-            <input
-              id="phone number"
-              name="phone number"
-              value={informations.phoneNumber}
-              onChange={e => {
-                const informations = { ...this.state.informations };
-                informations.phoneNumber = { ...informations.phoneNumber };
-                informations.phoneNumber = e.target.value;
-                this.setState({
-                  informations: informations
-                });
-              }}
-            />
+              <input
+                id="Wage"
+                name="Wage"
+                value={informations.salary}
+                placeholder="salaire"
+                onChange={e => {
+                  const informations = { ...this.state.informations };
+                  informations.salary = { ...informations.salary };
+                  informations.salary = e.target.value;
+                  this.setState({
+                    informations: informations
+                  });
+                }}
+              />
 
-            <input
-              id="Wage"
-              name="Wage"
-              value={informations.salary}
-              onChange={e => {
-                const informations = { ...this.state.informations };
-                informations.salary = { ...informations.salary };
-                informations.salary = e.target.value;
-                this.setState({
-                  informations: informations
-                });
-              }}
-            />
+              <input
+                id="Current company"
+                name="Current company"
+                value={informations.actualCompany}
+                placeholder="Entreprise actuelle"
+                onChange={e => {
+                  const informations = { ...this.state.informations };
+                  informations.actualCompany = {
+                    ...informations.actualCompany
+                  };
+                  informations.actualCompany = e.target.value;
+                  this.setState({
+                    informations: informations
+                  });
+                }}
+              />
 
-            <input
-              id="Current company"
-              name="Current company"
-              value={informations.actualCompany}
-              onChange={e => {
-                const informations = { ...this.state.informations };
-                informations.actualCompany = { ...informations.actualCompany };
-                informations.actualCompany = e.target.value;
-                this.setState({
-                  informations: informations
-                });
-              }}
-            />
+              <input
+                id="Desired sector"
+                name="Desired sector"
+                value={informations.wantedSector}
+                placeholder="secteur souhaité"
+                onChange={e => {
+                  const informations = { ...this.state.informations };
+                  informations.wantedSector = { ...informations.wantedSector };
+                  informations.wantedSector = e.target.value;
+                  this.setState({
+                    informations: informations
+                  });
+                }}
+              />
 
-            <input
-              id="Desired sector"
-              name="Desired sector"
-              value={informations.wantedSector}
-              onChange={e => {
-                const informations = { ...this.state.informations };
-                informations.wantedSector = { ...informations.wantedSector };
-                informations.wantedSector = e.target.value;
-                this.setState({
-                  informations: informations
-                });
-              }}
-            />
+              <input
+                id="Current position"
+                name="Current position"
+                value={informations.actualTitle}
+                placeholder="Posiiton actuelle"
+                onChange={e => {
+                  const informations = { ...this.state.informations };
+                  informations.actualTitle = { ...informations.actualTitle };
+                  informations.actualTitle = e.target.value;
+                  this.setState({
+                    informations: informations
+                  });
+                }}
+              />
 
-            <input
-              id="Current position"
-              name="Current position"
-              value={informations.actualTitle}
-              onChange={e => {
-                const informations = { ...this.state.informations };
-                informations.actualTitle = { ...informations.actualTitle };
-                informations.actualTitle = e.target.value;
-                this.setState({
-                  informations: informations
-                });
-              }}
-            />
+              <input
+                id="Desired Position"
+                name="Desired Position"
+                value={informations.wantedTitle}
+                placeholder="Position souhaitée"
+                onChange={e => {
+                  const informations = { ...this.state.informations };
+                  informations.wantedTitle = { ...informations.wantedTitle };
+                  informations.wantedTitle = e.target.value;
+                  this.setState({
+                    informations: informations
+                  });
+                }}
+              />
+            </form>
+            <div className="availability">
+              <div
+                onClick={() => {
+                  informations.status = { ...informations.status };
+                  informations.status = "1";
+                  this.setState({ informations });
+                }}
+                style={{
+                  backgroundColor: informations.status === "1" ? "red" : "white"
+                }}
+              />
+              <div
+                onClick={() => {
+                  informations.status = { ...informations.status };
+                  informations.status = "2";
+                  this.setState({ informations });
+                }}
+                style={{
+                  backgroundColor:
+                    informations.status === "2" ? "blue" : "white"
+                }}
+              />
+              <div
+                onClick={() => {
+                  informations.status = { ...informations.status };
+                  informations.status = "3";
+                  this.setState({ informations });
+                }}
+                style={{
+                  backgroundColor:
+                    informations.status === "3" ? "black" : "white"
+                }}
+              />
+              <div
+                onClick={() => {
+                  informations.status = { ...informations.status };
+                  informations.status = "4";
+                  this.setState({ informations });
+                }}
+                style={{
+                  backgroundColor:
+                    informations.status === "4" ? "green" : "white"
+                }}
+              />
+            </div>
 
-            <input
-              id="Desired Position"
-              name="Desired Position"
-              value={informations.wantedTitle}
-              onChange={e => {
-                const informations = { ...this.state.informations };
-                informations.wantedTitle = { ...informations.wantedTitle };
-                informations.wantedTitle = e.target.value;
-                this.setState({
-                  informations: informations
-                });
-              }}
-            />
-          </form>
-          <div className="availability">
-            <div
-              onClick={() => {
-                informations.status = { ...informations.status };
-                informations.status = "1";
-                this.setState({ informations });
-              }}
-              style={{
-                backgroundColor: informations.status === "1" ? "red" : "white"
-              }}
-            />
-            <div
-              onClick={() => {
-                informations.status = { ...informations.status };
-                informations.status = "2";
-                this.setState({ informations });
-              }}
-              style={{
-                backgroundColor: informations.status === "2" ? "blue" : "white"
-              }}
-            />
-            <div
-              onClick={() => {
-                informations.status = { ...informations.status };
-                informations.status = "3";
-                this.setState({ informations });
-              }}
-              style={{
-                backgroundColor: informations.status === "3" ? "black" : "white"
-              }}
-            />
-            <div
-              onClick={() => {
-                informations.status = { ...informations.status };
-                informations.status = "4";
-                this.setState({ informations });
-              }}
-              style={{
-                backgroundColor: informations.status === "4" ? "green" : "white"
-              }}
-            />
+            <div>{lastUpdate}</div>
           </div>
 
-          <div>{lastUpdate}</div>
-        </div>
-
-        <div>
-          <form>
-            <textarea
-              id="ideal firm"
-              name="ideal firm"
-              value={description.idealCompany}
-              onChange={e => {
-                const description = { ...this.state.description };
-                description.idealCompany = { ...description.idealCompany };
-                description.idealCompany = e.target.value;
-                this.setState({
-                  description: description
-                });
-              }}
-            />
-
-            <textarea
-              id="ideal role"
-              name="ideal role"
-              value={description.idealRole}
-              onChange={e => {
-                const description = { ...this.state.description };
-                description.idealRole = { ...description.idealRole };
-                description.idealRole = e.target.value;
-                this.setState({
-                  description: description
-                });
-              }}
-            />
-
-            <div className="allWishes">
+          <div>
+            <form>
               <div className="wishes">
                 <textarea
-                  id="ideal environment"
-                  name="ideal environment"
-                  value={description.workingEnvironment}
+                  id="ideal firm"
+                  name="ideal firm"
+                  value={description.idealCompany}
+                  placeholder="Entrerpise idéale"
                   onChange={e => {
                     const description = { ...this.state.description };
-                    description.workingEnvironment = {
-                      ...description.workingEnvironment
-                    };
-                    description.workingEnvironment = e.target.value;
+                    description.idealCompany = { ...description.idealCompany };
+                    description.idealCompany = e.target.value;
                     this.setState({
                       description: description
                     });
@@ -351,39 +331,76 @@ class CreateNewTalent extends React.Component {
                 />
 
                 <textarea
-                  id="ambitions"
-                  name="ambitions"
-                  value={description.development}
+                  id="ideal role"
+                  name="ideal role"
+                  value={description.idealRole}
+                  placeholder="Rôle idéal"
                   onChange={e => {
                     const description = { ...this.state.description };
-                    description.development = { ...description.development };
-                    description.development = e.target.value;
+                    description.idealRole = { ...description.idealRole };
+                    description.idealRole = e.target.value;
                     this.setState({
                       description: description
                     });
                   }}
                 />
               </div>
+              <div className="allWishes">
+                <div className="wishes">
+                  <textarea
+                    id="ideal environment"
+                    name="ideal environment"
+                    value={description.workingEnvironment}
+                    placeholder="Conditions idéales"
+                    onChange={e => {
+                      const description = { ...this.state.description };
+                      description.workingEnvironment = {
+                        ...description.workingEnvironment
+                      };
+                      description.workingEnvironment = e.target.value;
+                      this.setState({
+                        description: description
+                      });
+                    }}
+                  />
 
-              <div className="skills">
-                <textarea name="hardskills" value={skillsArray} />
-                <div onClick={this.showTagList}>Show tag list</div>
+                  <textarea
+                    id="ambitions"
+                    name="ambitions"
+                    value={description.development}
+                    placeholder="Ambitions d'évolution"
+                    onChange={e => {
+                      const description = { ...this.state.description };
+                      description.development = { ...description.development };
+                      description.development = e.target.value;
+                      this.setState({
+                        description: description
+                      });
+                    }}
+                  />
+                </div>
+
+                <div className="skills">
+                  <textarea name="hardskills" value={skillsArray} />
+                  <div onClick={this.showTagList}>Show tag list</div>
+                </div>
+              </div>
+            </form>
+            <div className="buttons">
+              <Link to={"/admin/talent-list"}>
+                <div className="cancel">X</div>
+              </Link>
+              {/* lien à faire vers liste des talents */}
+
+              <div className="validate" onClick={this.createTalent}>
+                {/* lien à faire vers page talent validée */}
+                Yes
               </div>
             </div>
-          </form>
-        </div>
-        {this.state.tagList === true ? <TagList setTag={this.setTag} /> : null}
-
-        <div className="buttons">
-          <Link to={"/admin/talent-list"}>
-            <div className="cancel">X</div>
-          </Link>
-          {/* lien à faire vers liste des talents */}
-
-          <div className="validate" onClick={this.createTalent}>
-            {/* lien à faire vers page talent validée */}
-            Yes
           </div>
+          {this.state.tagList === true ? (
+            <TagList setTag={this.setTag} />
+          ) : null}
         </div>
       </div>
     );

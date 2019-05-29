@@ -1,11 +1,23 @@
 .content {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(250, 250, 252);
+}
+
+.body-container {
   display: flex;
+  max-width: 1024px;
   flex-direction: row;
+  margin: auto;
 }
 
 /* Left side of the page */
 .leftContainer {
-  width: 15%;
+  padding: 20px;
+  background-color: rgb(254, 254, 254);
+  margin: 5px 20px;
+  border-radius: 2px;
+  box-shadow: 0 6px 12px rgba(28, 28, 28, 0.2);
 }
 
 .talentDetails {
@@ -13,12 +25,27 @@
   flex-direction: column;
 }
 
+.empty-photo {
+  height: 180px;
+  width: 150px;
+  border: 1px dotted darkgray;
+  border-radius: 5px;
+  margin: 0 auto 20px auto;
+}
 .talentPicture {
   height: 100px;
   width: 75px;
   object-fit: cover;
 }
 
+.leftContainer input {
+  height: 30px;
+  width: 200px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  padding: 0 10px;
+  margin: 10px 0;
+}
 /* 4 dots */
 .availability {
   display: flex;
@@ -33,6 +60,7 @@
 }
 
 /* Right side of the page */
+
 .allWishes {
   display: flex;
   flex-direction: row;
@@ -59,4 +87,12 @@
   height: 20px;
   border: 1px solid black;
   margin-left: 10px;
+}
+
+textarea {
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  resize: none;
+  padding: 10px;
+  height: 50px;
 }
