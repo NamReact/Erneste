@@ -78,7 +78,7 @@ class Talent extends React.Component {
         return tag.name;
       })
       .join(" ");
-
+    console.log(informations.photo);
     return (
       <div className="content" onClick={this.onClick}>
         <div className="leftContainer">
@@ -88,7 +88,7 @@ class Talent extends React.Component {
             multipleFiles={false}
             handleFiles={this.handleFiles}
           >
-            {informations.photo !== null ? (
+            {informations.photo.length > 20 ? (
               <span>
                 <img
                   src={informations.photo}

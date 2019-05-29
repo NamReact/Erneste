@@ -106,7 +106,7 @@ class TalentforTalent extends React.Component {
               multipleFiles={false}
               handleFiles={this.handleFiles}
             >
-              {this.state.picture !== null ? (
+              {informations.photo.length > 20 ? (
                 <span>
                   <img
                     src={informations.photo}
