@@ -4,7 +4,7 @@ import "./Title.css";
 function Title(props) {
   return (
     <div>
-      <div>Talents</div>
+      <div className="specialTitle">Talents</div>
       <div>{`Affichés : ${props.talentList.length}`}</div>
     </div>
   );
