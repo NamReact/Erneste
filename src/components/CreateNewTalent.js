@@ -158,6 +158,12 @@ class CreateNewTalent extends React.Component {
     const skills = this.state.skills.map(tag => {
       return tag._id;
     });
+    /*     const sectors = this.state.informations.wantedSector.map(sector => {
+      return sector._id;
+    });
+    const titles = this.state.informations.wantedTitle.map(title => {
+      return title._id;
+    }); */
     const response = await axios.post(
       "https://ernest-server.herokuapp.com/talent/create",
       {
@@ -487,7 +493,7 @@ class CreateNewTalent extends React.Component {
 
                 <div className="skills">
                   <div>Skills</div>
-                  <textarea name="hardskills" value={skillsArray} />
+                  <textarea name="hardskills" value={skillsArray} required />
                   <div onClick={this.showTagList}>Show tag list</div>
                 </div>
               </div>
