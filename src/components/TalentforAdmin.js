@@ -52,6 +52,35 @@ class TalentforAdmin extends React.Component {
     }
   };
 
+  /* Function to set availability */
+  handleAvailability = async e => {
+    const informations = this.state.informations;
+    if (e.target.value === "1") {
+      informations.status = { ...informations.status };
+      informations.status = "1";
+      this.setState({ informations });
+    }
+    if (e.target.value === "2") {
+      informations.status = { ...informations.status };
+      informations.status = "2";
+      this.setState({ informations });
+    }
+    if (e.target.value === "3") {
+      informations.status = { ...informations.status };
+      informations.status = "3";
+      this.setState({ informations });
+    }
+    if (e.target.value === "4") {
+      informations.status = { ...informations.status };
+      informations.status = "4";
+      this.setState({ informations });
+    }
+    await axios.post("https://ernest-server.herokuapp.com/talent/update", {
+      id: this.state.id,
+      informations: this.state.informations
+    });
+  };
+
   setTag = tag => {
     console.log(tag);
     const tagArray = this.state.skills;
@@ -72,13 +101,27 @@ class TalentforAdmin extends React.Component {
     const description = this.state.description;
     const skills = this.state.skills;
     const lastUpdate = this.state.lastUpdate;
+    let dotColor = "";
 
     const skillsArray = skills
       .map(tag => {
         return tag.name;
       })
       .join(" ");
-    console.log(informations.photo);
+
+    if (this.state.informations.status === "1") {
+      dotColor = "#9EBA83";
+    }
+    if (this.state.informations.status === "2") {
+      dotColor = "#F2E9A7";
+    }
+    if (this.state.informations.status === "3") {
+      dotColor = "#FF9D9D";
+    }
+    if (this.state.informations.status === "4") {
+      dotColor = "#6A6A8F";
+    }
+
     return (
       <div className="content" onClick={this.onClick}>
         <div className="leftContainer">
@@ -134,6 +177,20 @@ class TalentforAdmin extends React.Component {
                 });
               }}
             />
+
+            <div className="availability">
+              <div style={{ backgroundColor: dotColor }} />
+              <select
+                value={this.state.informations.status}
+                onChange={this.handleAvailability}
+              >
+                <option value="1">Recherche active</option>
+                <option value="2">Ouvert(e) aux opportunités</option>
+                <option value="3">Ne souhaite pas être contacté(e)</option>
+                <option value="4">Embauché(e) par Erneste</option>
+              </select>
+            </div>
+
             <input
               id="LinkedIn Profil"
               name="LinkedIn Profil"
@@ -246,48 +303,7 @@ class TalentforAdmin extends React.Component {
               }}
             />
           </form>
-          <div className="availability">
-            <div
-              onClick={() => {
-                informations.status = { ...informations.status };
-                informations.status = "1";
-                this.setState({ informations });
-              }}
-              style={{
-                backgroundColor: informations.status === "1" ? "red" : "white"
-              }}
-            />
-            <div
-              onClick={() => {
-                informations.status = { ...informations.status };
-                informations.status = "2";
-                this.setState({ informations });
-              }}
-              style={{
-                backgroundColor: informations.status === "2" ? "blue" : "white"
-              }}
-            />
-            <div
-              onClick={() => {
-                informations.status = { ...informations.status };
-                informations.status = "3";
-                this.setState({ informations });
-              }}
-              style={{
-                backgroundColor: informations.status === "3" ? "black" : "white"
-              }}
-            />
-            <div
-              onClick={() => {
-                informations.status = { ...informations.status };
-                informations.status = "4";
-                this.setState({ informations });
-              }}
-              style={{
-                backgroundColor: informations.status === "4" ? "green" : "white"
-              }}
-            />
-          </div>
+
           <div>
             <div>Client 1</div> {/* link to clients attibuted to talent */}
             <div>Client 2</div>
