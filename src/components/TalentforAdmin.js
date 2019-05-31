@@ -90,7 +90,6 @@ class TalentforAdmin extends React.Component {
   };
 
   setTag = tag => {
-    console.log(tag);
     const tagArray = this.state.skills;
     tagArray.push(tag);
     this.setState({ skills: tagArray });
@@ -403,11 +402,10 @@ class TalentforAdmin extends React.Component {
         this.props.match.params.id,
       { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
     );
-    console.log(response.data);
+
     this.setState({
       isLoading: false,
       id: this.props.match.params.id,
-      /* permission: response.data.permission, */
       informations: response.data.informations,
       description: response.data.description,
       skills: response.data.skills,
