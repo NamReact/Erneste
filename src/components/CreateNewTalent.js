@@ -44,7 +44,8 @@ class CreateNewTalent extends React.Component {
   /* Function to populate arrayOfSectors and arrayOfTitles */
   getWantedSectors = async () => {
     const response = await axios.get(
-      "https://ernest-server.herokuapp.com/sector"
+      "https://ernest-server.herokuapp.com/sector",
+      { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
     );
 
     this.setState({
@@ -55,7 +56,8 @@ class CreateNewTalent extends React.Component {
 
   getWantedTitles = async () => {
     const response = await axios.get(
-      "https://ernest-server.herokuapp.com/title"
+      "https://ernest-server.herokuapp.com/title",
+      { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
     );
 
     this.setState({
@@ -93,7 +95,7 @@ class CreateNewTalent extends React.Component {
     informationsCopy.wantedSector = [...this.state.informations.wantedSector];
     for (let i = 0; i < this.state.arrayOfSectors.length; i++) {
       if (e.target.value === this.state.arrayOfSectors[i].name) {
-        informationsCopy.wantedSector.push(this.state.arrayOfSectors[i]);
+        informationsCopy.wantedSector.push(this.state.arrayOfSectors[i]._id);
       }
     }
     this.setState({ informations: informationsCopy });
@@ -106,7 +108,7 @@ class CreateNewTalent extends React.Component {
     informationsCopy.wantedTitle = [...this.state.informations.wantedTitle];
     for (let i = 0; i < this.state.arrayOfTitles.length; i++) {
       if (e.target.value === this.state.arrayOfTitles[i].name) {
-        informationsCopy.wantedTitle.push(this.state.arrayOfTitles[i]);
+        informationsCopy.wantedTitle.push(this.state.arrayOfTitles[i]._id);
       }
     }
     this.setState({ informations: informationsCopy });
@@ -158,19 +160,15 @@ class CreateNewTalent extends React.Component {
     const skills = this.state.skills.map(tag => {
       return tag._id;
     });
-    /*     const sectors = this.state.informations.wantedSector.map(sector => {
-      return sector._id;
-    });
-    const titles = this.state.informations.wantedTitle.map(title => {
-      return title._id;
-    }); */
+
     const response = await axios.post(
       "https://ernest-server.herokuapp.com/talent/create",
       {
         informations: this.state.informations,
         description: this.state.description,
         skills: skills
-      }
+      },
+      { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
     );
     this.setState({ idTalentCreated: response.data._id, redirect: true });
   };
@@ -192,17 +190,49 @@ class CreateNewTalent extends React.Component {
       })
       .join(" ");
 
-    const displayOfWantedSectors = this.state.informations.wantedSector.map(
-      (item, index) => {
-        return <div>{item.name}</div>;
-      }
-    );
+    /* display the sectors wanted by talent */
 
-    const displayOfWantedTitles = this.state.informations.wantedTitle.map(
-      (item, index) => {
-        return <div>{item.name}</div>;
+    const idOfWantedSectors = this.state.informations.wantedSector;
+    const sectors = this.state.arrayOfSectors;
+    const sectorsSelectedToDisplay = [];
+
+    const sectorsToDisplay = () => {
+      for (let i = 0; i < idOfWantedSectors.length; i++) {
+        for (let j = 0; j < sectors.length; j++) {
+          if (idOfWantedSectors[i] === sectors[j]._id) {
+            sectorsSelectedToDisplay.push(sectors.name);
+          }
+        }
       }
-    );
+      return sectorsSelectedToDisplay;
+    };
+
+    const displayOfWantedSectors = sectorsToDisplay().map((item, index) => {
+      return <div>{item.name}</div>;
+    });
+
+    /* display the titles wanted by talent */
+
+    const idOfWantedTitles = this.state.informations.wantedTitle;
+    const titles = this.state.arrayOfTitles;
+    const titlesSelectedToDisplay = [];
+
+    const titlesToDisplay = () => {
+      for (let i = 0; i < idOfWantedTitles.length; i++) {
+        for (let j = 0; j < titles.length; j++) {
+          if (idOfWantedTitles[i] === titles[j]._id) {
+            titlesSelectedToDisplay.push(titles.name);
+          }
+        }
+      }
+      return titlesSelectedToDisplay;
+    };
+
+    const displayOfWantedTitles = titlesToDisplay().map((item, index) => {
+      return <div>{item.name}</div>;
+    });
+
+    /* Conditions for the color of the dot */
 
     if (this.state.informations.status === "1") {
       dotColor = "#9EBA83";
@@ -517,8 +547,27 @@ class CreateNewTalent extends React.Component {
   }
 
   async componentDidMount() {
-    this.getWantedSectors();
-    this.getWantedTitles();
+    const response = await axios.get(
+      "https://ernest-server.herokuapp.com/sector",
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+    );
+
+    const response2 = await axios.get(
+      "https://ernest-server.herokuapp.com/title",
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+    );
+
+    this.setState({
+      arrayOfTitles: response.data,
+      arrayOfSectors: response2.data,
+      loadingTitle: false
+    });
+    /*   this.setState({
+      arrayOfSectors: response.data,
+      loadingSector: false
+    }); */
+    /*   this.getWantedSectors();
+    this.getWantedTitles(); */
   }
 }
 

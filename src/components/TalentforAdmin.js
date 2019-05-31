@@ -40,12 +40,16 @@ class TalentforAdmin extends React.Component {
       const skills = this.state.skills.map(tag => {
         return tag._id;
       });
-      await axios.post("https://ernest-server.herokuapp.com/talent/update", {
-        id: this.state.id,
-        informations: this.state.informations,
-        description: this.state.description,
-        skills: skills
-      });
+      await axios.post(
+        "https://ernest-server.herokuapp.com/talent/update",
+        {
+          id: this.state.id,
+          informations: this.state.informations,
+          description: this.state.description,
+          skills: skills
+        },
+        { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
+      );
       console.log("posted");
     } else {
       console.log("same");
@@ -75,10 +79,14 @@ class TalentforAdmin extends React.Component {
       informations.status = "4";
       this.setState({ informations });
     }
-    await axios.post("https://ernest-server.herokuapp.com/talent/update", {
-      id: this.state.id,
-      informations: this.state.informations
-    });
+    await axios.post(
+      "https://ernest-server.herokuapp.com/talent/update",
+      {
+        id: this.state.id,
+        informations: this.state.informations
+      },
+      { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
+    );
   };
 
   setTag = tag => {
@@ -391,7 +399,9 @@ class TalentforAdmin extends React.Component {
 
   async componentDidMount() {
     const response = await axios.get(
-      "https://ernest-server.herokuapp.com/talent/" + this.props.match.params.id
+      "https://ernest-server.herokuapp.com/talent/" +
+        this.props.match.params.id,
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
     );
     console.log(response.data);
     this.setState({
