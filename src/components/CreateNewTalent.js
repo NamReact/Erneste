@@ -371,8 +371,8 @@ class CreateNewTalent extends React.Component {
                 value={this.state.informations.wantedSize}
                 onChange={this.handleSize}
               >
-                <option value="Petite entreprise">Petite</option>
-                <option value="Grosse entreprise">Grosse</option>
+                <option value="Petite">Petite entreprise</option>
+                <option value="Grosse">Grosse entreprise</option>
               </select>
 
               <div>Fonction actuelle</div>

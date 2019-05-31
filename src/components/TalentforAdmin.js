@@ -60,29 +60,82 @@ class TalentforAdmin extends React.Component {
           return item._id;
         }
       );
-      let wantedSectorCopy = [...this.state.informations.wantedSector];
-      wantedSectorCopy = [...wantedSectorstoPost];
-      this.state.informations.wantedSector = [...wantedSectorCopy];
+      console.log("test", wantedSectorstoPost);
+      const informationsbis = { ...this.state.informations };
+      /*    let wantedSectorCopy = [...this.state.informations.wantedSector]; */
+      /*  wantedSectorCopy = [...wantedSectorstoPost]; */
+      informationsbis.wantedSector = [...wantedSectorstoPost];
+      for (let i = 0; i < wantedSectorstoPost.length; i++) {
+        informationsbis.wantedSector[i] = wantedSectorstoPost[i];
+      }
+
+      /*    this.state.informations.wantedSector = [...wantedSectorCopy]; */
 
       const wantedTitlestoPost = this.state.informations.wantedTitle.map(
         item => {
           return item._id;
         }
       );
-      let wantedTitleCopy = [...this.state.informations.wantedTitle];
+      informationsbis.wantedTitle = [...wantedTitlestoPost];
+      /*      let wantedTitleCopy = [...this.state.informations.wantedTitle];
       wantedTitleCopy = [...wantedTitlestoPost];
-      this.state.informations.wantedTitle = [...wantedTitleCopy];
-
+      this.state.informations.wantedTitle = [...wantedTitleCopy]; */
+      console.log(this.state.id);
+      console.log(informationsbis);
+      console.log(this.state.description);
+      console.log("hello", skills);
       await axios.post(
         "https://ernest-server.herokuapp.com/talent/update",
         {
           id: this.state.id,
-          informations: this.state.informations,
-          description: this.state.description,
+          /*   informations: informationsbis */
+          /*   description: this.state.description */
           skills: skills
         },
         { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
       );
+    }
+  };
+
+  /* Function to handle wantedSector change*/
+
+  handlewantedSector = e => {
+    const informationsCopy = this.state.informations;
+    informationsCopy.wantedSector = [...this.state.informations.wantedSector];
+    for (let i = 0; i < this.state.arrayOfSectors.length; i++) {
+      if (e.target.value === this.state.arrayOfSectors[i].name) {
+        informationsCopy.wantedSector.push(this.state.arrayOfSectors[i]);
+      }
+    }
+    this.setState({ informations: informationsCopy });
+  };
+
+  /* Function to handle wantedTitle change*/
+
+  handlewantedTitle = e => {
+    const informationsCopy = this.state.informations;
+    informationsCopy.wantedTitle = [...this.state.informations.wantedTitle];
+    for (let i = 0; i < this.state.arrayOfTitles.length; i++) {
+      if (e.target.value === this.state.arrayOfTitles[i].name) {
+        informationsCopy.wantedTitle.push(this.state.arrayOfTitles[i]);
+      }
+    }
+    this.setState({ informations: informationsCopy });
+  };
+
+  /* Function to handle company size */
+
+  handleSize = e => {
+    const informations = this.state.informations;
+    if (e.target.value === "Petite") {
+      informations.wantedSize = { ...informations.wantedSize };
+      informations.wantedSize = "Petite";
+      this.setState({ informations });
+    }
+    if (e.target.value === "Grosse") {
+      informations.wantedSize = { ...informations.wantedSize };
+      informations.wantedSize = "Grosse";
+      this.setState({ informations });
     }
   };
 
@@ -349,8 +402,8 @@ class TalentforAdmin extends React.Component {
               value={this.state.informations.wantedSize}
               onChange={this.handleSize}
             >
-              <option value="Petite ebntreprise">Petite</option>
-              <option value="Grosse entreprise">Grosse</option>
+              <option value="Petite">Petite entreprise</option>
+              <option value="Grosse">Grosse entreprise</option>
             </select>
 
             <input
@@ -504,20 +557,32 @@ class TalentforAdmin extends React.Component {
   }
 
   async componentDidMount() {
-    const response = await axios.get(
+    const response1 = await axios.get(
       "https://ernest-server.herokuapp.com/talent/" +
         this.props.match.params.id,
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+    );
+
+    const response2 = await axios.get(
+      "https://ernest-server.herokuapp.com/sector",
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+    );
+
+    const response3 = await axios.get(
+      "https://ernest-server.herokuapp.com/title",
       { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
     );
 
     this.setState({
       isLoading: false,
       id: this.props.match.params.id,
-      informations: response.data.informations,
-      description: response.data.description,
-      skills: response.data.skills,
-      validated: response.data.validated,
-      lastUpdate: response.data.lastUpdate
+      informations: response1.data.informations,
+      description: response1.data.description,
+      skills: response1.data.skills,
+      validated: response1.data.validated,
+      lastUpdate: response1.data.lastUpdate,
+      arrayOfSectors: response2.data,
+      arrayOfTitles: response3.data
     });
   }
 }
