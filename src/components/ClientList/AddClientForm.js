@@ -6,11 +6,15 @@ import "./AddClientForm.css";
 class AddClientForm extends React.Component {
   state = {
     entreprise: "",
-    secteur: "",
+    secteur: null,
     taille: "",
     email: "",
+    sectorList: [],
+    addNewSector: "",
+    addNewSectorDiv: false,
     error: false,
-    valide: false
+    valide: false,
+    isLoading: false
   };
   // fonction pour changer les states des inputs
   handleChange = event => {
@@ -22,6 +26,7 @@ class AddClientForm extends React.Component {
   };
 
   // fonction pour valider le formulaire en envoyant les params en requette post
+  // et un message d'erreur ou validé à la soumission du formulaire
   handleSubmit = async event => {
     event.preventDefault();
     if (
@@ -44,7 +49,16 @@ class AddClientForm extends React.Component {
       return this.setState({ valid: true });
     }
   };
+  ShowNewSector = x => {
+    this.setState({
+      addNewSectorDiv: !this.state.addNewSectorDiv
+    });
+  };
+
   render() {
+    if (this.state.isLoading === true) {
+      return "Loading....";
+    }
     return (
       <div>
         <div className="addClientFormContainer">
@@ -69,26 +83,67 @@ class AddClientForm extends React.Component {
                 />
               </div>
               <div>
+                {/* liste des secteurs : en attente du selector */}
                 <label for="Secteur"> Secteur</label>
-                <input
+                {/* <input
                   value={this.state.secteur}
                   onChange={this.handleChange}
                   type="text"
                   name="secteur"
                   id="name"
                   required
-                />
+                /> */}
+                <select
+                  value={this.state.secteur}
+                  onChange={this.handleChange}
+                  type="text"
+                  name="secteur"
+                  id="secteur"
+                  required
+                >
+                  {this.state.sectorList.map((sector, id) => {
+                    return (
+                      <option key={sector.id} value={sector.name}>
+                        {sector.name}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
               <div>
-                <label for="Taille"> Taille</label>
-                <input
+                <div className="addnewtalent" onClick={this.ShowNewSector}>
+                  <p>+</p> <p>nouveau secteur</p>
+                </div>
+                {this.state.addNewSectorDiv === true ? (
+                  <div>
+                    <label for="newsector">Ajout d'un nouveau secteur </label>
+                    <input
+                      value={this.state.addNewSector}
+                      onChange={this.handleChange}
+                      type="email"
+                      name="email"
+                      id="email"
+                      required
+                    />
+                  </div>
+                ) : (
+                  this.state.addNewSectorDiv
+                )}
+              </div>
+              <div>
+                <label for="Secteur"> Taille</label>
+                <select
                   value={this.state.taille}
                   onChange={this.handleChange}
                   type="text"
                   name="taille"
-                  id="name"
+                  id="taille"
                   required
-                />
+                >
+                  <option value="">--choisir la taille--</option>
+                  <option value="Grande">Grande</option>
+                  <option value="Petite">Petite</option>
+                </select>
               </div>
               <div>
                 <label for="email">Email du référent </label>
@@ -101,7 +156,7 @@ class AddClientForm extends React.Component {
                   required
                 />
               </div>
-              <div classeName="submitButtons">
+              <div className="submitButtons">
                 <button onClick={this.props.closePopup}>Annuler</button>
                 <button type="submit">ajouter</button>
               </div>
@@ -115,6 +170,16 @@ class AddClientForm extends React.Component {
         </div>
       </div>
     );
+  }
+  async componentDidMount() {
+    this.setState({ isLoading: true });
+    const response = await axios.get(
+      "https://ernest-server.herokuapp.com/sector/"
+    );
+    this.setState({
+      isLoading: false,
+      sectorList: response.data
+    });
   }
 }
 

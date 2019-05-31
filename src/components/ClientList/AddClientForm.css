@@ -1,6 +1,6 @@
 .addClientFormContainer {
-  max-width: 500px;
-  max-height: 400px;
+  max-width: 600px;
+  max-height: 500px;
   border: red;
   border-style: dotted;
   border-radius: 10px;
@@ -21,14 +21,12 @@
 .formHeader {
   display: flex;
   width: 300px;
-  flex-direction: row;
 }
 
 .closingButton {
   font-size: 15px;
   background: none;
   border: none;
-  display: flex;
 }
 
 .addClientFormContainer h1 {
@@ -55,7 +53,14 @@
 }
 .submitButtons {
   display: flex;
-  flex-direction: column;
-  width: 100%;
+  flex-direction: row;
+  /* width: 100%; */
   padding: 10;
+}
+.addnewtalent {
+  display: flex;
+  margin: 5px;
+}
+.formContainer select {
+  width: 370px;
 }

@@ -9,6 +9,7 @@ import "./ClientList.css";
 class ClientList extends React.Component {
   state = {
     clientListData: null,
+    sectorList: null,
     clientList: null,
     searchFilter: "",
     PopUpAddClient: false,
@@ -18,6 +19,7 @@ class ClientList extends React.Component {
     const value = event.target.value;
     this.setState({ searchFilter: value });
   };
+
   togglePopup = () => {
     this.setState({
       PopUpAddClient: !this.state.PopUpAddClient
@@ -28,6 +30,9 @@ class ClientList extends React.Component {
     if (this.state.isLoading === true) {
       return <p>En cours de chargement ...</p>;
     }
+
+    // ----------filtre-----------------
+
     {
       /* copie des données pour filtre */
     }
@@ -35,6 +40,7 @@ class ClientList extends React.Component {
     {
       /*  filtre "size" , "name" et "field" */
     }
+    console.log(clientListArray);
     const result = clientListArray.filter(search => {
       return (
         search.size
@@ -48,6 +54,22 @@ class ClientList extends React.Component {
           .indexOf(this.state.searchFilter.toLowerCase()) !== -1
       );
     });
+    // ----------classement-----------------
+    let liste1 = [...this.state.clientListData];
+    const compare = (a, b) => {
+      // Use toUpperCase() to ignore character casing
+      const numberOfUserA = a.numberOfUser;
+      const numberOfUserB = b.numberOfUser;
+
+      let comparison = 0;
+      if (numberOfUserA < numberOfUserB) {
+        comparison = 1;
+      } else if (numberOfUserA > numberOfUserB) {
+        comparison = -1;
+      }
+      return comparison;
+    };
+    console.log(liste1.sort(compare));
 
     return (
       <div>
@@ -81,7 +103,7 @@ class ClientList extends React.Component {
             ajouter un client
           </button>
           {/* 2-1 page ajout client */}
-          <div classeName="addClientPage">
+          <div className="addClientPage">
             {this.state.PopUpAddClient ? (
               <AddClientForm
                 className="popUpWindow"
@@ -98,7 +120,6 @@ class ClientList extends React.Component {
           {/* Clientlist array Entries--start */}
           <div className="clientArrayEntries">
             <ul>
-              {/* <li>XXX</li> */}
               <li>
                 <button className="deleteAll" />
               </li>
@@ -114,7 +135,7 @@ class ClientList extends React.Component {
               <li>
                 Taille <span>▿</span>
               </li>
-              <li>
+              <li onClick={this.ShowNewSector}>
                 Comptes <span>▿</span>
               </li>
               <li>
@@ -129,7 +150,6 @@ class ClientList extends React.Component {
               {result.map((client, id) => {
                 return (
                   <ul key={client._id} className="clientListItem">
-
                     <li>
                       <button className="deleteAll" />
                     </li>
@@ -139,6 +159,7 @@ class ClientList extends React.Component {
                       <a href="#">{client.name}</a>
                     </li>
                     <li>{client.field}</li>
+
                     <li>{client.size}</li>
                     <li>{client.numberOfUser ? client.numberOfUser : "0"}</li>
                     <li>{client.recruited ? client.recruited : "0"}</li>
@@ -156,14 +177,20 @@ class ClientList extends React.Component {
     );
   }
   async componentDidMount() {
+    await axios;
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/client"
     );
-    console.log(response.data);
+    const response2 = await axios.get(
+      "https://ernest-server.herokuapp.com/sector"
+    );
+
     this.setState({
       clientListData: response.data,
+      sectorList: response2.data,
       isLoading: false
     });
+    console.log(response2.data);
   }
 }
 
