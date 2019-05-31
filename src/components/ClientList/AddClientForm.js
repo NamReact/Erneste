@@ -6,7 +6,7 @@ import "./AddClientForm.css";
 class AddClientForm extends React.Component {
   state = {
     entreprise: "",
-    secteur: null,
+    secteur: [],
     taille: "",
     email: "",
     sectorList: [],
@@ -25,6 +25,14 @@ class AddClientForm extends React.Component {
     this.setState(statesToUpdate);
   };
 
+  setSector = event => {
+    const id = event.target.value;
+    console.log(id);
+    const sectorArray = this.state.secteur;
+    sectorArray.push(id);
+    this.setState({ secteur: sectorArray });
+  };
+
   // fonction pour valider le formulaire en envoyant les params en requette post
   // et un message d'erreur ou validé à la soumission du formulaire
   handleSubmit = async event => {
@@ -38,11 +46,17 @@ class AddClientForm extends React.Component {
     } else {
       const response = await axios.post(
         "https://ernest-server.herokuapp.com/client/create",
+
         {
           name: this.state.entreprise,
           field: this.state.secteur,
           size: this.state.taille,
           email: this.state.mail
+        },
+        {
+          headers: {
+            authorization: "Bearer GFhOYeUPB2CA6TKZ"
+          }
         }
       );
       this.props.closePopup();
@@ -95,7 +109,7 @@ class AddClientForm extends React.Component {
                 /> */}
                 <select
                   value={this.state.secteur}
-                  onChange={this.handleChange}
+                  onChange={this.setSector}
                   type="text"
                   name="secteur"
                   id="secteur"
@@ -103,7 +117,11 @@ class AddClientForm extends React.Component {
                 >
                   {this.state.sectorList.map((sector, id) => {
                     return (
-                      <option key={sector.id} value={sector.name}>
+                      <option
+                        id={sector._id}
+                        key={sector._id}
+                        value={sector._id}
+                      >
                         {sector.name}
                       </option>
                     );
@@ -174,7 +192,8 @@ class AddClientForm extends React.Component {
   async componentDidMount() {
     this.setState({ isLoading: true });
     const response = await axios.get(
-      "https://ernest-server.herokuapp.com/sector/"
+      "https://ernest-server.herokuapp.com/sector/",
+      { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
     );
     this.setState({
       isLoading: false,

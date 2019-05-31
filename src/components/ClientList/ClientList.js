@@ -5,14 +5,15 @@ import HeaderAdmin from "../HeaderAdmin";
 import AddClientForm from "./AddClientForm";
 
 import "./ClientList.css";
+import { cpus } from "os";
 
 class ClientList extends React.Component {
   state = {
     clientListData: null,
-    sectorList: null,
     clientList: null,
     searchFilter: "",
     PopUpAddClient: false,
+    FilterOnClick: null,
     isLoading: true
   };
   handleChange = event => {
@@ -40,7 +41,6 @@ class ClientList extends React.Component {
     {
       /*  filtre "size" , "name" et "field" */
     }
-    console.log(clientListArray);
     const result = clientListArray.filter(search => {
       return (
         search.size
@@ -49,27 +49,22 @@ class ClientList extends React.Component {
         search.name
           .toLowerCase()
           .indexOf(this.state.searchFilter.toLowerCase()) !== -1 ||
-        search.field
+        search.field[0].name
           .toLowerCase()
           .indexOf(this.state.searchFilter.toLowerCase()) !== -1
       );
     });
     // ----------classement-----------------
     let liste1 = [...this.state.clientListData];
-    const compare = (a, b) => {
-      // Use toUpperCase() to ignore character casing
-      const numberOfUserA = a.numberOfUser;
-      const numberOfUserB = b.numberOfUser;
-
-      let comparison = 0;
-      if (numberOfUserA < numberOfUserB) {
-        comparison = 1;
-      } else if (numberOfUserA > numberOfUserB) {
-        comparison = -1;
-      }
-      return comparison;
-    };
-    console.log(liste1.sort(compare));
+    let sorteUser = liste1.sort((a, b) => {
+      return b.numberOfUser - a.numberOfUser;
+    });
+    let sorteRating = liste1.sort((a, b) => {
+      return b.rating - a.rating;
+    });
+    let Sorterecruited = liste1.sort((a, b) => {
+      return b.recruited - a.recruited;
+    });
 
     return (
       <div>
@@ -148,6 +143,8 @@ class ClientList extends React.Component {
           <div className="clientListItemContainer">
             <div>
               {result.map((client, id) => {
+                const field = { ...client.field };
+                console.log(field);
                 return (
                   <ul key={client._id} className="clientListItem">
                     <li>
@@ -158,7 +155,7 @@ class ClientList extends React.Component {
                     <li>
                       <a href="#">{client.name}</a>
                     </li>
-                    <li>{client.field}</li>
+                    <li>{field[0].name}</li>
 
                     <li>{client.size}</li>
                     <li>{client.numberOfUser ? client.numberOfUser : "0"}</li>
@@ -179,18 +176,15 @@ class ClientList extends React.Component {
   async componentDidMount() {
     await axios;
     const response = await axios.get(
-      "https://ernest-server.herokuapp.com/client"
-    );
-    const response2 = await axios.get(
-      "https://ernest-server.herokuapp.com/sector"
+      "https://ernest-server.herokuapp.com/client",
+      { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
     );
 
     this.setState({
       clientListData: response.data,
-      sectorList: response2.data,
       isLoading: false
     });
-    console.log(response2.data);
+    console.log(response.data);
   }
 }
 
