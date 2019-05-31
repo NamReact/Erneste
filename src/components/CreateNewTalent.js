@@ -362,7 +362,7 @@ class CreateNewTalent extends React.Component {
                 onChange={this.handlewantedSector}
               >
                 {this.state.arrayOfSectors.map((sector, index) => {
-                  return <option>{sector.name}</option>;
+                  return <option key={index}>{sector.name}</option>;
                 })}
               </select>
 
@@ -371,8 +371,8 @@ class CreateNewTalent extends React.Component {
                 value={this.state.informations.wantedSize}
                 onChange={this.handleSize}
               >
-                <option value="Petite">Petite</option>
-                <option value="Grosse">Grosse</option>
+                <option value="Petite entreprise">Petite</option>
+                <option value="Grosse entreprise">Grosse</option>
               </select>
 
               <div>Fonction actuelle</div>
@@ -420,7 +420,7 @@ class CreateNewTalent extends React.Component {
                 onChange={this.handlewantedTitle}
               >
                 {this.state.arrayOfTitles.map((title, index) => {
-                  return <option>{title.name}</option>;
+                  return <option key={index}>{title.name}</option>;
                 })}
               </select>
             </form>

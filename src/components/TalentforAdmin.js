@@ -8,8 +8,22 @@ import TagList from "./TagList";
 class TalentforAdmin extends React.Component {
   state = {
     id: null,
-    permission: null,
-    informations: null,
+
+    informations: {
+      photo: null,
+      firstName: "",
+      lastName: "",
+      linkedIn: "",
+      email: "",
+      phoneNumber: "",
+      salary: "",
+      actualCompany: "",
+      wantedSector: [],
+      wantedSize: "",
+      actualTitle: "",
+      wantedTitle: [],
+      status: ""
+    },
     description: null,
     skills: [],
     validated: null,
@@ -40,6 +54,25 @@ class TalentforAdmin extends React.Component {
       const skills = this.state.skills.map(tag => {
         return tag._id;
       });
+
+      const wantedSectorstoPost = this.state.informations.wantedSector.map(
+        item => {
+          return item._id;
+        }
+      );
+      let wantedSectorCopy = [...this.state.informations.wantedSector];
+      wantedSectorCopy = [...wantedSectorstoPost];
+      this.state.informations.wantedSector = [...wantedSectorCopy];
+
+      const wantedTitlestoPost = this.state.informations.wantedTitle.map(
+        item => {
+          return item._id;
+        }
+      );
+      let wantedTitleCopy = [...this.state.informations.wantedTitle];
+      wantedTitleCopy = [...wantedTitlestoPost];
+      this.state.informations.wantedTitle = [...wantedTitleCopy];
+
       await axios.post(
         "https://ernest-server.herokuapp.com/talent/update",
         {
@@ -50,9 +83,6 @@ class TalentforAdmin extends React.Component {
         },
         { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
       );
-      console.log("posted");
-    } else {
-      console.log("same");
     }
   };
 
@@ -268,7 +298,7 @@ class TalentforAdmin extends React.Component {
               }}
             />
 
-            <input
+            {/*    <input
               id="Desired sector"
               name="Desired sector"
               value={informations.wantedSector}
@@ -280,7 +310,48 @@ class TalentforAdmin extends React.Component {
                   informations: informations
                 });
               }}
-            />
+            /> */}
+
+            <div>
+              {this.state.informations.wantedSector.map((item, index) => {
+                return (
+                  <div key={index}>
+                    {item.name}
+                    <div
+                      id={index}
+                      onClick={e => {
+                        const id = e.target.id;
+                        const informations = { ...this.state.informations };
+                        informations.wantedSector = [
+                          ...informations.wantedSector
+                        ];
+
+                        informations.wantedSector.splice(id, 1);
+                        this.setState({ informations });
+                      }}
+                    >
+                      X
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <select
+              value={this.state.arrayOfSectors[0].name}
+              onChange={this.handlewantedSector}
+            >
+              {this.state.arrayOfSectors.map((sector, index) => {
+                return <option key={index}>{sector.name}</option>;
+              })}
+            </select>
+
+            <select
+              value={this.state.informations.wantedSize}
+              onChange={this.handleSize}
+            >
+              <option value="Petite ebntreprise">Petite</option>
+              <option value="Grosse entreprise">Grosse</option>
+            </select>
 
             <input
               id="Current position"
@@ -296,7 +367,7 @@ class TalentforAdmin extends React.Component {
               }}
             />
 
-            <input
+            {/*  <input
               id="Desired Position"
               name="Desired Position"
               value={informations.wantedTitle}
@@ -308,11 +379,47 @@ class TalentforAdmin extends React.Component {
                   informations: informations
                 });
               }}
-            />
+            /> */}
+
+            <div>
+              {this.state.informations.wantedTitle.map((item, index) => {
+                return (
+                  <div key={index}>
+                    {item.name}
+                    <div
+                      id={index}
+                      onClick={e => {
+                        const id = e.target.id;
+                        const informations = { ...this.state.informations };
+                        informations.wantedTitle = [
+                          ...informations.wantedTitle
+                        ];
+                        informations.wantedTitle.splice(id, 1);
+                        this.setState({ informations });
+                      }}
+                    >
+                      X
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <select
+              value={this.state.arrayOfTitles[0].name}
+              onChange={this.handlewantedTitle}
+            >
+              {this.state.arrayOfTitles.map((title, index) => {
+                return <option key={index}>{title.name}</option>;
+              })}
+            </select>
           </form>
 
+          {/* ink to appear when message sent by client to talent :
+- Contact refusé (le candidat refuse la proposition)
+- Contact en cours (le client envoie un premier message mais n'a pas encore de réponse)
+- Contact accepté : le talent répond au client */}
           <div>
-            <div>Client 1</div> {/* link to clients attibuted to talent */}
+            <div>Client 1</div>
             <div>Client 2</div>
             <div>Client 3</div>
             <div>Client 4</div>
