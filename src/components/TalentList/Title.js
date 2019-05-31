@@ -5,7 +5,7 @@ function Title(props) {
   return (
     <div>
       <div className="specialTitle">Talents</div>
-      <div>{`Affichés : ${props.talentList.length}`}</div>
+      <div className="CTA">{`Affichés : ${props.talentList.length}`}</div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-import Header from "../Header";
+import HeaderAdmin from "../HeaderAdmin";
 import AddClientForm from "./AddClientForm";
 
 import "./ClientList.css";
@@ -75,7 +75,7 @@ class ClientList extends React.Component {
       <div>
         {/* header  */}
         <div>
-          <Header />
+          <HeaderAdmin />
         </div>
         {/* header---end  */}
 

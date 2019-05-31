@@ -4,6 +4,7 @@ html {
 }
 
 /* Font-family "Montserrat" put in first font-family (used everywhere except special title) */
+/* Font-size put to 14px for "body text", most used, color to #31313C for all text except title*/
 body {
   margin: 0;
   font-family: "Montserrat", sans-serif, -apple-system, BlinkMacSystemFont,
@@ -11,6 +12,9 @@ body {
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #31313c;
+  font-size: 14px;
+  background-color: #fafafc;
 }
 
 code {
@@ -18,7 +22,43 @@ code {
     monospace;
 }
 
+/********* BLOCKS ********/
+
+/* CONTAINER */
+.container {
+  max-width: 1550px;
+  height: 95vh;
+  margin: auto;
+}
+
+/********** FONTS ********/
+
+/* Special Title */
 .specialTitle {
   font-family: var(--title-font);
   font-size: 60px;
+  color: #333366;
+}
+
+/* CTA */
+.CTA {
+  font-size: 30px;
+  color: #333366;
+  font-weight: medium;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #4caf50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover,
+.dropbtn:focus {
+  background-color: #3e8e41;
 }

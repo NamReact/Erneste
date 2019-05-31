@@ -17,8 +17,8 @@ function TagFilter(props) {
       .includes(tagFilterInputValue.toLowerCase());
   });
   return (
-    <div>
-      <div>filtres</div>
+    <div className="tagList-filterBlock">
+      <div className="tagList-filterTitle">Filtres</div>
       <div className="tagList">
         {tagFilterShown.map(element => {
           return (
@@ -65,6 +65,12 @@ function TagFilter(props) {
         <button>Filtrer</button>
         <button>X</button>
       </div>
+      <select>
+        <option>Hello</option>
+        <option>Comment</option>
+        <option>ca</option>
+        <option>va</option>
+      </select>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import Title from "./Title";
 import TagFilter from "./TagFilter";
 import TitleLine from "./TitleLine";
 import TalentList from "./TalentList";
-import Header from "../Header";
+import HeaderAdmin from "../HeaderAdmin";
 import Tools from "./Tools";
 import "./TalentListPage.css";
 
@@ -27,6 +27,7 @@ class TalentListPage extends React.Component {
     chevronFilter: [],
     tagList: [],
     tagFilterInputValue: "",
+    // tag
     tagFilterShown: []
   };
 
@@ -200,41 +201,43 @@ class TalentListPage extends React.Component {
     }
 
     return (
-      <div className="container">
-        <Header />
-        <div className="talentList-container">
-          <div className="talentList-left-block">
-            <Title talentList={talentListCopieFilter} />
-            <TagFilter
-              tagFilterInputValue={this.state.tagFilterInputValue}
-              tagList={this.state.tagList}
-              tagFilterShown={this.state.tagFilterShown}
-              handleChangeTagFilterInput={this.handleChangeTagFilterInput}
-              handleClickTagFilter={this.handleClickTagFilter}
-            />
-          </div>
-          <div className="talentList-right-block">
-            <Tools
-              delete={this.state.delete}
-              searchInput={this.state.searchInput}
-              addTalent={this.addTalent}
-              deleteClick={this.deleteClick}
-              searchType={event => {
-                this.setState({ searchInput: event });
-              }}
-            />
-            <TitleLine
-              talentList={talentListCopieFilter}
-              titleArray={this.state.titleArray}
-              chevronClick={this.chevronClick}
-              chevronClickedPosition={this.state.chevronClikedPosition}
-              filterCheckBox={this.filterCheckBox}
-              chevronFilter={this.state.chevronFilter}
-            />
-            <TalentList
-              talentList={talentListCopieFilter}
-              deleteCheckBox={this.deleteCheckBox}
-            />
+      <div>
+        <HeaderAdmin />
+        <div className="container">
+          <div className="talentList-container">
+            <div className="talentList-left-block">
+              <Title talentList={talentListCopieFilter} />
+              <TagFilter
+                tagFilterInputValue={this.state.tagFilterInputValue}
+                tagList={this.state.tagList}
+                tagFilterShown={this.state.tagFilterShown}
+                handleChangeTagFilterInput={this.handleChangeTagFilterInput}
+                handleClickTagFilter={this.handleClickTagFilter}
+              />
+            </div>
+            <div className="talentList-right-block">
+              <Tools
+                delete={this.state.delete}
+                searchInput={this.state.searchInput}
+                addTalent={this.addTalent}
+                deleteClick={this.deleteClick}
+                searchType={event => {
+                  this.setState({ searchInput: event });
+                }}
+              />
+              <TitleLine
+                talentList={talentListCopieFilter}
+                titleArray={this.state.titleArray}
+                chevronClick={this.chevronClick}
+                chevronClickedPosition={this.state.chevronClikedPosition}
+                filterCheckBox={this.filterCheckBox}
+                chevronFilter={this.state.chevronFilter}
+              />
+              <TalentList
+                talentList={talentListCopieFilter}
+                deleteCheckBox={this.deleteCheckBox}
+              />
+            </div>
           </div>
         </div>
       </div>
