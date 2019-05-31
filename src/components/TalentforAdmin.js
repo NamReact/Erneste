@@ -8,8 +8,22 @@ import TagList from "./TagList";
 class TalentforAdmin extends React.Component {
   state = {
     id: null,
-    permission: null,
-    informations: null,
+
+    informations: {
+      photo: null,
+      firstName: "",
+      lastName: "",
+      linkedIn: "",
+      email: "",
+      phoneNumber: "",
+      salary: "",
+      actualCompany: "",
+      wantedSector: [],
+      wantedSize: "",
+      actualTitle: "",
+      wantedTitle: [],
+      status: ""
+    },
     description: null,
     skills: [],
     validated: null,
@@ -40,19 +54,88 @@ class TalentforAdmin extends React.Component {
       const skills = this.state.skills.map(tag => {
         return tag._id;
       });
+
+      const wantedSectorstoPost = this.state.informations.wantedSector.map(
+        item => {
+          return item._id;
+        }
+      );
+      console.log("test", wantedSectorstoPost);
+      const informationsbis = { ...this.state.informations };
+      /*    let wantedSectorCopy = [...this.state.informations.wantedSector]; */
+      /*  wantedSectorCopy = [...wantedSectorstoPost]; */
+      informationsbis.wantedSector = [...wantedSectorstoPost];
+      for (let i = 0; i < wantedSectorstoPost.length; i++) {
+        informationsbis.wantedSector[i] = wantedSectorstoPost[i];
+      }
+
+      /*    this.state.informations.wantedSector = [...wantedSectorCopy]; */
+
+      const wantedTitlestoPost = this.state.informations.wantedTitle.map(
+        item => {
+          return item._id;
+        }
+      );
+      informationsbis.wantedTitle = [...wantedTitlestoPost];
+      /*      let wantedTitleCopy = [...this.state.informations.wantedTitle];
+      wantedTitleCopy = [...wantedTitlestoPost];
+      this.state.informations.wantedTitle = [...wantedTitleCopy]; */
+      console.log(this.state.id);
+      console.log(informationsbis);
+      console.log(this.state.description);
+      console.log("hello", skills);
       await axios.post(
         "https://ernest-server.herokuapp.com/talent/update",
         {
           id: this.state.id,
-          informations: this.state.informations,
-          description: this.state.description,
+          /*   informations: informationsbis */
+          /*   description: this.state.description */
           skills: skills
         },
         { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
       );
-      console.log("posted");
-    } else {
-      console.log("same");
+    }
+  };
+
+  /* Function to handle wantedSector change*/
+
+  handlewantedSector = e => {
+    const informationsCopy = this.state.informations;
+    informationsCopy.wantedSector = [...this.state.informations.wantedSector];
+    for (let i = 0; i < this.state.arrayOfSectors.length; i++) {
+      if (e.target.value === this.state.arrayOfSectors[i].name) {
+        informationsCopy.wantedSector.push(this.state.arrayOfSectors[i]);
+      }
+    }
+    this.setState({ informations: informationsCopy });
+  };
+
+  /* Function to handle wantedTitle change*/
+
+  handlewantedTitle = e => {
+    const informationsCopy = this.state.informations;
+    informationsCopy.wantedTitle = [...this.state.informations.wantedTitle];
+    for (let i = 0; i < this.state.arrayOfTitles.length; i++) {
+      if (e.target.value === this.state.arrayOfTitles[i].name) {
+        informationsCopy.wantedTitle.push(this.state.arrayOfTitles[i]);
+      }
+    }
+    this.setState({ informations: informationsCopy });
+  };
+
+  /* Function to handle company size */
+
+  handleSize = e => {
+    const informations = this.state.informations;
+    if (e.target.value === "Petite") {
+      informations.wantedSize = { ...informations.wantedSize };
+      informations.wantedSize = "Petite";
+      this.setState({ informations });
+    }
+    if (e.target.value === "Grosse") {
+      informations.wantedSize = { ...informations.wantedSize };
+      informations.wantedSize = "Grosse";
+      this.setState({ informations });
     }
   };
 
@@ -268,7 +351,7 @@ class TalentforAdmin extends React.Component {
               }}
             />
 
-            <input
+            {/*    <input
               id="Desired sector"
               name="Desired sector"
               value={informations.wantedSector}
@@ -280,7 +363,48 @@ class TalentforAdmin extends React.Component {
                   informations: informations
                 });
               }}
-            />
+            /> */}
+
+            <div>
+              {this.state.informations.wantedSector.map((item, index) => {
+                return (
+                  <div key={index}>
+                    {item.name}
+                    <div
+                      id={index}
+                      onClick={e => {
+                        const id = e.target.id;
+                        const informations = { ...this.state.informations };
+                        informations.wantedSector = [
+                          ...informations.wantedSector
+                        ];
+
+                        informations.wantedSector.splice(id, 1);
+                        this.setState({ informations });
+                      }}
+                    >
+                      X
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <select
+              value={this.state.arrayOfSectors[0].name}
+              onChange={this.handlewantedSector}
+            >
+              {this.state.arrayOfSectors.map((sector, index) => {
+                return <option key={index}>{sector.name}</option>;
+              })}
+            </select>
+
+            <select
+              value={this.state.informations.wantedSize}
+              onChange={this.handleSize}
+            >
+              <option value="Petite">Petite entreprise</option>
+              <option value="Grosse">Grosse entreprise</option>
+            </select>
 
             <input
               id="Current position"
@@ -296,7 +420,7 @@ class TalentforAdmin extends React.Component {
               }}
             />
 
-            <input
+            {/*  <input
               id="Desired Position"
               name="Desired Position"
               value={informations.wantedTitle}
@@ -308,11 +432,47 @@ class TalentforAdmin extends React.Component {
                   informations: informations
                 });
               }}
-            />
+            /> */}
+
+            <div>
+              {this.state.informations.wantedTitle.map((item, index) => {
+                return (
+                  <div key={index}>
+                    {item.name}
+                    <div
+                      id={index}
+                      onClick={e => {
+                        const id = e.target.id;
+                        const informations = { ...this.state.informations };
+                        informations.wantedTitle = [
+                          ...informations.wantedTitle
+                        ];
+                        informations.wantedTitle.splice(id, 1);
+                        this.setState({ informations });
+                      }}
+                    >
+                      X
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <select
+              value={this.state.arrayOfTitles[0].name}
+              onChange={this.handlewantedTitle}
+            >
+              {this.state.arrayOfTitles.map((title, index) => {
+                return <option key={index}>{title.name}</option>;
+              })}
+            </select>
           </form>
 
+          {/* ink to appear when message sent by client to talent :
+- Contact refusé (le candidat refuse la proposition)
+- Contact en cours (le client envoie un premier message mais n'a pas encore de réponse)
+- Contact accepté : le talent répond au client */}
           <div>
-            <div>Client 1</div> {/* link to clients attibuted to talent */}
+            <div>Client 1</div>
             <div>Client 2</div>
             <div>Client 3</div>
             <div>Client 4</div>
@@ -397,20 +557,32 @@ class TalentforAdmin extends React.Component {
   }
 
   async componentDidMount() {
-    const response = await axios.get(
+    const response1 = await axios.get(
       "https://ernest-server.herokuapp.com/talent/" +
         this.props.match.params.id,
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+    );
+
+    const response2 = await axios.get(
+      "https://ernest-server.herokuapp.com/sector",
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+    );
+
+    const response3 = await axios.get(
+      "https://ernest-server.herokuapp.com/title",
       { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
     );
 
     this.setState({
       isLoading: false,
       id: this.props.match.params.id,
-      informations: response.data.informations,
-      description: response.data.description,
-      skills: response.data.skills,
-      validated: response.data.validated,
-      lastUpdate: response.data.lastUpdate
+      informations: response1.data.informations,
+      description: response1.data.description,
+      skills: response1.data.skills,
+      validated: response1.data.validated,
+      lastUpdate: response1.data.lastUpdate,
+      arrayOfSectors: response2.data,
+      arrayOfTitles: response3.data
     });
   }
 }

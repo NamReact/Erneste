@@ -42,9 +42,6 @@ class TalentforTalent extends React.Component {
         },
         { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
       );
-      console.log("posted");
-    } else {
-      console.log("same");
     }
   };
 
@@ -195,7 +192,13 @@ class TalentforTalent extends React.Component {
             <input
               name="Desired sector"
               readOnly
-              value={informations.wantedSector}
+              value={informations.wantedSector.name}
+            />
+
+            <input
+              name="Size of firm"
+              readOnly
+              value={informations.wantedSize}
             />
 
             <input
@@ -215,7 +218,7 @@ class TalentforTalent extends React.Component {
             <input
               name="Desired Position"
               readOnly
-              value={informations.wantedTitle}
+              value={informations.wantedTitle.name}
             />
           </form>
         </div>
@@ -247,6 +250,7 @@ class TalentforTalent extends React.Component {
               <div className="wishes">
                 <textarea
                   name="ideal environment"
+                  readOnly
                   value={description.workingEnvironment}
                 />
 
