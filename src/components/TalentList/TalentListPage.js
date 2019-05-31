@@ -25,17 +25,25 @@ class TalentListPage extends React.Component {
     ],
     chevronClikedPosition: null,
     chevronFilter: [],
+    // tagList récupéré en GET
     tagList: [],
+    // Valeur de l'input du tag
     tagFilterInputValue: "",
-    // tag
-    tagFilterShown: []
+    // tag qui sont affichés dans la div
+    tagFilterShown: [],
+    // Suggestion sur laquelle est l'utilisateur
+    tagActiveSuggestion: 0,
+    // Suggestion montrés à l'utilisateur en fonction de la valeur de l'input
+    tagFilteredSuggestions: [],
+    tagShowSuggestions: false
   };
 
   // Function to GET data from /talent
   getDataTalentList = async toto => {
     this.setState({ isLoading: true });
     const response = await axios.get(
-      "https://ernest-server.herokuapp.com/talent/"
+      "https://ernest-server.herokuapp.com/talent/",
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
     );
     this.setState({
       isLoading: false,
@@ -46,7 +54,10 @@ class TalentListPage extends React.Component {
   // Function GET data from /tag
   getDataTagList = async toto => {
     this.setState({ isLoading: true });
-    const response = await axios.get("https://ernest-server.herokuapp.com/tag");
+    const response = await axios.get(
+      "https://ernest-server.herokuapp.com/tag",
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+    );
     this.setState({
       isLoading: false,
       tagList: response.data
@@ -213,6 +224,9 @@ class TalentListPage extends React.Component {
                 tagFilterShown={this.state.tagFilterShown}
                 handleChangeTagFilterInput={this.handleChangeTagFilterInput}
                 handleClickTagFilter={this.handleClickTagFilter}
+                tagActiveSuggestion={this.state.tagActiveSuggestion}
+                tagFilteredSuggestion={this.state.tagFilteredSuggestions}
+                tagShowSuggestions={this.tagShowSuggestions}
               />
             </div>
             <div className="talentList-right-block">

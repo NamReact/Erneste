@@ -1,13 +1,17 @@
 import React from "react";
 import "./TagFilter.css";
+import AutoComplete from "./AutoComplete";
 
 function TagFilter(props) {
   const {
-    tagList,
     tagFilterInputValue,
+    tagList,
+    tagFilterShown,
     handleChangeTagFilterInput,
     handleClickTagFilter,
-    tagFilterShown
+    tagActiveSuggestion,
+    tagFilteredSuggestion,
+    tagShowSuggestions
   } = props;
 
   // On filtre le tagList en fonction de ce qui est dans l'input
@@ -33,6 +37,13 @@ function TagFilter(props) {
             </div>
           );
         })}
+        <AutoComplete
+          activeSuggestions={tagActiveSuggestion}
+          filteredSuggestions={tagFilteredSuggestion}
+          showSuggestions={tagShowSuggestions}
+          handleChangeTagFilterInput={handleChangeTagFilterInput}
+          handleClickTagFilter={handleClickTagFilter}
+        />
         <div className="tagList-input-block">
           <input
             className="tagList-input"
@@ -62,15 +73,8 @@ function TagFilter(props) {
         </div>
       </div>
       <div>
-        <button>Filtrer</button>
         <button>X</button>
       </div>
-      <select>
-        <option>Hello</option>
-        <option>Comment</option>
-        <option>ca</option>
-        <option>va</option>
-      </select>
     </div>
   );
 }
