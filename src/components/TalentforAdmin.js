@@ -62,14 +62,8 @@ class TalentforAdmin extends React.Component {
       );
       console.log("test", wantedSectorstoPost);
       const informationsbis = { ...this.state.informations };
-      /*    let wantedSectorCopy = [...this.state.informations.wantedSector]; */
-      /*  wantedSectorCopy = [...wantedSectorstoPost]; */
-      informationsbis.wantedSector = [...wantedSectorstoPost];
-      for (let i = 0; i < wantedSectorstoPost.length; i++) {
-        informationsbis.wantedSector[i] = wantedSectorstoPost[i];
-      }
 
-      /*    this.state.informations.wantedSector = [...wantedSectorCopy]; */
+      informationsbis.wantedSector = [...wantedSectorstoPost];
 
       const wantedTitlestoPost = this.state.informations.wantedTitle.map(
         item => {
@@ -77,19 +71,12 @@ class TalentforAdmin extends React.Component {
         }
       );
       informationsbis.wantedTitle = [...wantedTitlestoPost];
-      /*      let wantedTitleCopy = [...this.state.informations.wantedTitle];
-      wantedTitleCopy = [...wantedTitlestoPost];
-      this.state.informations.wantedTitle = [...wantedTitleCopy]; */
-      console.log(this.state.id);
-      console.log(informationsbis);
-      console.log(this.state.description);
-      console.log("hello", skills);
       await axios.post(
         "https://ernest-server.herokuapp.com/talent/update",
         {
           id: this.state.id,
-          /*   informations: informationsbis */
-          /*   description: this.state.description */
+          informations: informationsbis,
+          description: this.state.description,
           skills: skills
         },
         { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
