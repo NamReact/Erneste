@@ -8,7 +8,7 @@ import CreateNewTalent from "./components/CreateNewTalent";
 import TalentListPage from "./components/TalentList/TalentListPage";
 import ClientList from "./components/ClientList/ClientList";
 import TalentforTalent from "./components/TalentforTalent";
-
+import Login from "./components/Login";
 import Home from "./components/Home";
 
 class App extends React.Component {
@@ -26,6 +26,7 @@ class App extends React.Component {
       <Router>
         <Switch>
           <Route exact={true} path="/" component={Home} />
+          <Route exact={true} path="/login" component={Login} />
           <Route
             exact={true}
             path="/admin/talent-create"
