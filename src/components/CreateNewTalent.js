@@ -41,38 +41,12 @@ class CreateNewTalent extends React.Component {
     arrayOfTitles: []
   };
 
-  /* Function to populate arrayOfSectors and arrayOfTitles */
-  getWantedSectors = async () => {
-    const response = await axios.get(
-      "https://ernest-server.herokuapp.com/sector",
-      { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
-    );
-
-    this.setState({
-      arrayOfSectors: response.data,
-      loadingSector: false
-    });
-  };
-
-  getWantedTitles = async () => {
-    const response = await axios.get(
-      "https://ernest-server.herokuapp.com/title",
-      { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
-    );
-
-    this.setState({
-      arrayOfTitles: response.data,
-      loadingTitle: false
-    });
-  };
-
   /* Function to save picture */
   handleFiles = files => {
     const informations = { ...this.state.informations };
     informations.photo = { ...informations.photo };
     const photo64 = files.base64;
     informations.photo = photo64;
-    console.log(photo64);
     this.setState({
       informations: informations
     });
@@ -196,20 +170,13 @@ class CreateNewTalent extends React.Component {
     const sectors = this.state.arrayOfSectors;
     const sectorsSelectedToDisplay = [];
 
-    const sectorsToDisplay = () => {
-      for (let i = 0; i < idOfWantedSectors.length; i++) {
-        for (let j = 0; j < sectors.length; j++) {
-          if (idOfWantedSectors[i] === sectors[j]._id) {
-            sectorsSelectedToDisplay.push(sectors.name);
-          }
+    for (let i = 0; i < idOfWantedSectors.length; i++) {
+      for (let j = 0; j < sectors.length; j++) {
+        if (idOfWantedSectors[i] === sectors[j]._id) {
+          sectorsSelectedToDisplay.push(sectors[j].name);
         }
       }
-      return sectorsSelectedToDisplay;
-    };
-
-    const displayOfWantedSectors = sectorsToDisplay().map((item, index) => {
-      return <div>{item.name}</div>;
-    });
+    }
 
     /* display the titles wanted by talent */
 
@@ -217,20 +184,13 @@ class CreateNewTalent extends React.Component {
     const titles = this.state.arrayOfTitles;
     const titlesSelectedToDisplay = [];
 
-    const titlesToDisplay = () => {
-      for (let i = 0; i < idOfWantedTitles.length; i++) {
-        for (let j = 0; j < titles.length; j++) {
-          if (idOfWantedTitles[i] === titles[j]._id) {
-            titlesSelectedToDisplay.push(titles.name);
-          }
+    for (let i = 0; i < idOfWantedTitles.length; i++) {
+      for (let j = 0; j < titles.length; j++) {
+        if (idOfWantedTitles[i] === titles[j]._id) {
+          titlesSelectedToDisplay.push(titles[j].name);
         }
       }
-      return titlesSelectedToDisplay;
-    };
-
-    const displayOfWantedTitles = titlesToDisplay().map((item, index) => {
-      return <div>{item.name}</div>;
-    });
+    }
 
     /* Conditions for the color of the dot */
 
@@ -385,7 +345,11 @@ class CreateNewTalent extends React.Component {
               />
 
               <div>Secteur souhaité</div>
-              <div>{displayOfWantedSectors}</div>
+              <div>
+                {sectorsSelectedToDisplay.map((item, index) => {
+                  return <div>{item}</div>;
+                })}
+              </div>
               <select
                 value={this.state.arrayOfSectors[0].name}
                 onChange={this.handlewantedSector}
@@ -421,7 +385,11 @@ class CreateNewTalent extends React.Component {
               />
 
               <div>Fonction souhaitée</div>
-              <div>{displayOfWantedTitles}</div>
+              <div>
+                {titlesSelectedToDisplay.map((item, index) => {
+                  return <div>{item}</div>;
+                })}
+              </div>
               <select
                 value={this.state.arrayOfTitles[0].name}
                 onChange={this.handlewantedTitle}
@@ -560,14 +528,9 @@ class CreateNewTalent extends React.Component {
     this.setState({
       arrayOfTitles: response.data,
       arrayOfSectors: response2.data,
-      loadingTitle: false
-    });
-    /*   this.setState({
-      arrayOfSectors: response.data,
+      loadingTitle: false,
       loadingSector: false
-    }); */
-    /*   this.getWantedSectors();
-    this.getWantedTitles(); */
+    });
   }
 }
 
