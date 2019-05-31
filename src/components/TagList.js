@@ -17,7 +17,8 @@ class TagList extends React.Component {
   addSoftTag = async () => {
     const response = await axios.post(
       "https://ernest-server.herokuapp.com/tag/create",
-      { name: this.state.search, type: "soft" }
+      { name: this.state.search, type: "soft" },
+      { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
     );
     this.setState({ data: response.data });
   };
@@ -25,7 +26,8 @@ class TagList extends React.Component {
   addHardTag = async () => {
     const response = await axios.post(
       "https://ernest-server.herokuapp.com/tag/create",
-      { name: this.state.search, type: "hard" }
+      { name: this.state.search, type: "hard" },
+      { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
     );
     this.setState({ data: response.data });
   };
@@ -70,7 +72,8 @@ class TagList extends React.Component {
 
   async componentDidMount() {
     const response = await axios.get(
-      "https://ernest-server.herokuapp.com/tag/"
+      "https://ernest-server.herokuapp.com/tag",
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
     );
     console.log(response.data);
     this.setState({ data: response.data });

@@ -32,12 +32,16 @@ class TalentforTalent extends React.Component {
     }
     if (this.state.changing !== e.target.id) {
       this.setState({ changing: e.target.id });
-      await axios.post("https://ernest-server.herokuapp.com/talent/update", {
-        id: this.state.id,
-        informations: this.state.informations,
-        description: this.state.description,
-        skills: this.state.skills
-      });
+      await axios.post(
+        "https://ernest-server.herokuapp.com/talent/update",
+        {
+          id: this.state.id,
+          informations: this.state.informations,
+          description: this.state.description,
+          skills: this.state.skills
+        },
+        { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
+      );
       console.log("posted");
     } else {
       console.log("same");
@@ -274,7 +278,8 @@ class TalentforTalent extends React.Component {
 
   async componentDidMount() {
     const response = await axios.get(
-      "https://ernest-server.herokuapp.com/talent/" + this.props.match.params.id
+      "https://ernest-server.herokuapp.com/talent" + this.props.match.params.id,
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
     );
 
     this.setState({
