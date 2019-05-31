@@ -69,7 +69,7 @@ class CreateNewTalent extends React.Component {
     informationsCopy.wantedSector = [...this.state.informations.wantedSector];
     for (let i = 0; i < this.state.arrayOfSectors.length; i++) {
       if (e.target.value === this.state.arrayOfSectors[i].name) {
-        informationsCopy.wantedSector.push(this.state.arrayOfSectors[i]._id);
+        informationsCopy.wantedSector.push(this.state.arrayOfSectors[i]);
       }
     }
     this.setState({ informations: informationsCopy });
@@ -82,7 +82,7 @@ class CreateNewTalent extends React.Component {
     informationsCopy.wantedTitle = [...this.state.informations.wantedTitle];
     for (let i = 0; i < this.state.arrayOfTitles.length; i++) {
       if (e.target.value === this.state.arrayOfTitles[i].name) {
-        informationsCopy.wantedTitle.push(this.state.arrayOfTitles[i]._id);
+        informationsCopy.wantedTitle.push(this.state.arrayOfTitles[i]);
       }
     }
     this.setState({ informations: informationsCopy });
@@ -135,6 +135,22 @@ class CreateNewTalent extends React.Component {
       return tag._id;
     });
 
+    const wantedSectorstoPost = this.state.informations.wantedSector.map(
+      item => {
+        return item._id;
+      }
+    );
+    let wantedSectorCopy = [...this.state.informations.wantedSector];
+    wantedSectorCopy = [...wantedSectorstoPost];
+    this.state.informations.wantedSector = [...wantedSectorCopy];
+
+    const wantedTitlestoPost = this.state.informations.wantedTitle.map(item => {
+      return item._id;
+    });
+    let wantedTitleCopy = [...this.state.informations.wantedTitle];
+    wantedTitleCopy = [...wantedTitlestoPost];
+    this.state.informations.wantedTitle = [...wantedTitleCopy];
+
     const response = await axios.post(
       "https://ernest-server.herokuapp.com/talent/create",
       {
@@ -163,34 +179,6 @@ class CreateNewTalent extends React.Component {
         return tag.name;
       })
       .join(" ");
-
-    /* display the sectors wanted by talent */
-
-    const idOfWantedSectors = this.state.informations.wantedSector;
-    const sectors = this.state.arrayOfSectors;
-    const sectorsSelectedToDisplay = [];
-
-    for (let i = 0; i < idOfWantedSectors.length; i++) {
-      for (let j = 0; j < sectors.length; j++) {
-        if (idOfWantedSectors[i] === sectors[j]._id) {
-          sectorsSelectedToDisplay.push(sectors[j].name);
-        }
-      }
-    }
-
-    /* display the titles wanted by talent */
-
-    const idOfWantedTitles = this.state.informations.wantedTitle;
-    const titles = this.state.arrayOfTitles;
-    const titlesSelectedToDisplay = [];
-
-    for (let i = 0; i < idOfWantedTitles.length; i++) {
-      for (let j = 0; j < titles.length; j++) {
-        if (idOfWantedTitles[i] === titles[j]._id) {
-          titlesSelectedToDisplay.push(titles[j].name);
-        }
-      }
-    }
 
     /* Conditions for the color of the dot */
 
@@ -346,8 +334,27 @@ class CreateNewTalent extends React.Component {
 
               <div>Secteur souhaité</div>
               <div>
-                {sectorsSelectedToDisplay.map((item, index) => {
-                  return <div>{item}</div>;
+                {this.state.informations.wantedSector.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      {item.name}
+                      <div
+                        id={index}
+                        onClick={e => {
+                          const id = e.target.id;
+                          const informations = { ...this.state.informations };
+                          informations.wantedSector = [
+                            ...informations.wantedSector
+                          ];
+
+                          informations.wantedSector.splice(id, 1);
+                          this.setState({ informations });
+                        }}
+                      >
+                        X
+                      </div>
+                    </div>
+                  );
                 })}
               </div>
               <select
@@ -386,8 +393,26 @@ class CreateNewTalent extends React.Component {
 
               <div>Fonction souhaitée</div>
               <div>
-                {titlesSelectedToDisplay.map((item, index) => {
-                  return <div>{item}</div>;
+                {this.state.informations.wantedTitle.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      {item.name}
+                      <div
+                        id={index}
+                        onClick={e => {
+                          const id = e.target.id;
+                          const informations = { ...this.state.informations };
+                          informations.wantedTitle = [
+                            ...informations.wantedTitle
+                          ];
+                          informations.wantedTitle.splice(id, 1);
+                          this.setState({ informations });
+                        }}
+                      >
+                        X
+                      </div>
+                    </div>
+                  );
                 })}
               </div>
               <select
@@ -526,8 +551,8 @@ class CreateNewTalent extends React.Component {
     );
 
     this.setState({
-      arrayOfTitles: response.data,
-      arrayOfSectors: response2.data,
+      arrayOfSectors: response.data,
+      arrayOfTitles: response2.data,
       loadingTitle: false,
       loadingSector: false
     });
