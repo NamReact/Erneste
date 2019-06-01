@@ -266,19 +266,6 @@ class TalentforAdmin extends React.Component {
                 }}
               />
 
-              {/*  <div className="availability">
-                <div style={{ backgroundColor: dotColor }} />
-                <select
-                  value={this.state.informations.status}
-                  onChange={this.handleAvailability}
-                >
-                  <option value="1">Recherche active</option>
-                  <option value="2">Ouvert(e) aux opportunités</option>
-                  <option value="3">Ne souhaite pas être contacté(e)</option>
-                  <option value="4">Embauché(e) par Erneste</option>
-                </select>
-              </div> */}
-
               <div>Profil LinkedIn</div>
               <input
                 id="LinkedIn Profil"
@@ -471,20 +458,6 @@ class TalentforAdmin extends React.Component {
                 }}
               />
 
-              {/*  <input
-              id="Desired Position"
-              name="Desired Position"
-              value={informations.wantedTitle}
-              onChange={e => {
-                const informations = { ...this.state.informations };
-                informations.wantedTitle = { ...informations.wantedTitle };
-                informations.wantedTitle = e.target.value;
-                this.setState({
-                  informations: informations
-                });
-              }}
-            /> */}
-
               <div>Fonction souhaitée</div>
               <div>
                 {this.state.informations.wantedTitle.map((item, index) => {
@@ -543,30 +516,6 @@ class TalentforAdmin extends React.Component {
                   </div>
                 )}
               </div>
-
-              {/*  <div>
-                {this.state.informations.wantedTitle.map((item, index) => {
-                  return (
-                    <div key={index}>
-                      {item.name}
-                      <div
-                        id={index}
-                        onClick={e => {
-                          const id = e.target.id;
-                          const informations = { ...this.state.informations };
-                          informations.wantedTitle = [
-                            ...informations.wantedTitle
-                          ];
-                          informations.wantedTitle.splice(id, 1);
-                          this.setState({ informations });
-                        }}
-                      >
-                        X
-                      </div>
-                    </div>
-                  );
-                })}
-              </div> */}
             </form>
 
             <div>Statut</div>
@@ -743,7 +692,6 @@ class TalentforAdmin extends React.Component {
                   ) : (
                     false
                   )}
-                  {/*  <textarea name="hardskills" value={skillsArray} required /> */}
 
                   <div className="add-skills">
                     <div
