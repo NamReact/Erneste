@@ -1,9 +1,12 @@
 .content {
   --input-padding: 10px;
   --input-margin: 10px;
-
   --input-width: 200px;
-  --input-height: 30px;
+  --input-height: 35px;
+  --container-background: rgb(254, 254, 254);
+  --input-border-color: rgba(168, 176, 208, 0.3);
+  --dark-blue: #333266;
+  --soft-skill-color: #ef6364;
   width: 100vw;
   height: 100vh;
   background-color: rgb(250, 250, 252);
@@ -11,18 +14,30 @@
 
 .body-container {
   display: flex;
-  max-width: 1024px;
+  justify-content: center;
+  /* align-items: center; */
+  max-width: 1200px;
   flex-direction: row;
   margin: auto;
 }
 
+h3 {
+  margin: 0;
+  font-weight: 500;
+}
+
+.relative-container {
+  position: relative;
+}
+
 /* Left side of the page */
 .leftContainer {
-  padding: 20px;
-  background-color: rgb(254, 254, 254);
-  margin: 5px 20px;
+  padding: 35px;
+  background-color: var(--container-background);
+  margin: 100px 20px;
   border-radius: 2px;
-  box-shadow: 0 6px 12px rgba(28, 28, 28, 0.2);
+  /* width: 19%; */
+  box-shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
 }
 
 .talentDetails {
@@ -32,48 +47,117 @@
 
 .empty-photo {
   height: 180px;
-  width: 150px;
-  border: 1px dotted darkgray;
+  width: 170px;
+  border: 1px dotted #333266;
   border-radius: 5px;
   margin: 0 auto 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
+
+.text-empty-picture {
+  width: 70%;
+  text-align: center;
+  padding: 5px;
+  color: var(--placeholder-grey);
+}
+
 .talentPicture {
-  height: 100px;
-  width: 75px;
+  height: 180px;
+  width: 150px;
   object-fit: cover;
 }
 
 .leftContainer input {
   height: var(--input-height);
   width: var(--input-width);
-  border: 1px solid lightgrey;
-  border-radius: 3px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 5px;
   padding: 0 var(--input-padding);
   margin: var(--input-margin) 0;
+  outline: none;
+  font-size: 14px;
+  color: #31313c;
 }
 
-/* .select-css {
+.select-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--input-padding);
+  color: var(--placeholder-grey);
   height: var(--input-height);
   width: var(--input-width);
-  border: 1px solid lightgrey;
-  border-radius: 3px;
-  padding: 0 var(--input-padding-left);
-  margin: var(--input-margin-bottom) 0; 
-} */
-/* 4 dots */
-.availability {
-  display: flex;
-  flex-direction: row;
-}
-.availability div {
-  width: 10px;
-  height: 10px;
-  margin-right: 10px;
-  border: 1px solid grey;
+  border: 1px solid var(--input-border-color);
   border-radius: 5px;
+  margin: var(--input-margin) 0;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.sector-list {
+  position: absolute;
+  top: 10px;
+  right: -225px;
+  border-radius: 5px;
+  height: 150px;
+  width: 200px;
+  z-index: 2;
+  padding: 0 var(--input-padding);
+  background-color: var(--container-background);
+  overflow: scroll;
+  border: 1px solid var(--input-border-color);
+}
+
+.displayed-array {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 10px 0 10px;
+}
+
+.displayed-array-delete {
+  cursor: pointer;
+}
+
+.size-list {
+  position: absolute;
+  top: 10px;
+  right: -225px;
+  border-radius: 5px;
+  width: 200px;
+  z-index: 2;
+  padding: 0 var(--input-padding);
+  background-color: var(--container-background);
+  border: 1px solid var(--input-border-color);
+}
+
+.availability-dot > div {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+.availability-dot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--input-height);
+  width: 20px;
 }
 
 /* Right side of the page */
+
+.right-container {
+  background-color: var(--container-background);
+  height: 50%;
+  width: 61%;
+  padding: 35px;
+  box-shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
+  border-radius: 2px;
+  margin: 100px 0;
+}
 
 .allWishes {
   display: flex;
@@ -81,32 +165,177 @@
 }
 
 /* ideal environment and ambitions */
+
 .wishes {
   display: flex;
   flex-direction: column;
+  margin-top: 50px;
+}
+
+.sub-wishes {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-right: 50px;
 }
 
 .skills {
   display: flex;
   flex-direction: column;
+  flex: 1;
+}
+
+.skills > div {
+  display: flex;
+  flex-wrap: wrap;
+  margin: var(--input-margin) 0;
+}
+
+.add-skills {
+  display: flex;
+  position: relative;
+}
+
+.tag-option {
+  padding: 7px var(--input-padding);
+  cursor: pointer;
+  border-bottom: 1px solid var(--input-border-color);
+}
+
+.tag-option:hover {
+  background-color: #fafafc;
+}
+
+.tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  box-sizing: border-box;
+  margin: 0 10px 7px 0;
+  overflow: hidden;
+}
+
+.tag-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  height: var(--input-height);
+  padding: 0 20px;
+
+  color: white;
+  border-radius: 3px;
+}
+
+.remove-tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  text-align: center;
+  height: 100%;
+  color: white;
+  cursor: pointer;
+}
+
+.add-skills-button {
+  border: 1px solid var(--placeholder-grey);
+  padding: 4px 10px;
+  width: 120px;
+  border-radius: 3px;
+  color: var(--dark-blue);
+  text-align: center;
+  cursor: pointer;
+}
+
+.tag-pop-up {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  z-index: 2;
+  background-color: var(--container-background);
+  border: 1px solid var(--placeholder-grey);
+  border-radius: 4px;
+  width: 200px;
+}
+
+.tag-pop-up input {
+  padding: 8px var(--input-padding);
+  box-sizing: border-box;
+  width: 200px;
+  outline: none;
+  border: none;
+}
+
+.tag-list-buttons {
+  text-align: center;
+  padding: var(--input-padding);
+  cursor: pointer;
+}
+
+.soft-skills {
+  background-color: var(--soft-skill-color);
+  color: white;
+}
+
+.hard-skills {
+  background-color: var(--dark-blue);
+  color: white;
+}
+
+.soft-skills:hover,
+.hard-skills:hover {
+  opacity: 0.6;
+}
+
+.pop-up-list {
+  overflow: scroll;
+  max-height: 120px;
+  border-top: 1px solid var(--input-border-color);
+  border-bottom: 1px solid var(--input-border-color);
 }
 
 .buttons {
   display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+}
+
+.buttons a {
+  text-decoration: none;
+}
+
+.buttons a:visited {
+  color: var(--placeholder-grey);
+}
+
+.validate {
+  color: var(--container-background);
+  background-color: var(--dark-blue);
 }
 
 .cancel,
 .validate {
-  width: 40px;
-  height: 20px;
-  border: 1px solid black;
-  margin-left: 10px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  margin-left: 20px;
+}
+
+.cancel {
+  border: 1px solid var(--placeholder-grey);
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 textarea {
-  border: 1px solid lightgray;
-  border-radius: 2px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 5px;
+  margin: var(--input-margin) 0;
+  padding: var(--input-padding);
   resize: none;
   padding: 10px;
-  height: 50px;
+  height: 80px;
+  outline: none;
+  overflow: scroll;
 }
