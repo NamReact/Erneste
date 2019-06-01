@@ -46,8 +46,6 @@ class CreateNewTalent extends React.Component {
     actualSelect: null
   };
 
-  /* setWrapper = node => (this.state.actualSelect = node); */
-
   /* ** INTERRUPTERS ** */
 
   showTagList = () => {

@@ -4,7 +4,7 @@ import ReactFileReader from "react-file-reader";
 import TagList from "./TagList";
 import { Link } from "react-router-dom";
 
-/* page admin talent : on peut tout modifier */
+/* *** Page for Admin. Everything can be modified *** */
 
 class TalentforAdmin extends React.Component {
   state = {
@@ -38,6 +38,12 @@ class TalentforAdmin extends React.Component {
     statusSelect: false
   };
 
+  /* ** INTERRUPTERS ** */
+
+  showTagList = () => {
+    this.setState({ tagList: !this.state.tagList });
+  };
+
   sectorSelect = () => {
     this.setState({ sectorSelect: !this.state.sectorSelect });
   };
@@ -54,7 +60,12 @@ class TalentforAdmin extends React.Component {
     this.setState({ statusSelect: !this.state.statusSelect });
   };
 
+  /* ***** */
+
+  /* ** ON CHANGE FUNCTIONS ** */
+
   /* Function to save picture */
+
   handleFiles = files => {
     const informations = { ...this.state.informations };
     informations.photo = { ...informations.photo };
@@ -65,6 +76,7 @@ class TalentforAdmin extends React.Component {
   };
 
   /* Function to save changes when clicking outside the input */
+
   onClick = async e => {
     if (this.state.changing === null) {
       this.setState({ changing: e.target.id });
@@ -81,7 +93,6 @@ class TalentforAdmin extends React.Component {
           return item._id;
         }
       );
-      console.log("test", wantedSectorstoPost);
       const informationsbis = { ...this.state.informations };
 
       informationsbis.wantedSector = [...wantedSectorstoPost];
@@ -140,11 +151,14 @@ class TalentforAdmin extends React.Component {
   };
 
   /* Function to set availability */
+
   handleAvailability = e => {
     const informations = this.state.informations;
     informations.status = e.target.id;
     this.setState({ informations });
   };
+
+  /* Function to set and remove tags */
 
   setTag = tag => {
     const tagArray = this.state.skills;
@@ -152,14 +166,27 @@ class TalentforAdmin extends React.Component {
     this.setState({ skills: tagArray });
   };
 
-  showTagList = () => {
-    this.setState({ tagList: !this.state.tagList });
+  removeTag = e => {
+    const skillsArray = [...this.state.skills];
+    for (let i = 0; i < skillsArray.length; i++) {
+      if (skillsArray[i]._id === e.target.id) {
+        skillsArray.splice(i, 1);
+        break;
+      }
+    }
+    this.setState({ skills: skillsArray });
   };
 
+  /* ***** */
+
   render() {
+    /* Loader */
+
     if (this.state.isLoading === true) {
       return <p>En cours de chargement...</p>;
     }
+
+    /* *** */
 
     const informations = this.state.informations;
     const description = this.state.description;
