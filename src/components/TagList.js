@@ -34,7 +34,7 @@ class TagList extends React.Component {
 
   render() {
     if (this.state.data === null) {
-      return <div>Loading ...</div>;
+      return <div />;
     }
 
     // définition de la RegExp par rapport au state
@@ -50,22 +50,36 @@ class TagList extends React.Component {
     // afficher les tags dans le textarea
     const filteredTagList = tagList.map(item => {
       return (
-        <div key={item._id} onClick={() => this.props.setTag(item)}>
+        <div
+          id={item._id}
+          key={item._id}
+          onClick={() => this.props.setTag(item)}
+          className="tag-option"
+        >
           {item.name}
         </div>
       );
     });
 
+    const addSoft = `${this.props.buttons} soft-skills`;
+    const addHard = `${this.props.buttons} hard-skills`;
+
     return (
-      <div>
+      <div className={this.props.class}>
         <input
           name="tag search"
           value={this.state.search}
           onChange={this.onChange}
+          placeholder="Recherche skills..."
         />
-        <div>{filteredTagList}</div>
-        <div onClick={this.addSoftTag}>Add new soft tag +</div>
-        <div onClick={this.addHardTag}>Add new hard tag +</div>
+
+        <div className={this.props.listClass}>{filteredTagList}</div>
+        <div onClick={this.addSoftTag} className={addSoft}>
+          Ajouter un soft skill
+        </div>
+        <div onClick={this.addHardTag} className={addHard}>
+          Ajouter un hard skill
+        </div>
       </div>
     );
   }

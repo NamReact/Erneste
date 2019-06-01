@@ -1,6 +1,8 @@
 /* Variable for speacial title font */
 html {
   --title-font: "Playfair Display", serif;
+  --placeholder-grey: #a8b0d0;
+  font-size: 14px;
 }
 
 /* Font-family "Montserrat" put in first font-family (used everywhere except special title) */
@@ -12,7 +14,7 @@ body {
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #31313c;
+  color: #333266;
   font-size: 14px;
   background-color: #fafafc;
 }
@@ -20,6 +22,14 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/********* GENERAL ********/
+
+::placeholder {
+  font-size: 14px;
+  color: var(--placeholder-grey);
+  opacity: 1;
 }
 
 /********* BLOCKS ********/
