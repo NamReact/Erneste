@@ -42,7 +42,8 @@ class CreateNewTalent extends React.Component {
     sectorSelect: false,
     sizeSelect: false,
     titleSelect: false,
-    statusSelect: false
+    statusSelect: false,
+    actualSelect: null
   };
 
   /* ** INTERRUPTERS ** */
@@ -213,7 +214,7 @@ class CreateNewTalent extends React.Component {
     }
 
     return (
-      <div className="content" onClick={this.onClick}>
+      <div className="content">
         {this.state.redirect && (
           <Redirect to={"/admin/talent/" + this.state.idTalentCreated} />
         )}
@@ -226,7 +227,7 @@ class CreateNewTalent extends React.Component {
               handleFiles={this.handleFiles}
             >
               {informations.photo !== null ? (
-                <span>
+                <span className="talent-picture-container">
                   <img
                     src={informations.photo}
                     alt="portrait of talent"
@@ -396,7 +397,7 @@ class CreateNewTalent extends React.Component {
                   )}
                 </div>
                 {this.state.sectorSelect && (
-                  <div className="sector-list">
+                  <div id="sector-list" className="sector-list">
                     {this.state.arrayOfSectors.map((sector, index) => {
                       return (
                         <div

@@ -89,7 +89,6 @@ class TagList extends React.Component {
       "https://ernest-server.herokuapp.com/tag",
       { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
     );
-    console.log(response.data);
     this.setState({ data: response.data });
   }
 }

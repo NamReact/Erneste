@@ -64,10 +64,20 @@ h3 {
   color: var(--placeholder-grey);
 }
 
-.talentPicture {
+.talent-picture-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.talent-picture {
+  margin: 0 auto 20px auto;
+  cursor: pointer;
+  border-radius: 5px;
   height: 180px;
-  width: 150px;
+  width: 170px;
   object-fit: cover;
+  overflow: hidden;
 }
 
 .leftContainer input {
@@ -338,4 +348,6 @@ textarea {
   height: 80px;
   outline: none;
   overflow: scroll;
+  font-size: 14px;
+  color: #31313c;
 }
