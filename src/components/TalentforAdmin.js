@@ -194,12 +194,6 @@ class TalentforAdmin extends React.Component {
     const lastUpdate = this.state.lastUpdate;
     let dotColor = "";
 
-    const skillsArray = skills
-      .map(tag => {
-        return tag.name;
-      })
-      .join(" ");
-
     if (this.state.informations.status === "Recherche active") {
       dotColor = "#9EBA83";
     }
