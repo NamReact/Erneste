@@ -30,6 +30,8 @@ class TalentforAdmin extends React.Component {
     validated: null,
     lastUpdate: null,
     isLoading: true,
+    arrayOfSectors: [],
+    arrayOfTitles: [],
     changing: null,
     tagList: false,
     sectorSelect: false,
@@ -226,13 +228,11 @@ class TalentforAdmin extends React.Component {
                   />
                 </span>
               ) : (
-                <div
-                  style={{
-                    height: "100px",
-                    width: "75px",
-                    backgroundColor: "grey"
-                  }}
-                />
+                <div className="empty-photo">
+                  <div className="text-empty-picture">
+                    Cliquez pour ajouter une photo
+                  </div>
+                </div>
               )}
             </ReactFileReader>
 
