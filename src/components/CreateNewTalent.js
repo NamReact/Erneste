@@ -23,7 +23,7 @@ class CreateNewTalent extends React.Component {
       wantedSize: "",
       actualTitle: "",
       wantedTitle: [],
-      status: "1"
+      status: null
     },
     description: {
       idealCompany: "",
@@ -38,10 +38,42 @@ class CreateNewTalent extends React.Component {
     loadingTitle: true,
     loadingSector: true,
     arrayOfSectors: [],
-    arrayOfTitles: []
+    arrayOfTitles: [],
+    sectorSelect: false,
+    sizeSelect: false,
+    titleSelect: false,
+    statusSelect: false,
+    actualSelect: null
   };
 
+  /* ** INTERRUPTERS ** */
+
+  showTagList = () => {
+    this.setState({ tagList: !this.state.tagList });
+  };
+
+  sectorSelect = () => {
+    this.setState({ sectorSelect: !this.state.sectorSelect });
+  };
+
+  sizeSelect = () => {
+    this.setState({ sizeSelect: !this.state.sizeSelect });
+  };
+
+  titleSelect = () => {
+    this.setState({ titleSelect: !this.state.titleSelect });
+  };
+
+  statusSelect = () => {
+    this.setState({ statusSelect: !this.state.statusSelect });
+  };
+
+  /* ***** */
+
+  /* ** ON CHANGE FUNCTIONS ** */
+
   /* Function to save picture */
+
   handleFiles = files => {
     const informations = { ...this.state.informations };
     informations.photo = { ...informations.photo };
@@ -52,89 +84,77 @@ class CreateNewTalent extends React.Component {
     });
   };
 
-  setTag = tag => {
-    const tagArray = this.state.skills;
-    tagArray.push(tag);
-    this.setState({ skills: tagArray });
-  };
+  /* Function to handle wantedSector change */
 
-  showTagList = () => {
-    this.setState({ tagList: !this.state.tagList });
-  };
-
-  /* Function to handle wantedSector change*/
-
-  handlewantedSector = e => {
+  handleWantedSector = e => {
     const informationsCopy = this.state.informations;
     informationsCopy.wantedSector = [...this.state.informations.wantedSector];
     for (let i = 0; i < this.state.arrayOfSectors.length; i++) {
-      if (e.target.value === this.state.arrayOfSectors[i].name) {
+      if (e.target.id === this.state.arrayOfSectors[i]._id) {
         informationsCopy.wantedSector.push(this.state.arrayOfSectors[i]);
       }
     }
-    this.setState({ informations: informationsCopy });
+    this.setState({ informations: informationsCopy, sectorSelect: false });
   };
 
   /* Function to handle wantedTitle change*/
 
-  handlewantedTitle = e => {
+  handleWantedTitle = e => {
     const informationsCopy = this.state.informations;
     informationsCopy.wantedTitle = [...this.state.informations.wantedTitle];
     for (let i = 0; i < this.state.arrayOfTitles.length; i++) {
-      if (e.target.value === this.state.arrayOfTitles[i].name) {
+      if (e.target.id === this.state.arrayOfTitles[i]._id) {
         informationsCopy.wantedTitle.push(this.state.arrayOfTitles[i]);
       }
     }
-    this.setState({ informations: informationsCopy });
+    this.setState({ informations: informationsCopy, titleSelect: false });
   };
 
   /* Function to handle company size */
 
   handleSize = e => {
     const informations = this.state.informations;
-    if (e.target.value === "Petite") {
-      informations.wantedSize = { ...informations.wantedSize };
-      informations.wantedSize = "Petite";
-      this.setState({ informations });
-    }
-    if (e.target.value === "Grosse") {
-      informations.wantedSize = { ...informations.wantedSize };
-      informations.wantedSize = "Grosse";
-      this.setState({ informations });
-    }
+    informations.size = e.target.id;
+    this.setState({ informations, sizeSelect: false });
   };
 
   /* Function to set availability */
+
   handleAvailability = e => {
     const informations = this.state.informations;
-    if (e.target.value === "1") {
-      informations.status = { ...informations.status };
-      informations.status = "1";
-      this.setState({ informations });
-    }
-    if (e.target.value === "2") {
-      informations.status = { ...informations.status };
-      informations.status = "2";
-      this.setState({ informations });
-    }
-    if (e.target.value === "3") {
-      informations.status = { ...informations.status };
-      informations.status = "3";
-      this.setState({ informations });
-    }
-    if (e.target.value === "4") {
-      informations.status = { ...informations.status };
-      informations.status = "4";
-      this.setState({ informations });
-    }
+    informations.status = e.target.id;
+    this.setState({ informations });
   };
 
-  /* Function to poste new talent */
+  /* Function to set and remove tags */
+
+  setTag = tag => {
+    const tagArray = this.state.skills;
+    tagArray.push(tag);
+    this.setState({ skills: tagArray });
+  };
+
+  removeTag = e => {
+    const skillsArray = [...this.state.skills];
+    for (let i = 0; i < skillsArray.length; i++) {
+      if (skillsArray[i]._id === e.target.id) {
+        skillsArray.splice(i, 1);
+        break;
+      }
+    }
+    this.setState({ skills: skillsArray });
+  };
+
+  /* ***** */
+
+  /* ** CREATE A TALENT ** */
+
   createTalent = async e => {
+    /* The API require an array of strings for those keys */
+
     const skills = this.state.skills.map(tag => {
       return tag._id;
     });
-
     const wantedSectorstoPost = this.state.informations.wantedSector.map(
       item => {
         return item._id;
@@ -164,9 +184,13 @@ class CreateNewTalent extends React.Component {
   };
 
   render() {
+    /* Loader */
+
     if (this.state.loadingTitle === true || this.state.loadingSector === true) {
       return <p>En cours de chargement...</p>;
     }
+
+    /* *** */
 
     const informations = { ...this.state.informations };
     const description = this.state.description;
@@ -174,29 +198,23 @@ class CreateNewTalent extends React.Component {
     const lastUpdate = this.state.lastUpdate;
     let dotColor = "";
 
-    const skillsArray = skills
-      .map(tag => {
-        return tag.name;
-      })
-      .join(" ");
-
     /* Conditions for the color of the dot */
 
-    if (this.state.informations.status === "1") {
+    if (this.state.informations.status === "Recherche active") {
       dotColor = "#9EBA83";
     }
-    if (this.state.informations.status === "2") {
+    if (this.state.informations.status === "Ouvert(e) aux opportunités") {
       dotColor = "#F2E9A7";
     }
-    if (this.state.informations.status === "3") {
+    if (this.state.informations.status === "Ne pas être contacter") {
       dotColor = "#FF9D9D";
     }
-    if (this.state.informations.status === "4") {
+    if (this.state.informations.status === "Embauché(e) par Erneste") {
       dotColor = "#6A6A8F";
     }
 
     return (
-      <div className="content" onClick={this.onClick}>
+      <div className="content">
         {this.state.redirect && (
           <Redirect to={"/admin/talent/" + this.state.idTalentCreated} />
         )}
@@ -209,15 +227,19 @@ class CreateNewTalent extends React.Component {
               handleFiles={this.handleFiles}
             >
               {informations.photo !== null ? (
-                <span>
+                <span className="talent-picture-container">
                   <img
+                    className="talent-picture"
                     src={informations.photo}
                     alt="portrait of talent"
-                    className="talentPicture"
                   />
                 </span>
               ) : (
-                <div className="empty-photo" />
+                <div className="empty-photo">
+                  <div className="text-empty-picture">
+                    Cliquez pour ajouter une photo
+                  </div>
+                </div>
               )}
             </ReactFileReader>
 
@@ -271,7 +293,7 @@ class CreateNewTalent extends React.Component {
                 id="email"
                 name="email"
                 value={informations.email}
-                placeholder="email"
+                placeholder="Email"
                 onChange={e => {
                   const informations = { ...this.state.informations };
                   informations.email = { ...informations.email };
@@ -287,7 +309,7 @@ class CreateNewTalent extends React.Component {
                 id="phone number"
                 name="phone number"
                 value={informations.phoneNumber}
-                placeholder="numéro téléphone"
+                placeholder="Numéro de téléphone"
                 onChange={e => {
                   const informations = { ...this.state.informations };
                   informations.phoneNumber = { ...informations.phoneNumber };
@@ -303,7 +325,7 @@ class CreateNewTalent extends React.Component {
                 id="Wage"
                 name="Wage"
                 value={informations.salary}
-                placeholder="salaire"
+                placeholder="Salaire"
                 onChange={e => {
                   const informations = { ...this.state.informations };
                   informations.salary = { ...informations.salary };
@@ -336,10 +358,11 @@ class CreateNewTalent extends React.Component {
               <div>
                 {this.state.informations.wantedSector.map((item, index) => {
                   return (
-                    <div key={index}>
+                    <div className="displayed-array" key={index}>
                       {item.name}
                       <div
                         id={index}
+                        className="displayed-array-delete"
                         onClick={e => {
                           const id = e.target.id;
                           const informations = { ...this.state.informations };
@@ -357,23 +380,83 @@ class CreateNewTalent extends React.Component {
                   );
                 })}
               </div>
-              <select
-                value={this.state.arrayOfSectors[0].name}
-                onChange={this.handlewantedSector}
-              >
-                {this.state.arrayOfSectors.map((sector, index) => {
-                  return <option key={index}>{sector.name}</option>;
-                })}
-              </select>
+              <div className="relative-container">
+                <div
+                  className="select-container"
+                  style={{
+                    borderColor: this.state.sectorSelect && "#333266",
+                    color: this.state.sectorSelect && "#333266"
+                  }}
+                  onClick={this.sectorSelect}
+                >
+                  <div>Ajouter un secteur</div>
+                  {this.state.sectorSelect === false ? (
+                    <div>{">"}</div>
+                  ) : (
+                    <div>{"<"}</div>
+                  )}
+                </div>
+                {this.state.sectorSelect && (
+                  <div id="sector-list" className="sector-list">
+                    {this.state.arrayOfSectors.map((sector, index) => {
+                      return (
+                        <div
+                          id={sector._id}
+                          key={index}
+                          onClick={this.handleWantedSector}
+                          className="tag-option"
+                        >
+                          {sector.name}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
 
               <div>Taille d'entreprise souhaitée</div>
-              <select
-                value={this.state.informations.wantedSize}
-                onChange={this.handleSize}
-              >
-                <option value="Petite">Petite entreprise</option>
-                <option value="Grosse">Grosse entreprise</option>
-              </select>
+
+              <div className="relative-container">
+                <div
+                  className="select-container"
+                  style={{
+                    borderColor: this.state.sizeSelect && "#333266",
+                    color: this.state.sizeSelect && "#333266"
+                  }}
+                  onClick={this.sizeSelect}
+                >
+                  {this.state.informations.size ? (
+                    <div style={{ color: "#333266" }}>
+                      {this.state.informations.size}
+                    </div>
+                  ) : (
+                    <div>Choisir une taille</div>
+                  )}
+                  {this.state.sizeSelect === false ? (
+                    <div>{">"}</div>
+                  ) : (
+                    <div>{"<"}</div>
+                  )}
+                </div>
+                {this.state.sizeSelect && (
+                  <div className="size-list">
+                    <div
+                      id="Petite"
+                      onClick={this.handleSize}
+                      className="tag-option"
+                    >
+                      Petite
+                    </div>
+                    <div
+                      id="Grande"
+                      onClick={this.handleSize}
+                      className="tag-option"
+                    >
+                      Grande
+                    </div>
+                  </div>
+                )}
+              </div>
 
               <div>Fonction actuelle</div>
               <input
@@ -395,10 +478,11 @@ class CreateNewTalent extends React.Component {
               <div>
                 {this.state.informations.wantedTitle.map((item, index) => {
                   return (
-                    <div key={index}>
+                    <div className="displayed-array" key={index}>
                       {item.name}
                       <div
                         id={index}
+                        className="displayed-array-delete"
                         onClick={e => {
                           const id = e.target.id;
                           const informations = { ...this.state.informations };
@@ -415,37 +499,122 @@ class CreateNewTalent extends React.Component {
                   );
                 })}
               </div>
-              <select
-                value={this.state.arrayOfTitles[0].name}
-                onChange={this.handlewantedTitle}
-              >
-                {this.state.arrayOfTitles.map((title, index) => {
-                  return <option key={index}>{title.name}</option>;
-                })}
-              </select>
+
+              <div className="relative-container">
+                <div
+                  className="select-container"
+                  style={{
+                    borderColor: this.state.titleSelect && "#333266",
+                    color: this.state.titleSelect && "#333266"
+                  }}
+                  onClick={this.titleSelect}
+                >
+                  <div>Ajouter une fonction</div>
+                  {this.state.titleSelect === false ? (
+                    <div>{">"}</div>
+                  ) : (
+                    <div>{"<"}</div>
+                  )}
+                </div>
+                {this.state.titleSelect && (
+                  <div className="sector-list">
+                    {this.state.arrayOfTitles.map((title, index) => {
+                      return (
+                        <div
+                          id={title._id}
+                          key={index}
+                          onClick={this.handleWantedTitle}
+                          className="tag-option"
+                        >
+                          {title.name}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </form>
+
             <div>Statut</div>
-            <div className="availability">
-              <div style={{ backgroundColor: dotColor }} />
-              <select
-                value={this.state.informations.status}
-                onChange={this.handleAvailability}
+
+            <div className="relative-container">
+              <div
+                className="select-container"
+                style={{
+                  borderColor: this.state.statusSelect && "#333266",
+                  color: this.state.statusSelect && "#333266"
+                }}
+                onClick={this.statusSelect}
               >
-                <option value="1">Recherche active</option>
-                <option value="2">Ouvert(e) aux opportunités</option>
-                <option value="3">Ne souhaite pas être contacté(e)</option>
-                <option value="4">Embauché(e) par Erneste</option>
-              </select>
+                <div className="availability-dot">
+                  <div
+                    style={{
+                      backgroundColor: dotColor,
+                      borderWidth: this.state.informations.status
+                        ? "none"
+                        : "1px",
+                      borderStyle: this.state.informations.status
+                        ? "none"
+                        : "solid"
+                    }}
+                  />
+                </div>
+                {this.state.informations.status ? (
+                  <div style={{ color: "#333266" }}>
+                    {this.state.informations.status}
+                  </div>
+                ) : (
+                  <div>Modifier le statut</div>
+                )}
+
+                {this.state.statusSelect === false ? (
+                  <div>{">"}</div>
+                ) : (
+                  <div>{"<"}</div>
+                )}
+              </div>
+              {this.state.statusSelect && (
+                <div className="sector-list">
+                  <div
+                    id="Recherche active"
+                    className="tag-option"
+                    onClick={this.handleAvailability}
+                  >
+                    Recherche active
+                  </div>
+                  <div
+                    id="Ouvert(e) aux opportunités"
+                    className="tag-option"
+                    onClick={this.handleAvailability}
+                  >
+                    Ouvert(e) aux opportunités
+                  </div>
+                  <div
+                    id="Ne pas être contacter"
+                    className="tag-option"
+                    onClick={this.handleAvailability}
+                  >
+                    Ne pas être contacter
+                  </div>
+                  <div
+                    id="Embauché(e) par Erneste"
+                    className="tag-option"
+                    onClick={this.handleAvailability}
+                  >
+                    Embauché(e) par Erneste
+                  </div>
+                </div>
+              )}
             </div>
 
             <div>{lastUpdate}</div>
           </div>
 
-          <div>
+          <div className="right-container">
             <div>Fiche talent</div>
             <form>
               <div className="wishes">
-                <div>L'entreprise idéale</div>
+                <h3>L'entreprise idéale</h3>
                 <textarea
                   id="ideal firm"
                   name="ideal firm"
@@ -461,7 +630,7 @@ class CreateNewTalent extends React.Component {
                   }}
                 />
 
-                <div>Mon rôle idéal</div>
+                <h3>Mon rôle idéal</h3>
                 <textarea
                   id="ideal role"
                   name="ideal role"
@@ -478,8 +647,8 @@ class CreateNewTalent extends React.Component {
                 />
               </div>
               <div className="allWishes">
-                <div className="wishes">
-                  <div>Mes conditions idéales</div>
+                <div className="sub-wishes">
+                  <h3>Mes conditions idéales</h3>
                   <textarea
                     id="ideal environment"
                     name="ideal environment"
@@ -497,7 +666,7 @@ class CreateNewTalent extends React.Component {
                     }}
                   />
 
-                  <div>Mes ambitions d'évolution</div>
+                  <h3>Mes ambitions d'évolution</h3>
                   <textarea
                     id="ambitions"
                     name="ambitions"
@@ -515,9 +684,56 @@ class CreateNewTalent extends React.Component {
                 </div>
 
                 <div className="skills">
-                  <div>Skills</div>
-                  <textarea name="hardskills" value={skillsArray} required />
-                  <div onClick={this.showTagList}>Show tag list</div>
+                  <h3>Skills</h3>
+
+                  {/* skillsArray */}
+                  {this.state.skills.length > 0 ? (
+                    <div>
+                      {this.state.skills.map(tag => {
+                        return (
+                          <div
+                            key={tag._id}
+                            className="tag"
+                            style={{
+                              backgroundColor:
+                                tag.type === "hard" ? "#333266" : "#EF6364"
+                            }}
+                          >
+                            <div className="tag-name">{tag.name}</div>
+                            <div
+                              id={tag._id}
+                              className="remove-tag"
+                              onClick={this.removeTag}
+                            >
+                              x
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    false
+                  )}
+                  {/*  <textarea name="hardskills" value={skillsArray} required /> */}
+
+                  <div className="add-skills">
+                    <div
+                      onClick={this.showTagList}
+                      className="add-skills-button"
+                    >
+                      {this.state.tagList === false
+                        ? "+ Ajouter skills"
+                        : "- Fermer la liste"}
+                    </div>
+                    {this.state.tagList === true ? (
+                      <TagList
+                        class="tag-pop-up"
+                        listClass="pop-up-list"
+                        buttons="tag-list-buttons"
+                        setTag={this.setTag}
+                      />
+                    ) : null}
+                  </div>
                 </div>
               </div>
             </form>
@@ -531,9 +747,6 @@ class CreateNewTalent extends React.Component {
               </div>
             </div>
           </div>
-          {this.state.tagList === true ? (
-            <TagList setTag={this.setTag} />
-          ) : null}
         </div>
       </div>
     );
