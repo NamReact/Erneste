@@ -17,7 +17,7 @@
   flex: 3;
 }
 
-.talentList-right-block-wantedTitle {
+.talentList-right-block-wantedTitle-title {
   flex: 2;
 }
 
@@ -39,9 +39,12 @@
 
 .chevron-filter {
   background-color: white;
+  min-height: 200px;
   width: 200px;
   position: absolute;
+  z-index: 2;
   border: 2px solid lightgray;
+  top: 200px;
 }
 
 .filter-line {

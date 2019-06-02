@@ -40,7 +40,7 @@ class TalentforTalent extends React.Component {
           description: this.state.description,
           skills: this.state.skills
         },
-        { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
+        { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
       );
     }
   };

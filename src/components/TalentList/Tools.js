@@ -12,10 +12,23 @@ function Tools(props) {
         searchType={event => {
           props.searchType(event);
         }}
+        onClickClearSearch={props.onClickClearSearch}
       />
       <AddTalent />
+
+      {/* Bouton qui apparait lorsqu'on click sur un talent à supprimer */}
       {props.delete === true && (
         <DeleteButton deleteClick={props.deleteClick} />
+      )}
+
+      {/* Bouton qui apparait lorsqu'un filtre en chevron est sélectionné */}
+      {props.chevronFilter.length > 0 && (
+        <div
+          className="tools-deleteFilter"
+          onClick={props.onDeleteChevronFilterClick}
+        >
+          Supprimer les filtres
+        </div>
       )}
     </div>
   );

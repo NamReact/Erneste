@@ -19,18 +19,20 @@
   flex-direction: column;
   justify-content: center;
   position: relative;
-  margin: 10px 10px;
-  padding: 5px 10px;
 }
-.tagList-input {
-  outline: none;
-  border: none;
-  overflow: scroll;
+.tagFilterInput {
+  border: 1px solid #999;
+  padding: 0.5rem;
+  width: 300px;
+  margin-top: 100px;
 }
+
 .tagList-tagShown {
   margin: 10px 10px;
   padding: 5px 10px;
   color: white;
+  display: flex;
+  flex-direction: row;
 }
 
 .hardSkill {
@@ -41,17 +43,65 @@
   background-color: #ff6666;
 }
 
-.tagList-proposition {
-  background-color: white;
+.tagList-deleteSingleTag {
+  margin-left: 20px;
+}
+
+.tagList-deleteSingleTag:hover {
+  cursor: pointer;
+}
+
+.tagList-suggestions {
+  border: 1px solid #999;
+  border-top-width: 0;
   display: flex;
   flex-direction: column;
-  width: 150px;
-  height: 120px;
-  border: 2px solid lightgray;
+  margin-top: 30px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-left: 0;
   position: absolute;
-  bottom: -120px;
+  width: calc(300px + 1rem);
+  z-index: 1;
+  background-color: white;
+}
+
+.tagList-no-suggestions {
+  border: 1px solid #999;
+  border-top-width: 0;
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-left: 0;
+  position: absolute;
+  width: calc(300px + 1rem);
+  z-index: 1;
+  background-color: white;
+}
+
+.tagList-suggestion-active,
+.tagList-suggestions div:hover {
+  background-color: #008f68;
+  color: #fae042;
+  cursor: pointer;
+  font-weight: 700;
 }
 
 .tagList-filterTitle {
   margin-bottom: 15px;
+}
+
+.tagList-deleteAllTag:hover {
+  cursor: pointer;
+}
+
+.tagList-deleteAllTag {
+  height: 24px;
+  width: 24px;
+  background-color: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
