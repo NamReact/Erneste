@@ -33,31 +33,44 @@ function TalentLine(props) {
           props.deleteCheckBox(talent._id);
         }}
       />
+
+      {/* NAME */}
       <Link
         to={`/admin/talent/${talent._id}`}
         className="talentList-right-block-name"
       >
         {`${talent.informations.firstName} ${talent.informations.lastName}`}
       </Link>
+
+      {/* ACTUAL TITLE */}
       <div className="talentList-right-block-actualTitle">
         {talent.informations.actualTitle}
       </div>
+
+      {/* ACTUAL COMPANY */}
       <div className="talentList-right-block-actualCompany">
         {talent.informations.actualCompany}
       </div>
+
+      {/* WANTED TITLE */}
       <div className="talentList-right-block-wantedTitle">
         {talent.informations.wantedTitle.map((element, index) => {
           return <div key={index}>{element}</div>;
         })}
       </div>
+
+      {/* VALIDATED */}
       <div className="talentList-right-block-validated-line">
         {talent.validated === true && <i className="fas fa-check fa-2x" />}
         {talent.validated === false && <i className="fas fa-times fa-2x" />}
       </div>
+
+      {/* STATUS */}
       <div className="talentList-right-block-status">
         <div className={classNameStatus} />
       </div>
 
+      {/* LAST UPDATE*/}
       <div className="talentList-right-block-lastUpdate-line">
         {talent.lastUpdate}
       </div>

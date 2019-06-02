@@ -7,13 +7,20 @@ import TalentList from "./TalentList";
 import HeaderAdmin from "../HeaderAdmin";
 import Tools from "./Tools";
 import "./TalentListPage.css";
-import { booleanLiteral } from "@babel/types";
+
+/* Page to see the Talent List (HomePage of Admin)*/
 
 class TalentListPage extends React.Component {
   state = {
+    /* State updated from the GET in ComponentDiMount*/
     talentList: [],
+    titleList: [],
+    tagList: [],
     isLoading: true,
+
+    /* State for delete a line of talent */
     delete: false,
+
     searchInput: "",
     titleArray: [
       { value: "Nom", clicked: false, firstClicked: false },
@@ -24,21 +31,19 @@ class TalentListPage extends React.Component {
       { value: "Statut", clicked: false, firstClicked: false },
       { value: "Dernière modif.", clicked: false, firstClicked: false }
     ],
+
+    /* Chevron Filter State */
     chevronClikedPosition: null,
     chevronFilter: [],
     filterOrder: 0,
-    // tagList récupéré en GET
+
+    /* Tag Filter State */
     tagList: [],
-    // Valeur de l'input du tag
     tagFilterInputValue: "",
-    // tag qui sont affichés dans la div
     tagSuggestions: [],
     tagSuggestionsShown: false,
     tagListFiltered: [],
-    // Suggestion sur laquelle est l'utilisateur
-    tagActiveSuggestion: 0,
-    // Title
-    titleList: []
+    tagActiveSuggestion: 0
   };
 
   // Function to GET data from /talent
@@ -48,7 +53,7 @@ class TalentListPage extends React.Component {
       "https://ernest-server.herokuapp.com/talent/",
       { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
     );
-    // We switch the wantedTitle ID by its name so we can sort it and filter it
+    // We switch the wantedTitle ID by its name
 
     for (let i = 0; i < response.data.length; i++) {
       for (
@@ -80,7 +85,6 @@ class TalentListPage extends React.Component {
     for (let i = 0; i < response.data.length; i++) {
       if (typeof response.data[i].lastUpdate === "string") {
         response.data[i].lastUpdate = response.data[i].lastUpdate.split(",");
-        // ["29 05 2019","15 05 98"]
         response.data[i].lastUpdate[0] = response.data[i].lastUpdate[0]
           .trim()
           .split(" ");
@@ -140,12 +144,11 @@ class TalentListPage extends React.Component {
       for (let j = 0; j < response.data.length; j++) {
         if (response.data[j].lastUpdate === lastUpdateArray[i]) {
           responseSorted.push(response.data[j]);
-          // We put the lastUpdate from [[29,05,2019],[15,05,98]] to "29/05/2019"
         }
       }
     }
 
-    // We put the lastUpdate from [[29,05,2019],[15,05,98]] to [29/05/2019]
+    // Change lastUpdate from [[29,05,2019],[15,05,98]] to 29/05/2019
 
     for (let i = 0; i < responseSorted.length; i++) {
       responseSorted[i].lastUpdate = responseSorted[i].lastUpdate[0].join("/");
@@ -183,7 +186,22 @@ class TalentListPage extends React.Component {
     });
   };
 
-  // Function to POST id of 1 element we want to delete
+  /* DELETE OF A TALENT */
+
+  // Function to enable to delete a talent, also enable to display the "delete the selected profils" by changing the state delete
+  deleteCheckBox = async id => {
+    const talentListCopie = [...this.state.talentList];
+    let element = talentListCopie.find(toto => toto._id === id);
+    element.delete = !element.delete;
+    this.setState({ talentList: talentListCopie });
+    if (this.state.talentList.find(toto => toto.delete === true)) {
+      this.setState({ delete: true });
+    } else {
+      this.setState({ delete: false });
+    }
+  };
+
+  // Function to POST id of 1 talent we want to delete in dataBase
   deletePost = async toto => {
     await axios.post(
       "https://ernest-server.herokuapp.com/talent/delete",
@@ -194,14 +212,6 @@ class TalentListPage extends React.Component {
     );
   };
 
-  // Fonction pour sauvegarder l'input de recherche
-  searchType = event => {
-    this.setState({ searchInput: event });
-  };
-  // Fonction pour mettre la barre de recherche vide
-  onClickClearSearch = () => {
-    this.setState({ searchInput: "" });
-  };
   // Function that enable to delete element which are checked
   deleteClick = async toto => {
     const talentListCopie = [...this.state.talentList];
@@ -218,6 +228,16 @@ class TalentListPage extends React.Component {
     await this.getDataTalentList();
   };
 
+  /* SEARCH INPUT FUNCTION */
+
+  searchType = event => {
+    this.setState({ searchInput: event });
+  };
+  // Function to empty the input on click X
+  onClickClearSearch = () => {
+    this.setState({ searchInput: "" });
+  };
+
   deleteCheckBox = async id => {
     const talentListCopie = [...this.state.talentList];
     let element = talentListCopie.find(toto => toto._id === id);
@@ -230,6 +250,9 @@ class TalentListPage extends React.Component {
     }
   };
 
+  /* CHEVRON FILTER FUNCTION*/
+
+  // Function to detect click on a chevron
   chevronClick = toto => {
     const titleArrayCopie = [...this.state.titleArray];
     for (let i = 0; i < titleArrayCopie.length; i++) {
@@ -244,17 +267,16 @@ class TalentListPage extends React.Component {
     this.setState({ titleArray: titleArrayCopie });
   };
 
-  // Fonction pour supprimer tous les filtres des chevrons
+  // Function to clear all filters from chevron
   onDeleteChevronFilterClick = () => {
     let chevronFilterCopie = [...this.state.chevronFilter];
     chevronFilterCopie.splice(0, chevronFilterCopie.length);
     this.setState({ chevronFilter: chevronFilterCopie });
   };
 
-  // On crée un tableau avec les filtres, chaque filtre est un objet contenant sont titre,filtre,filterOrder
+  // Function to insert the filter chosen
   filterCheckBox = async (titleType, filterChosen) => {
     const chevronFilterCopie = [...this.state.chevronFilter];
-    //////////// 2ème version du filtre /////////////
     let titleTypePosition = chevronFilterCopie
       .map(element => {
         return element.title;
@@ -280,7 +302,7 @@ class TalentListPage extends React.Component {
         );
       }
 
-      // Si on retire tous les elements du filtre, alors on enlève l'élément du tableau de filtre et on réduit l'ordre de 1
+      // If we remove all elements of the filter, we splice the element from the array et we reduce the order of 1
 
       if (chevronFilterCopie[titleTypePosition].filter.length < 1) {
         let FilterRemovedOrder =
@@ -308,7 +330,10 @@ class TalentListPage extends React.Component {
     await this.setState({ chevronFilter: chevronFilterCopie });
   };
 
-  // On gère l'input du TagFilter
+  /* TAG FUNTION */
+
+  // Function that deals with the tag input
+
   onChangeTagInput = toto => {
     let tagListFiltered = this.state.tagList.filter(element => {
       return element.name.toLowerCase().indexOf(toto.toLowerCase()) > -1;
@@ -320,8 +345,8 @@ class TalentListPage extends React.Component {
     });
   };
 
+  // Function to put tag as a filter
   onClickTag = tag => {
-    // On crée copie du tableau
     let tagSuggestionsCopie = [...this.state.tagSuggestions];
     tagSuggestionsCopie.push(tag);
 
@@ -333,26 +358,23 @@ class TalentListPage extends React.Component {
     });
   };
 
+  // Function that detect keyboard Key on tagInput
   onKeyDownTagInput = e => {
-    // l'utilisateur appuie sur la touche Entrée
+    // ENTER, it adds the tag
     if (e.keyCode === 13) {
       let tagSuggestionsCopie = [...this.state.tagSuggestions];
-      // On push le tag qui était actif
       tagSuggestionsCopie.push(
         this.state.tagListFiltered[this.state.tagActiveSuggestion]
       );
-
       this.setState({
         tagSuggestions: tagSuggestionsCopie,
         tagFilterInputValue: "",
         tagActiveSuggestion: 0,
         tagSuggestionsShown: false
-
-        // On push ce qui est dans l'input en tag
       });
     }
 
-    // l'utilisateur appuie sur la touche du haut
+    // UP ARROW
     else if (e.keyCode === 38) {
       if (this.state.tagActiveSuggestion === 0) {
         return;
@@ -361,7 +383,9 @@ class TalentListPage extends React.Component {
           tagActiveSuggestion: this.state.tagActiveSuggestion - 1
         });
       }
-    } else if (e.keyCode === 40) {
+    }
+    // DOWN ARROW
+    else if (e.keyCode === 40) {
       if (
         this.state.tagActiveSuggestion - 1 ===
         this.state.tagListFiltered.length
@@ -371,19 +395,20 @@ class TalentListPage extends React.Component {
       this.setState({
         tagActiveSuggestion: this.state.tagActiveSuggestion + 1
       });
-    } else if (e.keyCode === 27) {
+    }
+    // ESCAPE
+    else if (e.keyCode === 27) {
       this.setState({ tagSuggestionsShown: false });
     }
-
-    // On push ce qui est dans l'input en tag
   };
 
+  // Function to delete all tag from the filter
   onDeleteAllTagClick = () => {
     let tagSuggestionsCopie = [...this.state.tagSuggestions];
     tagSuggestionsCopie.splice(0, tagSuggestionsCopie.length);
     this.setState({ tagSuggestions: tagSuggestionsCopie });
   };
-
+  // Function to delete one tag
   onSingleTagDeleteClick = index => {
     let tagSuggestionsCopie = [...this.state.tagSuggestions];
     tagSuggestionsCopie.splice(index, 1);
@@ -397,16 +422,17 @@ class TalentListPage extends React.Component {
       return "Loading....";
     }
 
-    // Copy of state talentListCopieFilter
     let talentListCopieFilter = [];
     let ArrayOfFilteredTalentList = [];
+
+    // Copie of TalentList state
     if (this.state.talentList.length > 0) {
       const talentListCopie = [...this.state.talentList];
       for (let i = 0; i < this.state.talentList; i++) {
         talentListCopie[i] = this.state.talentList[i];
       }
 
-      // FILTRE SUR LE RESEARCH INPUT
+      // FILTER THE LIST WITH THE SEARCH INPUT
 
       let filter = this.state.searchInput.toLowerCase();
       talentListCopieFilter = talentListCopie.filter(element => {
@@ -435,7 +461,7 @@ class TalentListPage extends React.Component {
         return bool;
       });
 
-      // FILTRE DES TAGS
+      // FILTER WITH TAGS
       let tagFilter = this.state.tagSuggestions;
 
       if (tagFilter.length > 0) {
@@ -465,7 +491,7 @@ class TalentListPage extends React.Component {
           }
         });
       }
-      //  FILTRE SUR CHAQUE COLONNE EN CLIQUANT SUR LES CHEVRONS
+      //  FILTER BY CLICKING ON CHEVRON
 
       // On crée un tableau qui stock les différentes listes filtrées
       //A la base il a la première liste filtrée par le research

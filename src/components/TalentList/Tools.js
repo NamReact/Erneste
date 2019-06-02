@@ -16,12 +16,12 @@ function Tools(props) {
       />
       <AddTalent />
 
-      {/* Bouton qui apparait lorsqu'on click sur un talent à supprimer */}
+      {/* Button that appears when a talent is clicked to be deleted*/}
       {props.delete === true && (
         <DeleteButton deleteClick={props.deleteClick} />
       )}
 
-      {/* Bouton qui apparait lorsqu'un filtre en chevron est sélectionné */}
+      {/* Button that appears when a chevron is selected as filter */}
       {props.chevronFilter.length > 0 && (
         <div
           className="tools-deleteFilter"

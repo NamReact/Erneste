@@ -20,10 +20,8 @@ function TitleLine(props) {
       chevronClicked = false;
     }
   }
-  // On crée des tableaux qui indiquent ce qu'il faut mettre dedans
-  // On compare le filterorder pour chaque titre et on lui attribue la liste correspondante
 
-  // Create an array with only function
+  // Create an array with only actualTitle displayed
   const actualTitleArray = [];
   let actualTitlePosition = chevronFilter
     .map(element => {
@@ -53,7 +51,7 @@ function TitleLine(props) {
   }
   actualTitleArray.sort();
 
-  // Create an array with only actualCompany
+  // Create an array with only actualCompany displayed
   const actualCompanyArray = [];
   let actualCompanyPosition = chevronFilter
     .map(element => {
@@ -85,7 +83,7 @@ function TitleLine(props) {
   }
   actualCompanyArray.sort();
 
-  // Create an array with wantedTitle
+  // Create an array with only wantedTitle displayed
   const wantedTitleArray = [];
   let wantedTitlePosition = chevronFilter
     .map(element => {
@@ -121,7 +119,7 @@ function TitleLine(props) {
   }
   wantedTitleArray.sort();
 
-  // Create an array with Validated
+  // Create an array with only Validated displayed
   const validatedArray = [];
   let validatedPosition = chevronFilter
     .map(element => {
@@ -149,7 +147,7 @@ function TitleLine(props) {
   }
   validatedArray.sort();
 
-  // Create an array with status
+  // Create an array with only status displayed
   const statusArray = [];
   let statusPosition = chevronFilter
     .map(element => {
@@ -175,7 +173,7 @@ function TitleLine(props) {
   }
   statusArray.sort();
 
-  // Create an array with lastUpdate
+  // Create an array with only lastUpdate displayed
   const lastUpdateArray = [];
   let lastUpdatePosition = chevronFilter
     .map(element => {

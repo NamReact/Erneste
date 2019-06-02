@@ -15,13 +15,7 @@ function TagFilter(props) {
     onSingleTagDeleteClick
   } = props;
 
-  // Filtre de la tagList en fonction de ce qui est dans l'input
-  // let tagListFiltered = tagList.filter(element => {
-  //   return (
-  //     element.name.toLowerCase().indexOf(tagFilterInputValue.toLowerCase()) > -1
-  //   );
-  // });
-  // Création de la div avec les suggestions
+  // Suggestions List is the list that appears when we fill the input
   let suggestionsList = null;
 
   if (tagFilterInputValue && tagSuggestionsShown) {
