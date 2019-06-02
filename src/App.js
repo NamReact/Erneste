@@ -10,6 +10,7 @@ import ClientList from "./components/ClientList/ClientList";
 import TalentforTalent from "./pages/TalentforTalent";
 import Login from "./components/Login";
 import Home from "./components/Home";
+import ClientforAdmin from "./components/ClientforAdmin/ClientforAdmin";
 
 class App extends React.Component {
   state = {
