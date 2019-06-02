@@ -70,7 +70,7 @@ class ClientList extends React.Component {
       <div>
         {/* header  */}
         <div>
-          <HeaderAdmin />
+          <HeaderAdmin pageType={"client"} />
         </div>
         {/* header---end  */}
 

@@ -416,6 +416,7 @@ class TalentListPage extends React.Component {
   };
 
   render() {
+    console.log(this.state.talentList);
     /* Test of Loading... */
 
     if (this.state.isLoading === true) {
@@ -437,19 +438,35 @@ class TalentListPage extends React.Component {
       let filter = this.state.searchInput.toLowerCase();
       talentListCopieFilter = talentListCopie.filter(element => {
         let bool = false;
-        if (element.informations.firstName.toLowerCase().includes(filter)) {
+        if (
+          element.informations.firstName &&
+          element.informations.firstName.toLowerCase().includes(filter)
+        ) {
           bool = true;
         }
-        if (element.informations.lastName.toLowerCase().includes(filter)) {
+
+        if (
+          element.informations.lastName &&
+          element.informations.lastName.toLowerCase().includes(filter)
+        ) {
           bool = true;
         }
-        if (element.informations.actualCompany.toLowerCase().includes(filter)) {
+        if (
+          element.informations.actualCompany &&
+          element.informations.actualCompany.toLowerCase().includes(filter)
+        ) {
           bool = true;
         }
-        if (element.informations.actualTitle.toLowerCase().includes(filter)) {
+        if (
+          element.informations.actualTitle &&
+          element.informations.actualTitle.toLowerCase().includes(filter)
+        ) {
           bool = true;
         }
-        if (element.informations.wantedTitle.length > 0) {
+        if (
+          element.informations.wantedTitle &&
+          element.informations.wantedTitle.length > 0
+        ) {
           for (let i = 0; i < element.informations.wantedTitle.length; i++) {
             if (
               element.informations.wantedTitle[i].toLowerCase().includes(filter)
@@ -568,7 +585,7 @@ class TalentListPage extends React.Component {
 
     return (
       <div>
-        <HeaderAdmin />
+        <HeaderAdmin pageType={"talent"} />
         <div className="container">
           <div className="talentList-container">
             <div className="talentList-left-block">

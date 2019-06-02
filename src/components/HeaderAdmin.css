@@ -30,12 +30,12 @@ header {
   cursor: pointer;
 }
 
-.headerAdmin-tools-talents {
+.headerAdmin-tools-active {
   color: #333366;
   margin-right: 50px;
 }
 
-.headerAdmin-element-tools-clients {
+.headerAdmin-tools-inactive {
   color: #c3c3d2;
   margin-right: 50px;
 }
@@ -44,7 +44,7 @@ header {
   text-decoration: none;
 }
 
-.headerAdmin-element-tools-logOut {
+.headerAdmin-tools-logOut {
   color: #a8b0d0;
 }
 .notSelected {
