@@ -5,7 +5,6 @@ import HeaderAdmin from "../HeaderAdmin";
 import AddClientForm from "./AddClientForm";
 
 import "./ClientList.css";
-import { cpus } from "os";
 
 class ClientList extends React.Component {
   state = {
@@ -26,6 +25,25 @@ class ClientList extends React.Component {
       PopUpAddClient: !this.state.PopUpAddClient
     });
   };
+
+  /*   renderStars(item) {
+    const stars = [];
+
+    for (let i = 0; i < 5; i++) {
+      if (i < item.ratingValue) {
+        stars.push(<Ionicons key={i} name="md-star" size={32} color="gold" />);
+      } else {
+        stars.push(<Ionicons key={i} name="md-star" size={32} color="grey" />);
+      }
+    }
+
+    return (
+      <div style={{ flexDirection: "row", alignItems: "center" }}>
+        {stars}
+       
+      </div>
+    );
+  } */
 
   render() {
     if (this.state.isLoading === true) {
@@ -67,59 +85,68 @@ class ClientList extends React.Component {
     });
 
     return (
-      <div>
+      <div className="content">
         {/* header  */}
+
         <div>
           <HeaderAdmin pageType={"client"} />
         </div>
         {/* header---end  */}
 
         {/* title  page : Clients & view  */}
+
         <div className="titlePage">
           <p> Clients</p>
-          <p> Affichés : {result.length}</p>
+          <p className="number-of-clients"> Affichés : {result.length}</p>
         </div>
         {/* title  page : Clients & view---end */}
+        <div className="frame">
+          {/* Search bar & button--start */}
+          <div className="boxSearchBarAndButton">
+            {/* 1-Search bar */}
+            <div className="all-searchbar">
+              <div className="research">
+                <div className="loupe">x</div>
+                <input
+                  type="search"
+                  name="searchFilter"
+                  placeholder="rechercher client, secteur, taille"
+                  className="searchbar"
+                  value={this.state.searchFilter}
+                  onChange={this.handleChange}
+                />
+              </div>
 
-        {/* Search bar & button--start */}
-        <div className="boxSearchBarAndButton">
-          {/* 1-Search bar */}
-          <input
-            type="search"
-            name="searchFilter"
-            placeholder="rechercher client, secteur, taille"
-            className="searchbar"
-            value={this.state.searchFilter}
-            onChange={this.handleChange}
-          />
-          {/* 2-button */}
-          <button onClick={this.togglePopup} className="addClientButton">
-            {" "}
-            ajouter un client
-          </button>
-          {/* 2-1 page ajout client */}
-          <div className="addClientPage">
-            {this.state.PopUpAddClient ? (
-              <AddClientForm
-                className="popUpWindow"
-                text="Close Me"
-                closePopup={this.togglePopup}
-              />
-            ) : null}
+              {/* 2-button */}
+              <div className="all-button-add-client">
+                <div>+</div>
+                <button onClick={this.togglePopup} className="addClientButton">
+                  Ajouter un client
+                </button>
+              </div>
+            </div>
+
+            {/* 2-1 page ajout client */}
+            <div className="addClientPage">
+              {this.state.PopUpAddClient ? (
+                <AddClientForm
+                  className="popUpWindow"
+                  text="Close Me"
+                  closePopup={this.togglePopup}
+                />
+              ) : null}
+            </div>
           </div>
-        </div>
-        {/* Search bar & button---end */}
+          {/* Search bar & button---end */}
 
-        {/* Clientlist array fulllength box--start */}
-        <div className="clientListBox">
-          {/* Clientlist array Entries--start */}
-          <div className="clientArrayEntries">
-            <ul>
-              <li>
+          {/* Clientlist array fulllength box--start */}
+          <div>
+            {/* Clientlist array Entries--start */}
+
+            <ul className="clientArrayEntries">
+              <li className="button-and-note">
                 <button className="deleteAll" />
-              </li>
-              <li>
-                Note <span>▿</span>
+                <div>Note</div> <span>▿</span>
               </li>
               <li>
                 Entreprise <span>▿</span>
@@ -137,39 +164,43 @@ class ClientList extends React.Component {
                 Recrutements <span>▿</span>
               </li>
             </ul>
-          </div>
-          {/* Clientlist array boxEntries--end */}
-          {/* clientList array item*/}
-          <div className="clientListItemContainer">
+
+            {/* Clientlist array boxEntries--end */}
+
+            {/* clientList array item*/}
             <div>
-              {result.map((client, id) => {
-                const field = { ...client.field };
-                console.log(field);
-                return (
-                  <ul key={client._id} className="clientListItem">
-                    <li>
-                      <button className="deleteAll" />
-                    </li>
-                    <li>{client.rating ? client.numberOfUser : "0"}</li>
+              <div>
+                {result.map((client, id) => {
+                  const field = { ...client.field };
 
-                    <li>
-                      <a href="#">{client.name}</a>
-                    </li>
-                    <li>{field[0].name}</li>
+                  return (
+                    <ul key={client._id} className="clientListItem">
+                      <li>
+                        <button className="deleteAll" />
+                        {client.rating ? client.numberOfUser : "0"}
+                      </li>
 
-                    <li>{client.size}</li>
-                    <li>{client.numberOfUser ? client.numberOfUser : "0"}</li>
-                    <li>{client.recruited ? client.recruited : "0"}</li>
-                  </ul>
-                );
-              })}
+                      <li>
+                        <a href="#">{client.name}</a>
+                      </li>
+                      <li>{field[0].name}</li>
+
+                      <li>{client.size}</li>
+                      <li>{client.numberOfUser ? client.numberOfUser : "0"}</li>
+                      <li>{client.recruited ? client.recruited : "0"}</li>
+                    </ul>
+                  );
+                })}
+              </div>
             </div>
+            {/* clientList array item---end*/}
           </div>
-          {/* clientList array item---end*/}
+
+          {/* Clientlistarraybox fulllength--end*/}
+          {/* page-end */}
         </div>
 
-        {/* Clientlistarraybox fulllength--end*/}
-        {/* page-end */}
+        {/* Search bar & button--start */}
       </div>
     );
   }
