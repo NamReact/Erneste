@@ -156,39 +156,8 @@ class TalentforAdmin extends React.Component {
 
   handleAvailability = e => {
     const informations = this.state.informations;
-<<<<<<< HEAD
-    if (e.target.value === "1") {
-      informations.status = { ...informations.status };
-      informations.status = "1";
-      this.setState({ informations });
-    }
-    if (e.target.value === "2") {
-      informations.status = { ...informations.status };
-      informations.status = "2";
-      this.setState({ informations });
-    }
-    if (e.target.value === "3") {
-      informations.status = { ...informations.status };
-      informations.status = "3";
-      this.setState({ informations });
-    }
-    if (e.target.value === "4") {
-      informations.status = { ...informations.status };
-      informations.status = "4";
-      this.setState({ informations });
-    }
-    await axios.post(
-      "https://ernest-server.herokuapp.com/talent/update",
-      {
-        id: this.state.id,
-        informations: this.state.informations
-      },
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
-    );
-=======
     informations.status = e.target.id;
     this.setState({ informations });
->>>>>>> 18fd3fb1a097ee610dcf259ddf4ca2c4d6c45ee4
   };
 
   /* Function to set and remove tags */
