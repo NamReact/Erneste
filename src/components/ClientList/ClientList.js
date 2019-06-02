@@ -31,9 +31,9 @@ class ClientList extends React.Component {
 
     for (let i = 0; i < 5; i++) {
       if (i < item.ratingValue) {
-        stars.push(<Ionicons key={i} name="md-star" size={32} color="gold" />);
+        stars.push(<i class="fas fa-star"></i>);
       } else {
-        stars.push(<Ionicons key={i} name="md-star" size={32} color="grey" />);
+        stars.push(<<i class="far fa-star"></i>);
       }
     }
 
@@ -88,7 +88,7 @@ class ClientList extends React.Component {
       <div className="content">
         {/* header  */}
 
-        <div>
+        <div className="header-of-page">
           <HeaderAdmin pageType={"client"} />
         </div>
         {/* header---end  */}
@@ -106,7 +106,9 @@ class ClientList extends React.Component {
             {/* 1-Search bar */}
             <div className="all-searchbar">
               <div className="research">
-                <div className="loupe">x</div>
+                <div className="loupe">
+                  <i class="fas fa-search" />
+                </div>
                 <input
                   type="search"
                   name="searchFilter"
@@ -119,7 +121,9 @@ class ClientList extends React.Component {
 
               {/* 2-button */}
               <div className="all-button-add-client">
-                <div>+</div>
+                <div>
+                  <i class="fas fa-plus" />
+                </div>
                 <button onClick={this.togglePopup} className="addClientButton">
                   Ajouter un client
                 </button>
@@ -146,22 +150,40 @@ class ClientList extends React.Component {
             <ul className="clientArrayEntries">
               <li className="button-and-note">
                 <button className="deleteAll" />
-                <div>Note</div> <span>▿</span>
+                <div>Note</div>
+                <span>
+                  <i class="fas fa-sort-down" />
+                </span>
               </li>
               <li>
-                Entreprise <span>▿</span>
+                Entreprise
+                <span>
+                  <i class="fas fa-sort-down" />
+                </span>
               </li>
               <li>
-                Secteur <span>▿</span>
+                Secteur
+                <span>
+                  <i class="fas fa-sort-down" />
+                </span>
               </li>
               <li>
-                Taille <span>▿</span>
+                Taille
+                <span>
+                  <i class="fas fa-sort-down" />
+                </span>
               </li>
               <li onClick={this.ShowNewSector}>
-                Comptes <span>▿</span>
+                Comptes
+                <span>
+                  <i class="fas fa-sort-down" />
+                </span>
               </li>
               <li>
-                Recrutements <span>▿</span>
+                Recrutements
+                <span>
+                  <i class="fas fa-sort-down" />
+                </span>
               </li>
             </ul>
 

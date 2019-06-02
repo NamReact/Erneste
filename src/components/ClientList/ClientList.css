@@ -8,10 +8,17 @@
   background-color: rgb(254, 254, 254);
 }
 
+.header-of-page {
+  width: var(--center-body);
+  margin: auto;
+  background-color: rgb(254, 254, 254);
+}
+
 .frame {
   width: var(--center-body);
   margin: auto;
-  background-color: rgb(250, 250, 252);
+
+  background-color: rgb(254, 254, 254);
   border-radius: 2px;
   box-shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
 }
@@ -21,6 +28,7 @@
 .titlePage {
   width: var(--center-body);
   margin: auto;
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
   font-size: 40px;
@@ -64,6 +72,8 @@
 .searchbar {
   height: var(--input-height);
   width: 400px;
+}
+.searchbar:focus {
   outline: none;
 }
 

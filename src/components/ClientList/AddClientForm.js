@@ -80,9 +80,10 @@ class AddClientForm extends React.Component {
             <p>Ajouter un nouveau client</p>
 
             <button className="closingButton" onClick={this.props.closePopup}>
-              X
+              <i class="fas fa-times" />
             </button>
           </div>
+
           <div className="formContainer">
             <form onSubmit={this.handleSubmit}>
               <div>
@@ -129,8 +130,11 @@ class AddClientForm extends React.Component {
                 </select>
               </div>
               <div>
-                <div className="addnewtalent" onClick={this.ShowNewSector}>
-                  <p>+</p> <p>nouveau secteur</p>
+                <div className="addnewsector" onClick={this.ShowNewSector}>
+                  <p>
+                    <i class="fas fa-plus" />
+                  </p>{" "}
+                  <p>nouveau secteur</p>
                 </div>
                 {this.state.addNewSectorDiv === true ? (
                   <div>
@@ -175,8 +179,12 @@ class AddClientForm extends React.Component {
                 />
               </div>
               <div className="submitButtons">
-                <button onClick={this.props.closePopup}>Annuler</button>
-                <button type="submit">ajouter</button>
+                <button onClick={this.props.closePopup} className="annuler">
+                  Annuler
+                </button>
+                <button type="submit" className="ajouter">
+                  Ajouter
+                </button>
               </div>
             </form>
             {/* affichage de l'état de la validation du formulaire */}
