@@ -229,9 +229,9 @@ class CreateNewTalent extends React.Component {
               {informations.photo !== null ? (
                 <span className="talent-picture-container">
                   <img
+                    className="talent-picture"
                     src={informations.photo}
                     alt="portrait of talent"
-                    className="talentPicture"
                   />
                 </span>
               ) : (

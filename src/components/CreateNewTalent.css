@@ -73,9 +73,9 @@ h3 {
 .talent-picture {
   margin: 0 auto 20px auto;
   cursor: pointer;
-  border-radius: 5px;
-  height: 180px;
-  width: 170px;
+  border-radius: 4px;
+  height: 220px;
+  width: 220px;
   object-fit: cover;
   overflow: hidden;
 }
@@ -330,6 +330,7 @@ h3 {
   padding: 8px 10px;
   border-radius: 5px;
   margin-left: 20px;
+  cursor: pointer;
 }
 
 .cancel {
@@ -350,4 +351,65 @@ textarea {
   overflow: scroll;
   font-size: 14px;
   color: #31313c;
+}
+
+/* A EXTRAIRE POUR TALENT-INFO-DISPLAY */
+
+.display-container {
+  position: relative;
+}
+
+.display-div {
+  width: 220px;
+  margin-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid var(--input-border-color);
+}
+
+.talent-detail-display {
+  margin-bottom: 30px;
+}
+
+.first-name {
+  font-size: 30px;
+  width: 220px;
+}
+
+.display-dot {
+  width: 220px;
+  justify-content: flex-start;
+  margin: 10px 0;
+}
+
+.display-dot > div {
+  margin-right: 10px;
+}
+
+.display-update {
+  font-size: 11px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
+.button-update-talent {
+  margin-left: 0;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.update-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 33px;
+  height: 27px;
+  border-radius: 3px;
+  background-color: var(--container-background);
+  position: absolute;
+  right: 37px;
+  top: 237px;
+  z-index: 2;
+  box-shadow: 0px 3px 6px rgba(28, 28, 28, 0.1);
+  cursor: pointer;
 }

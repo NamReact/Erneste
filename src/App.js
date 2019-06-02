@@ -7,7 +7,7 @@ import TalentforAdmin from "./components/TalentforAdmin";
 import CreateNewTalent from "./components/CreateNewTalent";
 import TalentListPage from "./components/TalentList/TalentListPage";
 import ClientList from "./components/ClientList/ClientList";
-import TalentforTalent from "./components/TalentforTalent";
+import TalentforTalent from "./pages/TalentforTalent";
 import Login from "./components/Login";
 import Home from "./components/Home";
 
