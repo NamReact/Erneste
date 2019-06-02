@@ -7,45 +7,48 @@ import TalentList from "./TalentList";
 import HeaderAdmin from "../HeaderAdmin";
 import Tools from "./Tools";
 import "./TalentListPage.css";
+import { Redirect } from "react-router-dom";
 
 /* Page to see the Talent List (HomePage of Admin)*/
 
 class TalentListPage extends React.Component {
-  state = {
-    /* State updated from the GET in ComponentDiMount*/
-    talentList: [],
-    titleList: [],
-    tagList: [],
-    isLoading: true,
+  constructor(props) {
+    super(props);
+    this.state = {
+      /* State updated from the GET in ComponentDiMount*/
+      talentList: [],
+      titleList: [],
+      tagList: [],
+      isLoading: true,
 
-    /* State for delete a line of talent */
-    delete: false,
+      /* State for delete a line of talent */
+      delete: false,
 
-    searchInput: "",
-    titleArray: [
-      { value: "Nom", clicked: false, firstClicked: false },
-      { value: "Fonction", clicked: false, firstClicked: false },
-      { value: "Entreprise", clicked: false, firstClicked: false },
-      { value: "Souhait", clicked: false, firstClicked: false },
-      { value: "Validé", clicked: false, firstClicked: false },
-      { value: "Statut", clicked: false, firstClicked: false },
-      { value: "Dernière modif.", clicked: false, firstClicked: false }
-    ],
+      searchInput: "",
+      titleArray: [
+        { value: "Nom", clicked: false, firstClicked: false },
+        { value: "Fonction", clicked: false, firstClicked: false },
+        { value: "Entreprise", clicked: false, firstClicked: false },
+        { value: "Souhait", clicked: false, firstClicked: false },
+        { value: "Validé", clicked: false, firstClicked: false },
+        { value: "Statut", clicked: false, firstClicked: false },
+        { value: "Dernière modif.", clicked: false, firstClicked: false }
+      ],
 
-    /* Chevron Filter State */
-    chevronClikedPosition: null,
-    chevronFilter: [],
-    filterOrder: 0,
+      /* Chevron Filter State */
+      chevronClikedPosition: null,
+      chevronFilter: [],
+      filterOrder: 0,
 
-    /* Tag Filter State */
-    tagList: [],
-    tagFilterInputValue: "",
-    tagSuggestions: [],
-    tagSuggestionsShown: false,
-    tagListFiltered: [],
-    tagActiveSuggestion: 0
-  };
-
+      /* Tag Filter State */
+      tagList: [],
+      tagFilterInputValue: "",
+      tagSuggestions: [],
+      tagSuggestionsShown: false,
+      tagListFiltered: [],
+      tagActiveSuggestion: 0
+    };
+  }
   // Function to GET data from /talent
   getDataTalentList = async toto => {
     this.setState({ isLoading: true });
@@ -228,16 +231,7 @@ class TalentListPage extends React.Component {
     await this.getDataTalentList();
   };
 
-  /* SEARCH INPUT FUNCTION */
-
-  searchType = event => {
-    this.setState({ searchInput: event });
-  };
-  // Function to empty the input on click X
-  onClickClearSearch = () => {
-    this.setState({ searchInput: "" });
-  };
-
+  //Function to make appear the delete button
   deleteCheckBox = async id => {
     const talentListCopie = [...this.state.talentList];
     let element = talentListCopie.find(toto => toto._id === id);
@@ -248,6 +242,16 @@ class TalentListPage extends React.Component {
     } else {
       this.setState({ delete: false });
     }
+  };
+
+  /* SEARCH INPUT FUNCTION */
+
+  searchType = event => {
+    this.setState({ searchInput: event });
+  };
+  // Function to empty the input on click X
+  onClickClearSearch = () => {
+    this.setState({ searchInput: "" });
   };
 
   /* CHEVRON FILTER FUNCTION*/
@@ -416,7 +420,11 @@ class TalentListPage extends React.Component {
   };
 
   render() {
-    console.log(this.state.talentList);
+    /* Permission test */
+    if (this.props.permission !== "Admin") {
+      return <Redirect to={"/login"} />;
+    }
+
     /* Test of Loading... */
 
     if (this.state.isLoading === true) {
@@ -582,10 +590,13 @@ class TalentListPage extends React.Component {
         }
       }
     }
-
+    console.log("test", this.props.handleClickLogOut);
     return (
       <div>
-        <HeaderAdmin pageType={"talent"} />
+        <HeaderAdmin
+          pageType={"talent"}
+          handleClickLogOut={this.props.handleClickLogOut}
+        />
         <div className="container">
           <div className="talentList-container">
             <div className="talentList-left-block">

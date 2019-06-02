@@ -22,13 +22,19 @@ function HeaderAdmin(props) {
       <div className="headerAdmin-container">
         <img className="headerAdmin-image" src={logo} alt="Erneste Logo" />
         <div className="headerAdmin-tools">
+          {/* Lien vers Talent-List */}
           <Link className="linkDecoration" to={`/admin/talent-list`}>
             <span className={classNameTalent}>Talents</span>
           </Link>
+          {/* Lien vers Client-List */}
           <Link className="linkDecoration" to={`/admin/client-list`}>
             <span className={classNameClient}>Clients</span>
           </Link>
-          <div className="headerAdmin-tools-logOut">
+          {/* Log Out Bouton */}
+          <div
+            onClick={props.handleClickLogOut}
+            className="headerAdmin-tools-logOut"
+          >
             <i className="fas fa-power-off" />
           </div>
         </div>
