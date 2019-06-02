@@ -3,15 +3,17 @@ import TalentLine from "./TalentLine.js";
 import "./TalentList.css";
 
 function TalentList(props) {
+  const { talentList, deleteCheckBox } = props;
+
   return (
     <div className="talentList-right-block-list">
-      {props.talentList.map((element, index) => {
+      {talentList.map((element, index) => {
         return (
           <TalentLine
             talent={element}
             key={index}
             deleteCheckBox={id => {
-              props.deleteCheckBox(id);
+              deleteCheckBox(id);
             }}
           />
         );

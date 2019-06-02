@@ -1,79 +1,102 @@
 import React from "react";
 import "./TagFilter.css";
-import AutoComplete from "./AutoComplete";
 
 function TagFilter(props) {
   const {
     tagFilterInputValue,
-    tagList,
-    tagFilterShown,
-    handleChangeTagFilterInput,
-    handleClickTagFilter,
+    tagSuggestions,
+    tagSuggestionsShown,
+    onChangeTagInput,
+    onClickTag,
     tagActiveSuggestion,
-    tagFilteredSuggestion,
-    tagShowSuggestions
+    onKeyDownTagInput,
+    tagListFiltered,
+    onDeleteAllTagClick,
+    onSingleTagDeleteClick
   } = props;
 
-  // On filtre le tagList en fonction de ce qui est dans l'input
-  let tagListCopieFilter = tagList.filter(element => {
-    return element.name
-      .toLowerCase()
-      .includes(tagFilterInputValue.toLowerCase());
-  });
+  // Filtre de la tagList en fonction de ce qui est dans l'input
+  // let tagListFiltered = tagList.filter(element => {
+  //   return (
+  //     element.name.toLowerCase().indexOf(tagFilterInputValue.toLowerCase()) > -1
+  //   );
+  // });
+  // Création de la div avec les suggestions
+  let suggestionsList = null;
+
+  if (tagFilterInputValue && tagSuggestionsShown) {
+    if (tagListFiltered.length) {
+      suggestionsList = (
+        <div className="tagList-suggestions">
+          {tagListFiltered.map((tag, index) => {
+            let className;
+            if (index === tagActiveSuggestion) {
+              className = "tagList-suggestion-active";
+            }
+            return (
+              <div
+                className={className}
+                onClick={() => {
+                  onClickTag(tag);
+                }}
+                key={tag.name}
+              >
+                {tag.name}
+              </div>
+            );
+          })}
+        </div>
+      );
+    } else {
+      suggestionsList = (
+        <div class="tagList-no-suggestions">
+          <em>Pas de tag correspondant</em>
+        </div>
+      );
+    }
+  }
+
   return (
     <div className="tagList-filterBlock">
       <div className="tagList-filterTitle">Filtres</div>
       <div className="tagList">
-        {tagFilterShown.map(element => {
-          return (
-            <div
-              className={
-                element.type === "hard"
-                  ? "tagList-tagShown hardSkill"
-                  : "tagList-tagShown softSkill"
-              }
-            >
-              {element.name}
-            </div>
-          );
-        })}
-        <AutoComplete
-          activeSuggestions={tagActiveSuggestion}
-          filteredSuggestions={tagFilteredSuggestion}
-          showSuggestions={tagShowSuggestions}
-          handleChangeTagFilterInput={handleChangeTagFilterInput}
-          handleClickTagFilter={handleClickTagFilter}
-        />
+        {tagSuggestions.length > 0 &&
+          tagSuggestions.map((element, index) => {
+            return (
+              <div
+                key={element.name}
+                className={
+                  element.type === "hard"
+                    ? "tagList-tagShown hardSkill"
+                    : "tagList-tagShown softSkill"
+                }
+              >
+                {element.name}
+                <div
+                  className="tagList-deleteSingleTag"
+                  onClick={() => onSingleTagDeleteClick(index)}
+                >
+                  X
+                </div>
+              </div>
+            );
+          })}
+
         <div className="tagList-input-block">
           <input
-            className="tagList-input"
-            value={tagFilterInputValue}
+            className="tagFilterInput"
             placeholder="Write your tag"
-            onChange={event => handleChangeTagFilterInput(event.target.value)}
+            value={tagFilterInputValue}
+            onChange={event => onChangeTagInput(event.target.value)}
+            onKeyDown={onKeyDownTagInput}
           />
-          {tagFilterInputValue !== "" && (
-            <div className="tagList-proposition">
-              {tagListCopieFilter.map(tag => {
-                console.log(tag);
-                // console.log(tag.name);
-                // console.log(tag.type);
-                return (
-                  <div
-                    onClick={() => {
-                      handleClickTagFilter(tag);
-                    }}
-                    key={tag.name}
-                  >
-                    {tag.name}
-                  </div>
-                );
-              })}
-            </div>
-          )}
+          {suggestionsList}
         </div>
       </div>
       <div>
-        <button>X</button>
+        <div className="tagList-deleteAllTag" onClick={onDeleteAllTagClick}>
+          X
+        </div>
       </div>
     </div>
   );

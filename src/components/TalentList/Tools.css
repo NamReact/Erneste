@@ -6,3 +6,15 @@
 .talentList-delete-block {
   width: 20px;
 }
+
+.tools-deleteFilter {
+  text-decoration: none;
+  outline: none;
+  background-color: #ff6666;
+  color: white;
+  padding: 15px;
+  font-size: 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-left: 20px;
+}

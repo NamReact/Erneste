@@ -79,7 +79,7 @@ class TalentforAdmin extends React.Component {
           description: this.state.description,
           skills: skills
         },
-        { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
+        { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
       );
     }
   };
@@ -155,7 +155,7 @@ class TalentforAdmin extends React.Component {
         id: this.state.id,
         informations: this.state.informations
       },
-      { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
     );
   };
 

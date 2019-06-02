@@ -158,7 +158,7 @@ class CreateNewTalent extends React.Component {
         description: this.state.description,
         skills: skills
       },
-      { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
     );
     this.setState({ idTalentCreated: response.data._id, redirect: true });
   };

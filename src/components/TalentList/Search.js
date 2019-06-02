@@ -4,7 +4,7 @@ import "./Search.css";
 function Search(props) {
   return (
     <div className="tools-search">
-      <i class="fas fa-search" />
+      <i className="fas fa-search" />
       <input
         className="tools-search-input"
         value={props.searchInput}
@@ -13,6 +13,7 @@ function Search(props) {
           props.searchType(event.target.value);
         }}
       />
+      <div onClick={props.onClickClearSearch}>X</div>
     </div>
   );
 }

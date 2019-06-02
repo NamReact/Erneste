@@ -7,6 +7,24 @@ function TalentLine(props) {
   let deleteCheckBoxStyle = talent.delete
     ? "deleteBox deleteCheck"
     : "deleteBox deleteUncheck";
+
+  let classNameStatus = "";
+
+  if (talent.informations.status === "0") {
+    classNameStatus = "statut0";
+  }
+  if (talent.informations.status === "1") {
+    classNameStatus = "statut1";
+  }
+  if (talent.informations.status === "2") {
+    classNameStatus = "statut2";
+  }
+  if (talent.informations.status === "3") {
+    classNameStatus = "statut3";
+  }
+  if (talent.informations.status === "4") {
+    classNameStatus = "statut4";
+  }
   return (
     <div className="talentList-right-block-line">
       <div
@@ -28,11 +46,19 @@ function TalentLine(props) {
         {talent.informations.actualCompany}
       </div>
       <div className="talentList-right-block-wantedTitle">
-        {talent.informations.wantedTitle}
+        {talent.informations.wantedTitle.map((element, index) => {
+          return <div key={index}>{element}</div>;
+        })}
       </div>
-      <div className="talentList-right-block-validated">{talent.validated}</div>
-      <div className="talentList-right-block-status">{talent.status}</div>
-      <div className="talentList-right-block-lastUpdate">
+      <div className="talentList-right-block-validated-line">
+        {talent.validated === true && <i className="fas fa-check fa-2x" />}
+        {talent.validated === false && <i className="fas fa-times fa-2x" />}
+      </div>
+      <div className="talentList-right-block-status">
+        <div className={classNameStatus} />
+      </div>
+
+      <div className="talentList-right-block-lastUpdate-line">
         {talent.lastUpdate}
       </div>
     </div>

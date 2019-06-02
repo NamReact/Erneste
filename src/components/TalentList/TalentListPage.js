@@ -7,6 +7,7 @@ import TalentList from "./TalentList";
 import HeaderAdmin from "../HeaderAdmin";
 import Tools from "./Tools";
 import "./TalentListPage.css";
+import { booleanLiteral } from "@babel/types";
 
 class TalentListPage extends React.Component {
   state = {
@@ -15,27 +16,29 @@ class TalentListPage extends React.Component {
     delete: false,
     searchInput: "",
     titleArray: [
-      { value: "Nom", clicked: false },
-      { value: "Fonction", clicked: false },
-      { value: "Entreprise", clicked: false },
-      { value: "Souhait", clicked: false },
-      { value: "Validé", clicked: false },
-      { value: "Statut", clicked: false },
-      { value: "Dernière modif.", clicked: false }
+      { value: "Nom", clicked: false, firstClicked: false },
+      { value: "Fonction", clicked: false, firstClicked: false },
+      { value: "Entreprise", clicked: false, firstClicked: false },
+      { value: "Souhait", clicked: false, firstClicked: false },
+      { value: "Validé", clicked: false, firstClicked: false },
+      { value: "Statut", clicked: false, firstClicked: false },
+      { value: "Dernière modif.", clicked: false, firstClicked: false }
     ],
     chevronClikedPosition: null,
     chevronFilter: [],
+    filterOrder: 0,
     // tagList récupéré en GET
     tagList: [],
     // Valeur de l'input du tag
     tagFilterInputValue: "",
     // tag qui sont affichés dans la div
-    tagFilterShown: [],
+    tagSuggestions: [],
+    tagSuggestionsShown: false,
+    tagListFiltered: [],
     // Suggestion sur laquelle est l'utilisateur
     tagActiveSuggestion: 0,
-    // Suggestion montrés à l'utilisateur en fonction de la valeur de l'input
-    tagFilteredSuggestions: [],
-    tagShowSuggestions: false
+    // Title
+    titleList: []
   };
 
   // Function to GET data from /talent
@@ -45,9 +48,112 @@ class TalentListPage extends React.Component {
       "https://ernest-server.herokuapp.com/talent/",
       { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
     );
-    this.setState({
+    // We switch the wantedTitle ID by its name so we can sort it and filter it
+
+    for (let i = 0; i < response.data.length; i++) {
+      for (
+        let j = 0;
+        j < response.data[i].informations.wantedTitle.length;
+        j++
+      ) {
+        for (let k = 0; k < this.state.titleList.length; k++) {
+          if (
+            this.state.titleList[k]._id ===
+            response.data[i].informations.wantedTitle[j]
+          ) {
+            response.data[i].informations.wantedTitle[j] = this.state.titleList[
+              k
+            ].name;
+            break;
+          }
+        }
+      }
+    }
+
+    // We sort the array by lastUpdate
+
+    // The date we get is type "29 05 2019, 15 05 98"
+    // We want to show 29/05/2019, but the sort has to be on hour minutes secondes too
+
+    // 1. change of the 29 05 2019, 15 05 98 into [[29,05,2019],[15,05,98]]
+
+    for (let i = 0; i < response.data.length; i++) {
+      if (typeof response.data[i].lastUpdate === "string") {
+        response.data[i].lastUpdate = response.data[i].lastUpdate.split(",");
+        // ["29 05 2019","15 05 98"]
+        response.data[i].lastUpdate[0] = response.data[i].lastUpdate[0]
+          .trim()
+          .split(" ");
+        if (response.data[i].lastUpdate[1]) {
+          response.data[i].lastUpdate[1] = response.data[i].lastUpdate[1]
+            .trim()
+            .split(" ");
+        }
+      }
+    }
+
+    // response.data got his lastupdateDate like [[29,05,2019],[15,05,98]]
+    // We create an array with all lastUpdate date from the response.data  array
+
+    let lastUpdateArray = [];
+    for (let i = 0; i < response.data.length; i++) {
+      lastUpdateArray.push(response.data[i].lastUpdate);
+    }
+
+    // We sort lastUpdateArray
+
+    lastUpdateArray
+      .sort((a, b) => {
+        // sort seconds
+        if (a[1] && b[1]) {
+          return a[1][2] - b[1][2];
+        } else return false;
+      })
+      .sort((a, b) => {
+        // sort minutes
+        if (a[1] && b[1]) {
+          return b[1][1] - a[1][1];
+        } else return false;
+      })
+      .sort((a, b) => {
+        // sort hour
+        if (a[1] && b[1]) {
+          return b[1][0] - a[1][0];
+        } else return false;
+      })
+      .sort((a, b) => {
+        // sort day
+        return b[0][0] - a[0][0];
+      })
+      .sort((a, b) => {
+        // sort month
+        return b[0][1] - a[0][1];
+      })
+      .sort((a, b) => {
+        // sort year
+        return b[0][2] - a[0][2];
+      });
+
+    // LastUpdateArray is sorted, we recreate response.data with same order
+    let responseSorted = [];
+    for (let i = 0; i < lastUpdateArray.length; i++) {
+      for (let j = 0; j < response.data.length; j++) {
+        if (response.data[j].lastUpdate === lastUpdateArray[i]) {
+          responseSorted.push(response.data[j]);
+          // We put the lastUpdate from [[29,05,2019],[15,05,98]] to "29/05/2019"
+        }
+      }
+    }
+
+    // We put the lastUpdate from [[29,05,2019],[15,05,98]] to [29/05/2019]
+
+    for (let i = 0; i < responseSorted.length; i++) {
+      responseSorted[i].lastUpdate = responseSorted[i].lastUpdate[0].join("/");
+    }
+
+    await this.setState({
       isLoading: false,
-      talentList: response.data
+      talentList: responseSorted
     });
   };
 
@@ -64,13 +170,38 @@ class TalentListPage extends React.Component {
     });
   };
 
-  // Function to POST id of 1 element we want to delete
-  deletePost = async toto => {
-    await axios.post("https://ernest-server.herokuapp.com/talent/delete", {
-      id: toto
+  // Function GET data from /title
+  getDataTitleList = async toto => {
+    this.setState({ isLoading: true });
+    const response = await axios.get(
+      "https://ernest-server.herokuapp.com/title",
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+    );
+    await this.setState({
+      isLoading: false,
+      titleList: response.data
     });
   };
 
+  // Function to POST id of 1 element we want to delete
+  deletePost = async toto => {
+    await axios.post(
+      "https://ernest-server.herokuapp.com/talent/delete",
+      {
+        id: toto
+      },
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+    );
+  };
+
+  // Fonction pour sauvegarder l'input de recherche
+  searchType = event => {
+    this.setState({ searchInput: event });
+  };
+  // Fonction pour mettre la barre de recherche vide
+  onClickClearSearch = () => {
+    this.setState({ searchInput: "" });
+  };
   // Function that enable to delete element which are checked
   deleteClick = async toto => {
     const talentListCopie = [...this.state.talentList];
@@ -108,107 +239,305 @@ class TalentListPage extends React.Component {
       } else {
         titleArrayCopie[i].clicked = false;
       }
-      this.setState({ titleArray: titleArrayCopie });
     }
+
+    this.setState({ titleArray: titleArrayCopie });
   };
 
-  // On push dans le tableau de filtres si le filtre n'existe pas, sinon on le retire
-  filterCheckBox = (titleType, filter) => {
-    const chevronFilterCopie = [...this.state.chevronFilter];
-    let position = 0;
-    if (
-      chevronFilterCopie
-        .map(e => {
-          return e.value;
-        })
-        .indexOf(filter) === -1 ||
-      chevronFilterCopie
-        .map(e => {
-          return e.type;
-        })
-        .indexOf(titleType) === -1
-    ) {
-      chevronFilterCopie.push({ value: filter, type: titleType });
-    } else {
-      position = chevronFilterCopie
-        .map(e => {
-          return e.value;
-        })
-        .indexOf(filter);
-      chevronFilterCopie.splice(position, 1);
-    }
+  // Fonction pour supprimer tous les filtres des chevrons
+  onDeleteChevronFilterClick = () => {
+    let chevronFilterCopie = [...this.state.chevronFilter];
+    chevronFilterCopie.splice(0, chevronFilterCopie.length);
     this.setState({ chevronFilter: chevronFilterCopie });
   };
-  // ON gère l'input du TagFilter
-  handleChangeTagFilterInput = toto => {
-    this.setState({ tagFilterInputValue: toto });
+
+  // On crée un tableau avec les filtres, chaque filtre est un objet contenant sont titre,filtre,filterOrder
+  filterCheckBox = async (titleType, filterChosen) => {
+    const chevronFilterCopie = [...this.state.chevronFilter];
+    //////////// 2ème version du filtre /////////////
+    let titleTypePosition = chevronFilterCopie
+      .map(element => {
+        return element.title;
+      })
+      .indexOf(titleType);
+    if (titleTypePosition === -1) {
+      await this.setState({ filterOrder: this.state.filterOrder + 1 });
+      chevronFilterCopie.push({
+        title: titleType,
+        filter: [filterChosen],
+        filterOrder: this.state.filterOrder
+      });
+    } else {
+      if (
+        chevronFilterCopie[titleTypePosition].filter.indexOf(filterChosen) ===
+        -1
+      ) {
+        chevronFilterCopie[titleTypePosition].filter.push(filterChosen);
+      } else {
+        chevronFilterCopie[titleTypePosition].filter.splice(
+          chevronFilterCopie[titleTypePosition].filter.indexOf(filterChosen),
+          1
+        );
+      }
+
+      // Si on retire tous les elements du filtre, alors on enlève l'élément du tableau de filtre et on réduit l'ordre de 1
+
+      if (chevronFilterCopie[titleTypePosition].filter.length < 1) {
+        let FilterRemovedOrder =
+          chevronFilterCopie[titleTypePosition].filterOrder;
+
+        chevronFilterCopie.splice(titleTypePosition, 1);
+        // On réduit le numéro du filterOrder
+
+        await this.setState({ filterOrder: this.state.filterOrder - 1 });
+
+        // On réduit le filterOrder de tous les autres filtres qui ont un order plus grand
+        for (let i = 0; i < chevronFilterCopie.length; i++) {
+          if (chevronFilterCopie[i].filterOrder > FilterRemovedOrder) {
+            chevronFilterCopie[i].filterOrder =
+              chevronFilterCopie[i].filterOrder - 1;
+          }
+        }
+      }
+    }
+    // sort chevronFilterCopie by filterOrder
+    chevronFilterCopie.sort((a, b) => {
+      return a.filterOrder - b.filterOrder;
+    });
+
+    await this.setState({ chevronFilter: chevronFilterCopie });
   };
 
-  handleClickTagFilter = tag => {
-    // On crée copie du tableau
-    let tagFilterShownCopie = [...this.state.tagFilterShown];
-    console.log("toto test:", tag);
-    tagFilterShownCopie.push(tag);
-
+  // On gère l'input du TagFilter
+  onChangeTagInput = toto => {
+    let tagListFiltered = this.state.tagList.filter(element => {
+      return element.name.toLowerCase().indexOf(toto.toLowerCase()) > -1;
+    });
     this.setState({
-      tagFilterShown: tagFilterShownCopie,
-      tagFilterInputValue: ""
+      tagFilterInputValue: toto,
+      tagListFiltered: tagListFiltered,
+      tagSuggestionsShown: true
     });
   };
 
+  onClickTag = tag => {
+    // On crée copie du tableau
+    let tagSuggestionsCopie = [...this.state.tagSuggestions];
+    tagSuggestionsCopie.push(tag);
+
+    this.setState({
+      tagSuggestions: tagSuggestionsCopie,
+      tagFilterInputValue: "",
+      tagActiveSuggestion: 0,
+      tagSuggestionsShown: false
+    });
+  };
+
+  onKeyDownTagInput = e => {
+    // l'utilisateur appuie sur la touche Entrée
+    if (e.keyCode === 13) {
+      let tagSuggestionsCopie = [...this.state.tagSuggestions];
+      // On push le tag qui était actif
+      tagSuggestionsCopie.push(
+        this.state.tagListFiltered[this.state.tagActiveSuggestion]
+      );
+
+      this.setState({
+        tagSuggestions: tagSuggestionsCopie,
+        tagFilterInputValue: "",
+        tagActiveSuggestion: 0,
+        tagSuggestionsShown: false
+
+        // On push ce qui est dans l'input en tag
+      });
+    }
+
+    // l'utilisateur appuie sur la touche du haut
+    else if (e.keyCode === 38) {
+      if (this.state.tagActiveSuggestion === 0) {
+        return;
+      } else {
+        this.setState({
+          tagActiveSuggestion: this.state.tagActiveSuggestion - 1
+        });
+      }
+    } else if (e.keyCode === 40) {
+      if (
+        this.state.tagActiveSuggestion - 1 ===
+        this.state.tagListFiltered.length
+      ) {
+        return;
+      }
+      this.setState({
+        tagActiveSuggestion: this.state.tagActiveSuggestion + 1
+      });
+    } else if (e.keyCode === 27) {
+      this.setState({ tagSuggestionsShown: false });
+    }
+
+    // On push ce qui est dans l'input en tag
+  };
+
+  onDeleteAllTagClick = () => {
+    let tagSuggestionsCopie = [...this.state.tagSuggestions];
+    tagSuggestionsCopie.splice(0, tagSuggestionsCopie.length);
+    this.setState({ tagSuggestions: tagSuggestionsCopie });
+  };
+
+  onSingleTagDeleteClick = index => {
+    let tagSuggestionsCopie = [...this.state.tagSuggestions];
+    tagSuggestionsCopie.splice(index, 1);
+    this.setState({ tagSuggestions: tagSuggestionsCopie });
+  };
+
   render() {
-    /* Filtre sur le research input */
-    // Copie du state
+    /* Test of Loading... */
+
+    if (this.state.isLoading === true) {
+      return "Loading....";
+    }
+
+    // Copy of state talentListCopieFilter
     let talentListCopieFilter = [];
+    let ArrayOfFilteredTalentList = [];
     if (this.state.talentList.length > 0) {
       const talentListCopie = [...this.state.talentList];
       for (let i = 0; i < this.state.talentList; i++) {
         talentListCopie[i] = this.state.talentList[i];
       }
 
-      // On crée le filtre sur la barre de research
-
-      // 1. On crée un tableau de key, pour pouvoir parcourir l'objet ensuite
+      // FILTRE SUR LE RESEARCH INPUT
 
       let filter = this.state.searchInput.toLowerCase();
       talentListCopieFilter = talentListCopie.filter(element => {
-        return (
-          element.informations.firstName.toLowerCase().includes(filter) ||
-          element.informations.lastName.toLowerCase().includes(filter) ||
-          element.informations.actualCompany.toLowerCase().includes(filter) ||
-          element.informations.actualTitle.toLowerCase().includes(filter) ||
-          element.informations.wantedTitle.toLowerCase().includes(filter)
-        );
+        let bool = false;
+        if (element.informations.firstName.toLowerCase().includes(filter)) {
+          bool = true;
+        }
+        if (element.informations.lastName.toLowerCase().includes(filter)) {
+          bool = true;
+        }
+        if (element.informations.actualCompany.toLowerCase().includes(filter)) {
+          bool = true;
+        }
+        if (element.informations.actualTitle.toLowerCase().includes(filter)) {
+          bool = true;
+        }
+        if (element.informations.wantedTitle.length > 0) {
+          for (let i = 0; i < element.informations.wantedTitle.length; i++) {
+            if (
+              element.informations.wantedTitle[i].toLowerCase().includes(filter)
+            ) {
+              bool = true;
+            }
+          }
+        }
+        return bool;
       });
 
-      // On crée le filtre sur les chevrons, à  partir du tableau filtrer par les search
-      // const test = [];
-      // for (let i = 0; i < this.state.chevronFilter.length; i++) {
-      //   test.push([talentListCopieFilter]);
-      // }
-      for (let i = 0; i < this.state.chevronFilter.length; i++) {
+      // FILTRE DES TAGS
+      let tagFilter = this.state.tagSuggestions;
+
+      if (tagFilter.length > 0) {
         talentListCopieFilter = talentListCopieFilter.filter(element => {
-          if (
-            this.state.chevronFilter[i].type === "validated" ||
-            this.state.chevronFilter[i].type === "lastUpdate"
-          ) {
-            return (
-              element[this.state.chevronFilter[i].type].toString() ===
-              this.state.chevronFilter[i].value
-            );
-          } else {
-            return (
-              element.informations[this.state.chevronFilter[i].type] ===
-              this.state.chevronFilter[i].value
-            );
+          // On crée un tableau de booléen,La longueur du tableau de booléen doit être celle de tagFilter, on remplit ce tableau de true à la base
+          let bool = Array(tagFilter.length).fill(true);
+          let booltest = true;
+          if (element.skills.length > 0) {
+            for (let i = 0; i < tagFilter.length; i++) {
+              for (let j = 0; j < element.skills.length; j++) {
+                console.log(element.skills[j]);
+                console.log(tagFilter[i]);
+                if (tagFilter[i]._id === element.skills[j]) {
+                  bool[i] = true;
+                  break;
+                } else {
+                  bool[i] = false;
+                }
+              }
+            }
+            for (let i = 0; i < bool.length; i++) {
+              if (bool[i] === false) {
+                booltest = false;
+              }
+            }
+            return booltest;
           }
         });
       }
-    }
-    /* Test du Loading */
+      //  FILTRE SUR CHAQUE COLONNE EN CLIQUANT SUR LES CHEVRONS
 
-    if (this.state.isLoading === true) {
-      return "Loading....";
+      // On crée un tableau qui stock les différentes listes filtrées
+      //A la base il a la première liste filtrée par le research
+      ArrayOfFilteredTalentList = [talentListCopieFilter];
+
+      //1. On applique les filtres, et on enregistre la nouvelle liste filtrée à chaque fois
+      if (this.state.chevronFilter) {
+        for (let i = 0; i < this.state.chevronFilter.length; i++) {
+          talentListCopieFilter = talentListCopieFilter.filter(element => {
+            let bool = false;
+            // cas wantedTitle
+            if (this.state.chevronFilter[i].title === "wantedTitle") {
+              for (
+                let j = 0;
+                j <
+                element.informations[this.state.chevronFilter[i].title].length;
+                j++
+              ) {
+                for (
+                  let k = 0;
+                  k < this.state.chevronFilter[i].filter.length;
+                  k++
+                ) {
+                  if (
+                    element.informations[this.state.chevronFilter[i].title][
+                      j
+                    ] === this.state.chevronFilter[i].filter[k]
+                  ) {
+                    bool = true;
+                  }
+                }
+              }
+              return bool;
+            } else if (
+              // cas validated et lastUpdate
+              this.state.chevronFilter[i].title === "validated" ||
+              this.state.chevronFilter[i].title === "lastUpdate"
+            ) {
+              for (
+                let j = 0;
+                j < this.state.chevronFilter[i].filter.length;
+                j++
+              ) {
+                if (
+                  element[this.state.chevronFilter[i].title] ===
+                  this.state.chevronFilter[i].filter[j]
+                ) {
+                  bool = true;
+                }
+              }
+              return bool;
+            } else {
+              // cas actualTitle,actualCompany,status
+              for (
+                let j = 0;
+                j < this.state.chevronFilter[i].filter.length;
+                j++
+              ) {
+                if (
+                  element.informations[this.state.chevronFilter[i].title] ===
+                  this.state.chevronFilter[i].filter[j]
+                ) {
+                  bool = true;
+                }
+              }
+              return bool;
+            }
+          });
+          // On push la listefiltrée dans le tableau des listes filtrées
+          ArrayOfFilteredTalentList.push(talentListCopieFilter);
+        }
+      }
     }
 
     return (
@@ -220,13 +549,15 @@ class TalentListPage extends React.Component {
               <Title talentList={talentListCopieFilter} />
               <TagFilter
                 tagFilterInputValue={this.state.tagFilterInputValue}
-                tagList={this.state.tagList}
-                tagFilterShown={this.state.tagFilterShown}
-                handleChangeTagFilterInput={this.handleChangeTagFilterInput}
-                handleClickTagFilter={this.handleClickTagFilter}
+                tagListFiltered={this.state.tagListFiltered}
+                tagSuggestions={this.state.tagSuggestions}
+                tagSuggestionsShown={this.state.tagSuggestionsShown}
+                onChangeTagInput={this.onChangeTagInput}
+                onClickTag={this.onClickTag}
                 tagActiveSuggestion={this.state.tagActiveSuggestion}
-                tagFilteredSuggestion={this.state.tagFilteredSuggestions}
-                tagShowSuggestions={this.tagShowSuggestions}
+                onKeyDownTagInput={this.onKeyDownTagInput}
+                onDeleteAllTagClick={this.onDeleteAllTagClick}
+                onSingleTagDeleteClick={this.onSingleTagDeleteClick}
               />
             </div>
             <div className="talentList-right-block">
@@ -235,12 +566,14 @@ class TalentListPage extends React.Component {
                 searchInput={this.state.searchInput}
                 addTalent={this.addTalent}
                 deleteClick={this.deleteClick}
-                searchType={event => {
-                  this.setState({ searchInput: event });
-                }}
+                searchType={this.searchType}
+                onClickClearSearch={this.onClickClearSearch}
+                chevronFilter={this.state.chevronFilter}
+                onDeleteChevronFilterClick={this.onDeleteChevronFilterClick}
               />
               <TitleLine
-                talentList={talentListCopieFilter}
+                talentListNonFiltered={this.state.talentList}
+                ArrayOfFilteredTalentList={ArrayOfFilteredTalentList}
                 titleArray={this.state.titleArray}
                 chevronClick={this.chevronClick}
                 chevronClickedPosition={this.state.chevronClikedPosition}
@@ -259,6 +592,7 @@ class TalentListPage extends React.Component {
   }
 
   async componentDidMount() {
+    this.getDataTitleList();
     this.getDataTalentList();
     this.getDataTagList();
   }

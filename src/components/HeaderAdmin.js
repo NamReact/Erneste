@@ -17,7 +17,7 @@ function HeaderAdmin(props) {
             <span className="headerAdmin-element-tools-clients">Clients</span>
           </Link>
           <div className="headerAdmin-element-tools-logOut">
-            <i class="fas fa-power-off" />
+            <i className="fas fa-power-off" />
           </div>
         </div>
       </div>
