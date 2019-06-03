@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import "./index.css";
 
 class Login extends React.Component {
   state = {
@@ -26,9 +27,10 @@ class Login extends React.Component {
           password: this.state.password
         }
       );
-      Cookies.set("erneste-token", response.data.token);
-      Cookies.set("erneste-permission", response.data.permission);
-      Cookies.set("erneste-id", response.data.id);
+      Cookies.set("ernest", {
+        token: response.data.token,
+        permission: response.data.permission
+      });
       this.setState({ wrong: false });
     } catch (error) {
       this.setState({ wrong: true, password: "" });
@@ -38,24 +40,36 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <div>
-          <form>
+        <div className="login-container">
+          <div className="login-img">
+            <img
+              src={require("../../features/img/loginbackground.png")}
+              alt="login-image"
+            />
+          </div>
+          <div className="input-container">
+            <h3>Just log you in</h3>
             <input
               name="email"
               value={this.state.email}
               onChange={this.setEmail}
-              placeholder="email"
+              placeholder="Email"
             />
             <input
               name="password"
               type="password"
               value={this.state.password}
               onChange={this.setPassword}
-              placeholder="password"
+              placeholder="Password"
             />
             {this.state.wrong && <div>Wrong email / password</div>}
-          </form>
-          <div onClick={this.login}>Connect</div>
+            <div onClick={this.login} className="button">
+              Start your journey
+            </div>
+            <div className="redirect">
+              Not in the Ernest community yet? Join us
+            </div>
+          </div>
         </div>
       </div>
     );
