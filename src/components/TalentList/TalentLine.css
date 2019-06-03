@@ -81,10 +81,9 @@
 .statut1 {
   height: 24px;
   width: 24px;
-  background-color: #ff9d9d;
+  background-color: #9eba83;
   border-radius: 50%;
 }
-
 .statut2 {
   height: 24px;
   width: 24px;
@@ -95,7 +94,7 @@
 .statut3 {
   height: 24px;
   width: 24px;
-  background-color: #9eba83;
+  background-color: #ff9d9d;
   border-radius: 50%;
 }
 
