@@ -8,6 +8,7 @@
   --background-color: rgb(250, 250, 252);
   --container-background: rgb(254, 254, 254);
   --placeholder-grey: #a8b0d0;
+  --shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
 }
 
 .header-of-page {
@@ -21,7 +22,7 @@
   margin: auto;
   background-color: var(--container-background);
   border-radius: 2px;
-  box-shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
+  box-shadow: var(--shadow);
 }
 
 /* title  page : Clients & view  */

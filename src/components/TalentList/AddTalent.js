@@ -5,7 +5,12 @@ import { Link } from "react-router-dom";
 function AddTalent(props) {
   return (
     <Link to={`/admin/talent-create`}>
-      <div className="toolsAddTalent">Ajouter un talent</div>
+      <div className="all-button-add-talent">
+        <div>
+          <i class="fas fa-plus" />
+        </div>
+        <button className="addTalentButton">Ajouter un talent</button>
+      </div>
     </Link>
   );
 }

@@ -1,18 +1,26 @@
+.tools-search {
+  --input-height: 35px;
+  --input-border-color: rgba(168, 176, 208, 0.3);
+
+  border: 1px solid var(--input-border-color);
+  border-radius: 5px;
+  width: 400px;
+  height: var(--input-height);
+  margin-right: 10px;
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
 .tools-search-input {
   padding: 5px;
   border: none;
   text-decoration: none;
   outline: none;
-  font-size: 14px;
+  font-size: 16px;
 }
 
-.tools-search {
-  border: 1px solid lightgray;
-  padding: 10px;
-  border-radius: 8px;
-  width: 25%;
-  margin-right: 10px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.fas {
+  margin: 0 10px;
 }

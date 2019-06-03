@@ -592,7 +592,9 @@ class TalentListPage extends React.Component {
     }
     console.log("test", this.props.handleClickLogOut);
     return (
-      <div>
+
+      <div className="content">
+
         <div className="container">
           <div className="talentList-container">
             <div className="talentList-left-block">
