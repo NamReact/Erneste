@@ -3,31 +3,34 @@ import axios from "axios";
 import ReactFileReader from "react-file-reader";
 
 class TalentInformations extends React.Component {
-  state = {
-    informations: {
-      photo: null,
-      firstName: "",
-      lastName: "",
-      linkedIn: "",
-      email: "",
-      phoneNumber: "",
-      salary: "",
-      actualCompany: "",
-      wantedSector: [],
-      wantedSize: "",
-      actualTitle: "",
-      wantedTitle: [],
-      status: ""
-    },
-    arrayOfTitles: [],
-    arrayOfSectors: [],
-    sectorSelect: false,
-    sizeSelect: false,
-    titleSelect: false,
-    statusSelect: false,
-    lastUpdate: null
-  };
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      informations: {
+        photo: null,
+        firstName: "",
+        lastName: "",
+        linkedIn: "",
+        email: "",
+        phoneNumber: "",
+        salary: "",
+        actualCompany: "",
+        wantedSector: [],
+        wantedSize: "",
+        actualTitle: "",
+        wantedTitle: [],
+        status: ""
+      },
+      arrayOfTitles: [],
+      arrayOfSectors: [],
+      sectorSelect: false,
+      sizeSelect: false,
+      titleSelect: false,
+      statusSelect: false,
+      lastUpdate: null
+    };
+  }
   sectorSelect = () => {
     this.setState({ sectorSelect: !this.state.sectorSelect });
   };

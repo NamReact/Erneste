@@ -3,24 +3,27 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 import TalentDescription from "../components/TalentDescription";
 import TalentInformations from "../components/TalentInformations";
+import HeaderAdmin from "../components/HeaderAdmin";
 
 import "../components/CreateNewTalent.css";
 
 /* Page to create a talent */
 
 class CreateNewTalent extends React.Component {
-  state = {
-    informations: null,
-    description: null,
-    skills: null,
-    redirect: false,
-    idTalentCreated: null,
-    loadingTitle: true,
-    loadingSector: true,
-    save: false,
-    actualSelect: null
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      informations: null,
+      description: null,
+      skills: null,
+      redirect: false,
+      idTalentCreated: null,
+      loadingTitle: true,
+      loadingSector: true,
+      save: false,
+      actualSelect: null
+    };
+  }
   /* ** INTERRUPTERS ** */
 
   setUpdate = () => {
@@ -70,28 +73,31 @@ class CreateNewTalent extends React.Component {
       return <Redirect to="/admin/talent-list" />;
     }
     return (
-      <div className="content">
-        {this.state.redirect && <Redirect to="/admin/talent-list" />}
-        <div className="body-container">
-          <TalentInformations
-            button={false}
-            getInformations={this.getInformations}
-            save={this.state.save}
-          />
+      <div>
+        <div className="content">
+          {this.state.redirect && <Redirect to="/admin/talent-list" />}
+          <div className="body-container">
+            <TalentInformations
+              button={false}
+              getInformations={this.getInformations}
+              save={this.state.save}
+            />
 
-          <TalentDescription
-            action="create"
-            isUpdating={true}
-            getDescription={this.getDescription}
-            save={this.state.save}
-            setSave={this.save}
-          />
+            <TalentDescription
+              action="create"
+              isUpdating={true}
+              getDescription={this.getDescription}
+              save={this.state.save}
+              setSave={this.save}
+            />
+          </div>
         </div>
       </div>
     );
   }
 
   async componentDidMount() {
+    this.props.setPageActive("admin/talent");
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/sector",
       { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
