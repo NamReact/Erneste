@@ -8,14 +8,98 @@ import TalentDescription from "../components/TalentDescription";
 
 class TalentforTalent extends React.Component {
   state = {
+    informations: {
+      photo: null,
+      firstName: "",
+      lastName: "",
+      linkedIn: "",
+      email: "",
+      phoneNumber: "",
+      salary: "",
+      actualCompany: "",
+      wantedSector: [],
+      wantedSize: "",
+      actualTitle: "",
+      wantedTitle: [],
+      status: ""
+    },
+    description: {
+      idealCompany: "",
+      idealRole: "",
+      workingEnvironment: "",
+      development: ""
+    },
+    skills: null,
     validated: null,
-    isLoading: true,
+    lastUpdate: null,
     isUpdating: false
   };
 
   /* ** INTERRUPTERS ** */
   setUpdate = () => {
     this.setState({ isUpdating: !this.state.isUpdating });
+  };
+
+  setInformations = e => {
+    const key = e.target.id;
+    const informations = this.state.informations;
+    informations[key] = e.target.value;
+    this.setState({ informations });
+  };
+
+  setPhoto = photo => {
+    const informations = this.state.informations;
+    informations.photo = photo;
+    this.setState({ informations });
+  };
+
+  setTitle = title => {
+    const informations = this.state.informations;
+    informations.title = title;
+    this.setState({ informations });
+  };
+
+  deleteTitle = i => {
+    const informations = this.state.informations;
+    informations.wantedTitle.splice(i, 1);
+    this.setState({ informations });
+  };
+
+  setSize = wantedSize => {
+    const informations = this.state.informations;
+    informations.wantedSize = wantedSize;
+    this.setState({ informations });
+  };
+
+  setStatus = status => {
+    const informations = this.state.informations;
+    informations.status = status;
+    this.setState({ informations });
+  };
+
+  setSector = sector => {
+    const informations = this.state.informations;
+    informations.sector = sector;
+    this.setState({ informations });
+  };
+
+  deleteSector = i => {
+    const informations = this.state.informations;
+    informations.wantedSector.splice(i, 1);
+    this.setState({ informations });
+  };
+
+  update = async () => {
+    await axios.post(
+      "https://ernest-server.herokuapp.com/talent/update",
+      {
+        id: this.props.match.params.id,
+        informations: this.state.informations
+      },
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+    );
+    this.setState({ isUpdating: false });
+    return;
   };
 
   render() {
@@ -26,19 +110,35 @@ class TalentforTalent extends React.Component {
           <div className="body-container">
             {this.state.isUpdating ? (
               <TalentInformations
-                action="update"
-                id={this.props.match.params.id}
                 button={true}
+                update={this.update}
                 setUpdate={this.setUpdate}
+                lastUpdate={this.state.lastUpdate}
+                informations={this.state.informations}
+                setInformations={this.setInformations}
+                lastUpdate={this.state.lastUpdate}
+                setPhoto={this.setPhoto}
+                setTitle={this.setTitle}
+                deleteTitle={this.deleteTitle}
+                setSize={this.setSize}
+                setStatus={this.setStatus}
+                setSector={this.setSector}
+                deleteSector={this.deleteSector}
               />
             ) : (
               <TalentInfoDisplay
-                id={this.props.match.params.id}
                 setUpdate={this.setUpdate}
+                informations={this.state.informations}
+                lastUpdate={this.state.lastUpdate}
+                setUpdate={this.setUpdate}
+                isUpdating={this.state.isUpdating}
               />
             )}
 
-            <TalentDescription id={this.props.match.params.id} />
+            <TalentDescription
+              description={this.state.description}
+              skills={this.state.skills}
+            />
           </div>
         </div>
       </div>
@@ -53,7 +153,11 @@ class TalentforTalent extends React.Component {
     );
 
     this.setState({
-      validated: response.data.validated
+      informations: response.data.informations,
+      description: response.data.description,
+      skills: response.data.skills,
+      validated: response.data.validated,
+      lastUpdate: response.data.lastUpdate
     });
   }
 }

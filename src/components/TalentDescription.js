@@ -5,13 +5,6 @@ import { Link } from "react-router-dom";
 
 class TalentDescriptions extends React.Component {
   state = {
-    description: {
-      idealCompany: "",
-      idealRole: "",
-      workingEnvironment: "",
-      development: ""
-    },
-    skills: [],
     tagList: false
   };
 
@@ -19,60 +12,23 @@ class TalentDescriptions extends React.Component {
     this.setState({ tagList: !this.state.tagList });
   };
 
-  setTag = tag => {
-    const tagArray = this.state.skills;
+  tagArrayPush = (tagArray, tag) => {
     tagArray.push(tag);
-    this.setState({ skills: tagArray });
+    this.props.setSkills(tagArray);
   };
 
-  removeTag = e => {
-    const skillsArray = [...this.state.skills];
-    for (let i = 0; i < skillsArray.length; i++) {
-      if (skillsArray[i]._id === e.target.id) {
-        skillsArray.splice(i, 1);
-        break;
-      }
+  setTag = tag => {
+    if (this.props.skills === null) {
+      const tagArray = [];
+      this.tagArrayPush(tagArray, tag);
+    } else {
+      const tagArray = this.props.skills;
+      this.tagArrayPush(tagArray, tag);
     }
-    this.setState({ skills: skillsArray });
-  };
-
-  post = async () => {
-    try {
-      await axios.post(
-        "https://ernest-server.herokuapp.com/talent/update",
-        {
-          id: this.props.id,
-          description: this.state.description,
-          skills: this.state.skills
-        },
-        { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
-      );
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  onSave = async () => {
-    await this.post();
-  };
-
-  onCreate = () => {
-    this.props.getDescription(this.state.description, this.state.skills);
   };
 
   render() {
-    if (this.state.description === null) {
-      return <div>Loading</div>;
-    }
-    if (this.props.save === true) {
-      if (this.props.action === "update") {
-        this.onSave();
-      } else {
-        this.onCreate();
-      }
-    }
-    const description = this.state.description;
-
+    const description = this.props.description;
     return (
       <div className="right-container">
         <div>Fiche talent</div>
@@ -80,74 +36,48 @@ class TalentDescriptions extends React.Component {
           <div className="wishes">
             <h3>L'entreprise idéale</h3>
             <textarea
+              id="idealCompany"
               readOnly={!this.props.isUpdating}
               name="ideal firm"
               value={description.idealCompany}
-              onChange={e => {
-                const description = { ...this.state.description };
-                description.idealCompany = { ...description.idealCompany };
-                description.idealCompany = e.target.value;
-                this.setState({
-                  description: description
-                });
-              }}
+              onChange={e => this.props.setDescription(e)}
             />
 
             <h3>Mon rôle idéal</h3>
             <textarea
+              id="idealRole"
               readOnly={!this.props.isUpdating}
               name="ideal role"
               value={description.idealRole}
-              onChange={e => {
-                const description = { ...this.state.description };
-                description.idealRole = { ...description.idealRole };
-                description.idealRole = e.target.value;
-                this.setState({
-                  description: description
-                });
-              }}
+              onChange={e => this.props.setDescription(e)}
             />
           </div>
           <div className="allWishes">
             <div className="sub-wishes">
               <h3>Mes conditions idéales</h3>
               <textarea
-                readOnly={!this.props.isUpdating}
+                id="workingEnvironment"
+                readOnly={this.props.update}
                 name="ideal environment"
                 value={description.workingEnvironment}
-                onChange={e => {
-                  const description = { ...this.state.description };
-                  description.workingEnvironment = {
-                    ...description.workingEnvironment
-                  };
-                  description.workingEnvironment = e.target.value;
-                  this.setState({
-                    description: description
-                  });
-                }}
+                onChange={e => this.props.setDescription(e)}
               />
 
               <h3>Mes ambitions d'évolution</h3>
               <textarea
+                id="development"
                 readOnly={!this.props.isUpdating}
                 name="ambitions"
                 value={description.development}
-                onChange={e => {
-                  const description = { ...this.state.description };
-                  description.development = { ...description.development };
-                  description.development = e.target.value;
-                  this.setState({
-                    description: description
-                  });
-                }}
+                onChange={e => this.props.setDescription(e)}
               />
             </div>
             <div className="skills">
               <h3>Skills</h3>
 
-              {this.state.skills ? (
+              {this.props.skills ? (
                 <div>
-                  {this.state.skills.map(tag => {
+                  {this.props.skills.map((tag, index) => {
                     return (
                       <div
                         key={tag._id}
@@ -160,9 +90,9 @@ class TalentDescriptions extends React.Component {
                         <div className="tag-name">{tag.name}</div>
                         {this.props.isUpdating && (
                           <div
-                            id={tag._id}
+                            id={index}
                             className="remove-tag"
-                            onClick={this.removeTag}
+                            onClick={e => this.props.deleteSkills(e.target.id)}
                           >
                             x
                           </div>
@@ -208,11 +138,11 @@ class TalentDescriptions extends React.Component {
               false
             )}
             {this.props.action === "update" ? (
-              <div className="validate" onClick={this.props.setSave}>
+              <div className="validate" onClick={this.props.update}>
                 Mettre à jour
               </div>
             ) : (
-              <div className="validate" onClick={this.props.setSave}>
+              <div className="validate" onClick={this.props.post}>
                 Ajouter le profil
               </div>
             )}
@@ -220,19 +150,6 @@ class TalentDescriptions extends React.Component {
         )}
       </div>
     );
-  }
-
-  async componentDidMount() {
-    if (this.props.id) {
-      const response = await axios.get(
-        "https://ernest-server.herokuapp.com/talent/" + this.props.id,
-        { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
-      );
-      this.setState({
-        description: response.data.description,
-        skills: response.data.skills
-      });
-    }
   }
 }
 

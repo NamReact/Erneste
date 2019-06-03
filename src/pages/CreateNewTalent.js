@@ -12,41 +12,101 @@ class CreateNewTalent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      informations: null,
-      description: null,
+      informations: {
+        photo: null,
+        firstName: "",
+        lastName: "",
+        linkedIn: "",
+        email: "",
+        phoneNumber: "",
+        salary: "",
+        actualCompany: "",
+        wantedSector: [],
+        wantedSize: "",
+        actualTitle: "",
+        wantedTitle: [],
+        status: ""
+      },
+      description: {
+        idealCompany: "",
+        idealRole: "",
+        workingEnvironment: "",
+        development: ""
+      },
       skills: null,
-      redirect: false,
-      idTalentCreated: null,
-      loadingTitle: true,
-      loadingSector: true,
-      save: false,
-      actualSelect: null
+      redirect: false
     };
   }
   /* ** INTERRUPTERS ** */
 
-  setUpdate = () => {
-    this.setState({ isUpdating: !this.state.isUpdating });
+  setInformations = e => {
+    const key = e.target.id;
+    const informations = this.state.informations;
+    informations[key] = e.target.value;
+    this.setState({ informations });
   };
 
-  save = () => {
-    this.setState({ save: true });
+  setPhoto = photo => {
+    const informations = this.state.informations;
+    informations.photo = photo;
+    this.setState({ informations });
   };
 
-  stopSave = () => {
-    this.setState({ save: false });
+  setTitle = title => {
+    const informations = this.state.informations;
+    informations.title = title;
+    this.setState({ informations });
   };
 
-  getInformations = async informations => {
-    await this.setState({ informations });
+  deleteTitle = i => {
+    const informations = this.state.informations;
+    informations.wantedTitle.splice(i, 1);
+    this.setState({ informations });
   };
 
-  getDescription = async (description, skills) => {
-    await this.setState({ description, skills });
+  setSize = wantedSize => {
+    const informations = this.state.informations;
+    informations.wantedSize = wantedSize;
+    this.setState({ informations });
+  };
+
+  setStatus = status => {
+    const informations = this.state.informations;
+    informations.status = status;
+    this.setState({ informations });
+  };
+
+  setSector = sector => {
+    const informations = this.state.informations;
+    informations.sector = sector;
+    this.setState({ informations });
+  };
+
+  deleteSector = i => {
+    const informations = this.state.informations;
+    informations.wantedSector.splice(i, 1);
+    this.setState({ informations });
+  };
+
+  setDescription = e => {
+    const key = e.target.id;
+    const description = this.state.description;
+    description[key] = e.target.value;
+    this.setState({ description });
+  };
+
+  setSkills = skills => {
+    this.setState({ skills });
+  };
+
+  deleteSkills = i => {
+    const skills = this.state.skills;
+    skills.splice(i, 1);
+    this.setState({ skills });
   };
 
   post = async () => {
-    const response = await axios.post(
+    await axios.post(
       "https://ernest-server.herokuapp.com/talent/create",
       {
         informations: this.state.informations,
@@ -55,22 +115,11 @@ class CreateNewTalent extends React.Component {
       },
       { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
     );
-    console.log(response.data);
+    this.setState({ redirect: true });
     return;
-
-    /* this.setState({ redirect: true }); */
   };
 
   render() {
-    if (
-      this.state.informations &&
-      this.state.description &&
-      this.state.skills
-    ) {
-      this.post();
-      setTimeout(1000);
-      return <Redirect to="/admin/talent-list" />;
-    }
     return (
       <div>
         <div className="content">
@@ -78,16 +127,25 @@ class CreateNewTalent extends React.Component {
           <div className="body-container">
             <TalentInformations
               button={false}
-              getInformations={this.getInformations}
-              save={this.state.save}
+              informations={this.state.informations}
+              setInformations={this.setInformations}
+              setPhoto={this.setPhoto}
+              setTitle={this.setTitle}
+              deleteTitle={this.deleteTitle}
+              setSize={this.setSize}
+              setStatus={this.setStatus}
+              setSector={this.setSector}
+              deleteSector={this.deleteSector}
             />
 
             <TalentDescription
-              action="create"
               isUpdating={true}
-              getDescription={this.getDescription}
-              save={this.state.save}
-              setSave={this.save}
+              post={this.post}
+              description={this.state.description}
+              skills={this.state.skills}
+              setDescription={this.setDescription}
+              setSkills={this.setSkills}
+              deleteSkills={this.deleteSkills}
             />
           </div>
         </div>

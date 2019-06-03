@@ -7,30 +7,17 @@ class TalentInformations extends React.Component {
     super(props);
 
     this.state = {
-      informations: {
-        photo: null,
-        firstName: "",
-        lastName: "",
-        linkedIn: "",
-        email: "",
-        phoneNumber: "",
-        salary: "",
-        actualCompany: "",
-        wantedSector: [],
-        wantedSize: "",
-        actualTitle: "",
-        wantedTitle: [],
-        status: ""
-      },
       arrayOfTitles: [],
       arrayOfSectors: [],
       sectorSelect: false,
       sizeSelect: false,
       titleSelect: false,
-      statusSelect: false,
-      lastUpdate: null
+      statusSelect: false
     };
   }
+
+  /* Interrupters for drop lists */
+
   sectorSelect = () => {
     this.setState({ sectorSelect: !this.state.sectorSelect });
   };
@@ -47,101 +34,73 @@ class TalentInformations extends React.Component {
     this.setState({ statusSelect: !this.state.statusSelect });
   };
 
+  /* Functions for setState */
+
   handleFiles = files => {
-    const informations = { ...this.state.informations };
-    informations.photo = { ...informations.photo };
-    informations.photo = files.base64;
-    this.setState({
-      informations: informations
-    });
+    this.props.setPhoto(files.base64);
   };
 
   handleWantedTitle = e => {
-    const informationsCopy = this.state.informations;
-    informationsCopy.wantedTitle = [...this.state.informations.wantedTitle];
+    const title = this.props.informations.wantedTitle;
     for (let i = 0; i < this.state.arrayOfTitles.length; i++) {
       if (e.target.id === this.state.arrayOfTitles[i]._id) {
-        informationsCopy.wantedTitle.push(this.state.arrayOfTitles[i]);
+        title.push(this.state.arrayOfTitles[i]);
+        break;
       }
     }
-    this.setState({ informations: informationsCopy, titleSelect: false });
+    this.props.setTitle(title);
+    this.setState({ titleSelect: false });
   };
 
   /* Function to handle company size */
 
   handleSize = e => {
-    const informations = this.state.informations;
-    informations.wantedSize = e.target.id;
-    this.setState({ informations, sizeSelect: false });
+    this.props.setSize(e.target.id);
+    this.setState({ sizeSelect: false });
   };
 
   /* Function to set availability */
 
   handleAvailability = e => {
-    const informations = this.state.informations;
-    informations.status = e.target.id;
-    this.setState({ informations, statusSelect: false });
+    this.props.setStatus(e.target.id);
+    this.setState({ statusSelect: false });
   };
 
   handleWantedSector = e => {
-    const informationsCopy = this.state.informations;
-    informationsCopy.wantedSector = [...this.state.informations.wantedSector];
+    const sector = this.props.informations.wantedSector;
     for (let i = 0; i < this.state.arrayOfSectors.length; i++) {
       if (e.target.id === this.state.arrayOfSectors[i]._id) {
-        informationsCopy.wantedSector.push(this.state.arrayOfSectors[i]);
+        sector.push(this.state.arrayOfSectors[i]);
+        break;
       }
     }
-    this.setState({ informations: informationsCopy, sectorSelect: false });
-  };
-
-  post = async () => {
-    try {
-      await axios.post(
-        "https://ernest-server.herokuapp.com/talent/update",
-        {
-          id: this.props.id,
-          informations: this.state.informations
-        },
-        { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
-      );
-      this.props.setUpdate();
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  onSave = async () => {
-    await this.post();
-    this.props.setUpdate();
-    this.props.stopSave();
-  };
-
-  onCreate = () => {
-    this.props.getInformations(this.state.informations);
+    this.props.setSector(sector);
+    this.setState({ sectorSelect: false });
   };
 
   render() {
-    if (this.props.save === true) {
-      if (this.props.action === "update") {
-        this.onSave();
-      } else {
-        this.onCreate();
-      }
+    const informations = this.props.informations;
+    const lastUpdate = this.props.lastUpdate;
+    let formatUpdate = null;
+    if (lastUpdate !== null) {
+      formatUpdate = lastUpdate
+        .split(",")
+        .shift()
+        .split(" ")
+        .join("/");
     }
-    const informations = this.state.informations;
-    const lastUpdate = this.state.lastUpdate;
     let dotColor = "";
 
-    if (this.state.informations.status === "Recherche active") {
+    if (informations.status === "Recherche active") {
       dotColor = "#9EBA83";
     }
-    if (this.state.informations.status === "Ouvert(e) aux opportunités") {
+    if (informations.status === "Ouvert(e) aux opportunités") {
       dotColor = "#F2E9A7";
     }
-    if (this.state.informations.status === "Ne pas être contacter") {
+    if (informations.status === "Ne pas être contacter") {
       dotColor = "#FF9D9D";
     }
-    if (this.state.informations.status === "Embauché(e) par Erneste") {
+    if (informations.status === "Embauché(e) par Erneste") {
       dotColor = "#6A6A8F";
     }
     return (
@@ -172,125 +131,72 @@ class TalentInformations extends React.Component {
         <form className="talentDetails">
           <div>Prénom</div>
           <input
+            id="firstName"
             placeholder="Prénom"
             name="First Name"
             value={informations.firstName}
-            onChange={e => {
-              const informations = { ...this.state.informations };
-              informations.firstName = { ...informations.firstName };
-              informations.firstName = e.target.value;
-              this.setState({
-                informations: informations
-              });
-            }}
+            onChange={e => this.props.setInformations(e)}
           />
           <div>Nom</div>
           <input
+            id="lastName"
             placeholder="Nom"
             name="Last Name"
             value={informations.lastName}
-            onChange={e => {
-              const informations = { ...this.state.informations };
-              informations.lastName = { ...informations.lastName };
-              informations.lastName = e.target.value;
-              this.setState({
-                informations: informations
-              });
-            }}
+            onChange={e => this.props.setInformations(e)}
           />
 
           <div>Profil LinkedIn</div>
           <input
+            id="linkedIn"
             placeholder="Mon LinkedIn"
             name="LinkedIn Profil"
             value={informations.linkedIn}
-            onChange={e => {
-              const informations = { ...this.state.informations };
-              informations.linkedIn = { ...informations.linkedIn };
-              informations.linkedIn = e.target.value;
-              this.setState({
-                informations: informations
-              });
-            }}
+            onChange={e => this.props.setInformations(e)}
           />
           <div>Email</div>
           <input
+            id="email"
             placeholder="Email"
             name="email"
             value={informations.email}
-            onChange={e => {
-              const informations = { ...this.state.informations };
-              informations.email = { ...informations.email };
-              informations.email = e.target.value;
-              this.setState({
-                informations: informations
-              });
-            }}
+            onChange={e => this.props.setInformations(e)}
           />
           <div>Téléphone</div>
           <input
+            id="phoneNumber"
             placeholder="XX XX XX XX XX"
             name="phone number"
             value={informations.phoneNumber}
-            onChange={e => {
-              const informations = { ...this.state.informations };
-              informations.phoneNumber = { ...informations.phoneNumber };
-              informations.phoneNumber = e.target.value;
-              this.setState({
-                informations: informations
-              });
-            }}
+            onChange={e => this.props.setInformations(e)}
           />
           <div>Salaire</div>
           <input
+            id="salary"
             placeholder="Salaire"
             name="Wage"
             value={informations.salary}
-            onChange={e => {
-              const informations = { ...this.state.informations };
-              informations.salary = { ...informations.salary };
-              informations.salary = e.target.value;
-              this.setState({
-                informations: informations
-              });
-            }}
+            onChange={e => this.props.setInformations(e)}
           />
           <div>Entreprise actuelle</div>
           <input
+            id="actualCompany"
             placeholder="Entreprise actuelle"
             name="Current company"
             value={informations.actualCompany}
-            onChange={e => {
-              const informations = { ...this.state.informations };
-              informations.actualCompany = {
-                ...informations.actualCompany
-              };
-              informations.actualCompany = e.target.value;
-              this.setState({
-                informations: informations
-              });
-            }}
+            onChange={e => this.props.setInformations(e)}
           />
 
           <div>Secteur souhaité</div>
           <div>
-            {this.state.informations.wantedSector.map((item, index) => {
+            {informations.wantedSector.map((item, index) => {
               return (
                 <div className="displayed-array" key={index}>
                   {item.name}
                   <div
                     id={index}
                     className="displayed-array-delete"
-                    onClick={e => {
-                      const id = e.target.id;
-                      const informations = { ...this.state.informations };
-                      informations.wantedSector = [
-                        ...informations.wantedSector
-                      ];
-
-                      informations.wantedSector.splice(id, 1);
-                      this.setState({ informations });
-                    }}
+                    onClick={e => this.props.deleteSector(e.target.id)}
                   >
                     X
                   </div>
@@ -343,9 +249,9 @@ class TalentInformations extends React.Component {
               }}
               onClick={this.sizeSelect}
             >
-              {this.state.informations.wantedSize ? (
+              {informations.wantedSize ? (
                 <div style={{ color: "#333266" }}>
-                  {this.state.informations.wantedSize}
+                  {informations.wantedSize}
                 </div>
               ) : (
                 <div>Choisir une taille</div>
@@ -378,35 +284,23 @@ class TalentInformations extends React.Component {
 
           <div>Fonction actuelle</div>
           <input
+            id="actualTitle"
             placeholder="Fonction actuelle"
             name="Current position"
             value={informations.actualTitle}
-            onChange={e => {
-              const informations = { ...this.state.informations };
-              informations.actualTitle = { ...informations.actualTitle };
-              informations.actualTitle = e.target.value;
-              this.setState({
-                informations: informations
-              });
-            }}
+            onChange={e => this.props.setInformations(e)}
           />
 
           <div>Fonction souhaitée</div>
           <div>
-            {this.state.informations.wantedTitle.map((item, index) => {
+            {informations.wantedTitle.map((item, index) => {
               return (
                 <div className="displayed-array" key={index}>
                   {item.name}
                   <div
                     id={index}
                     className="displayed-array-delete"
-                    onClick={e => {
-                      const id = e.target.id;
-                      const informations = { ...this.state.informations };
-                      informations.wantedTitle = [...informations.wantedTitle];
-                      informations.wantedTitle.splice(id, 1);
-                      this.setState({ informations });
-                    }}
+                    onClick={e => this.props.deleteTitle(e.target.id)}
                   >
                     X
                   </div>
@@ -464,15 +358,13 @@ class TalentInformations extends React.Component {
               <div
                 style={{
                   backgroundColor: dotColor,
-                  borderWidth: this.state.informations.status ? "none" : "1px",
-                  borderStyle: this.state.informations.status ? "none" : "solid"
+                  borderWidth: informations.status ? "none" : "1px",
+                  borderStyle: informations.status ? "none" : "solid"
                 }}
               />
             </div>
-            {this.state.informations.status ? (
-              <div style={{ color: "#333266" }}>
-                {this.state.informations.status}
-              </div>
+            {informations.status ? (
+              <div style={{ color: "#333266" }}>{informations.status}</div>
             ) : (
               <div>Modifier le statut</div>
             )}
@@ -524,40 +416,33 @@ class TalentInformations extends React.Component {
             >
               Annuler
             </div>
-            <div onClick={this.post} className="validate button-update-talent">
+            <div
+              onClick={this.props.update}
+              className="validate button-update-talent"
+            >
               Mettre à jour
             </div>
           </div>
         )}
-        {this.state.lastUpdate && (
-          <div>{"Modifé le " + lastUpdate.split(",").shift()}</div>
-        )}
+        {lastUpdate && <div>{"Modifé le " + formatUpdate}</div>}
       </div>
     );
   }
 
   async componentDidMount() {
-    if (this.props.id) {
-      const response1 = await axios.get(
-        "https://ernest-server.herokuapp.com/talent/" + this.props.id,
-        { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
-      );
-      this.setState({ informations: response1.data.informations });
-    }
-
-    const response2 = await axios.get(
+    const response1 = await axios.get(
       "https://ernest-server.herokuapp.com/sector",
       { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
     );
 
-    const response3 = await axios.get(
+    const response2 = await axios.get(
       "https://ernest-server.herokuapp.com/title",
       { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
     );
 
     this.setState({
-      arrayOfSectors: response2.data,
-      arrayOfTitles: response3.data
+      arrayOfSectors: response1.data,
+      arrayOfTitles: response2.data
     });
   }
 }
