@@ -17,32 +17,31 @@ import Login from "../src/pages/Login";
 import Home from "./components/Home";
 import ClientforAdmin from "./components/ClientforAdmin/ClientforAdmin";
 import Cookies from "js-cookie";
+import HeaderAdmin from "./components/HeaderAdmin";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     // Get the token and permission from the cookies
-    const token = Cookies.get("erneste-token");
-    const permission = Cookies.get("erneste-permission");
-    const id = Cookies.get("erneste-id");
-    const userData = {
-      token: token,
-      permission: permission,
-      id: id
-    };
+    const userData = Cookies.getJSON("erneste");
+
     this.state = {
-      userData: userData === undefined ? null : userData
+      userData: null || userData,
+      pageActive: null
       /* mettre dans le state un token qui permet d'identifeir qui consulte la fiche, qui peut modifier quoi*/
     };
 
     this.handleClickLogOut = () => {
       console.log("hello");
       this.setState({ userData: null });
-      Cookies.remove("erneste-token");
-      Cookies.remove("erneste-permission");
-      Cookies.remove("erneste-id");
+      Cookies.remove("erneste");
+    };
+
+    this.setPageActive = toto => {
+      this.setState({ pageActive: toto });
     };
   }
+
   /* getId = id => {
     this.setState({ id: id });
   }; */
@@ -50,6 +49,12 @@ class App extends React.Component {
   render() {
     return (
       <Router>
+        {this.state.userData && (
+          <HeaderAdmin
+            pageType={this.state.pageActive}
+            handleClickLogOut={this.handleClickLogOut}
+          />
+        )}
         <Switch>
           <Route exact={true} path="/" component={Home} />
           <Route
@@ -90,8 +95,8 @@ class App extends React.Component {
               return (
                 <CreateNewTalent
                   getId={this.getId}
-                  handleClickLogOut={this.handleClickLogOut}
                   permission={this.state.userData.permission}
+                  setPageActive={this.setPageActive}
                 />
               );
             }}
@@ -99,15 +104,15 @@ class App extends React.Component {
           <Route
             exact={true}
             path="/admin/talent/:id"
-            component={props => {
+            render={props => {
               if (!this.state.userData) {
                 return <Redirect to={"/login"} />;
               }
               return (
                 <TalentforAdmin
                   match={props.match}
-                  handleClickLogOut={this.handleClickLogOut}
                   permission={this.state.userData.permission}
+                  setPageActive={this.setPageActive}
                 />
               );
             }}
@@ -122,8 +127,8 @@ class App extends React.Component {
               return (
                 <TalentforTalent
                   match={props.match}
-                  handleClickLogOut={this.handleClickLogOut}
                   permission={this.state.userData.permission}
+                  setPageActive={this.setPageActive}
                 />
               );
             }}
@@ -136,8 +141,8 @@ class App extends React.Component {
               }
               return (
                 <TalentListPage
-                  handleClickLogOut={this.handleClickLogOut}
                   permission={this.state.userData.permission}
+                  setPageActive={this.setPageActive}
                 />
               );
             }}
@@ -151,8 +156,8 @@ class App extends React.Component {
               return (
                 <ClientList
                   match={props.match}
-                  handleClickLogOut={this.handleClickLogOut}
                   permission={this.state.userData.permission}
+                  setPageActive={this.setPageActive}
                 />
               );
             }}
@@ -166,8 +171,8 @@ class App extends React.Component {
               return (
                 <ClientforAdmin
                   match={props.match}
-                  handleClickLogOut={this.handleClickLogOut}
                   permission={this.state.userData.permission}
+                  setPageActive={this.setPageActive}
                 />
               );
             }}

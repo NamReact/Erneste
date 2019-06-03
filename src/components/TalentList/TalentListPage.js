@@ -593,10 +593,6 @@ class TalentListPage extends React.Component {
     console.log("test", this.props.handleClickLogOut);
     return (
       <div>
-        <HeaderAdmin
-          pageType={"talent"}
-          handleClickLogOut={this.props.handleClickLogOut}
-        />
         <div className="container">
           <div className="talentList-container">
             <div className="talentList-left-block">
@@ -649,6 +645,7 @@ class TalentListPage extends React.Component {
     this.getDataTitleList();
     this.getDataTalentList();
     this.getDataTagList();
+    this.props.setPageActive("admin/talent");
   }
 }
 

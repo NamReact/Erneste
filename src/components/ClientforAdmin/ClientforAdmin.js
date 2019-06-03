@@ -52,8 +52,8 @@ class ClientforAdmin extends React.Component {
   render() {
     return (
       <div>
-        <div /* container for the grey area */>
-          <HeaderAdmin />
+        <div>
+          {/* container for the grey area */}
           <div className="client-details">
             <div className="client-details-top">
               <ReactFileReader
@@ -107,6 +107,12 @@ class ClientforAdmin extends React.Component {
         </div>
       </div>
     );
+  }
+  async componentDidMount() {
+    this.getDataTitleList();
+    this.getDataTalentList();
+    this.getDataTagList();
+    this.props.setPageActive("admin/talent");
   }
 }
 

@@ -6,12 +6,14 @@ import TalentDescription from "../components/TalentDescription";
 /* *** Page for Admin. Everything can be modified *** */
 
 class TalentforAdmin extends React.Component {
-  state = {
-    validated: null,
-    isUpdating: false,
-    save: false
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      validated: null,
+      isUpdating: false,
+      save: false
+    };
+  }
   /* ** INTERRUPTERS ** */
 
   setUpdate = () => {
@@ -59,6 +61,9 @@ class TalentforAdmin extends React.Component {
         </div>
       </div>
     );
+  }
+  async componentDidMount() {
+    this.props.setPageActive("admin/talent");
   }
 }
 
