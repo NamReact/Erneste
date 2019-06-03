@@ -89,7 +89,7 @@ function TagFilter(props) {
       </div>
       <div>
         <div className="tagList-deleteAllTag" onClick={onDeleteAllTagClick}>
-          X
+          <i class="fas fa-times" />
         </div>
       </div>
     </div>

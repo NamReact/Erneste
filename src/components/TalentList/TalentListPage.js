@@ -592,7 +592,7 @@ class TalentListPage extends React.Component {
     }
     console.log("test", this.props.handleClickLogOut);
     return (
-      <div>
+      <div className="content">
         <HeaderAdmin
           pageType={"talent"}
           handleClickLogOut={this.props.handleClickLogOut}

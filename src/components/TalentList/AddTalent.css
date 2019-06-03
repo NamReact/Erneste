@@ -1,10 +1,20 @@
-.toolsAddTalent {
-  text-decoration: none;
-  outline: none;
-  background-color: #474d8b;
+.all-button-add-talent {
+  display: flex;
+  align-items: center;
+  background-color: #333366;
+  border-radius: 5px;
+  width: 200px;
+  height: var(--input-height);
+}
+
+.all-button-add-talent div {
   color: white;
-  padding: 15px;
-  font-size: 14px;
-  border-radius: 8px;
-  font-weight: 600;
+  font-size: 20px;
+  margin: 0 10px;
+}
+.addTalentButton {
+  color: white;
+  font-size: 16px;
+  background-color: #333366;
+  border: none;
 }
