@@ -26,9 +26,12 @@ class Login extends React.Component {
           password: this.state.password
         }
       );
-      Cookies.set("erneste-token", response.data.token);
-      Cookies.set("erneste-permission", response.data.permission);
-      Cookies.set("erneste-id", response.data.id);
+      Cookies.set("erneste", {
+        token: response.data.token,
+        permission: response.data.permission,
+        id: response.data.id
+      });
+
       this.setState({ wrong: false });
     } catch (error) {
       this.setState({ wrong: true, password: "" });

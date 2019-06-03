@@ -88,9 +88,7 @@ class ClientList extends React.Component {
       <div className="content">
         {/* header  */}
 
-        <div className="header-of-page">
-          <HeaderAdmin pageType={"client"} />
-        </div>
+        <div className="header-of-page" />
         {/* header---end  */}
 
         {/* title  page : Clients & view  */}
@@ -227,7 +225,7 @@ class ClientList extends React.Component {
     );
   }
   async componentDidMount() {
-    await axios;
+    this.props.setPageActive("admin/client");
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/client",
       { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
@@ -237,7 +235,6 @@ class ClientList extends React.Component {
       clientListData: response.data,
       isLoading: false
     });
-    console.log(response.data);
   }
 }
 
