@@ -3,7 +3,6 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 import TalentDescription from "../components/TalentDescription";
 import TalentInformations from "../components/TalentInformations";
-import HeaderAdmin from "../components/HeaderAdmin";
 
 import "../components/CreateNewTalent.css";
 

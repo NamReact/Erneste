@@ -4,7 +4,6 @@ import Title from "./Title";
 import TagFilter from "./TagFilter";
 import TitleLine from "./TitleLine";
 import TalentList from "./TalentList";
-import HeaderAdmin from "../HeaderAdmin";
 import Tools from "./Tools";
 import "./TalentListPage.css";
 import { Redirect } from "react-router-dom";

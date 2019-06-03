@@ -14,7 +14,6 @@ import TalentListPage from "./components/TalentList/TalentListPage";
 import ClientList from "./components/ClientList/ClientList";
 import TalentforTalent from "./pages/TalentforTalent";
 import Login from "../src/pages/Login";
-import Home from "./components/Home";
 import ClientforAdmin from "./components/ClientforAdmin/ClientforAdmin";
 import Cookies from "js-cookie";
 import HeaderAdmin from "./components/HeaderAdmin";
@@ -32,7 +31,6 @@ class App extends React.Component {
     };
 
     this.handleClickLogOut = () => {
-      console.log("hello");
       this.setState({ userData: null });
       Cookies.remove("erneste");
     };
@@ -56,10 +54,9 @@ class App extends React.Component {
           />
         )}
         <Switch>
-          <Route exact={true} path="/" component={Home} />
           <Route
             exact={true}
-            path="/login"
+            path="/"
             render={props => {
               if (this.state.userData) {
                 if (this.state.userData.permission === "Admin") {
@@ -90,7 +87,7 @@ class App extends React.Component {
             path="/admin/talent-create"
             render={props => {
               if (!this.state.userData) {
-                return <Redirect to={"/login"} />;
+                return <Redirect to={"/"} />;
               }
               return (
                 <CreateNewTalent
@@ -106,7 +103,7 @@ class App extends React.Component {
             path="/admin/talent/:id"
             render={props => {
               if (!this.state.userData) {
-                return <Redirect to={"/login"} />;
+                return <Redirect to={"/"} />;
               }
               return (
                 <TalentforAdmin
@@ -122,7 +119,7 @@ class App extends React.Component {
             path="/talent/:id"
             render={props => {
               if (!this.state.userData) {
-                return <Redirect to={"/login"} />;
+                return <Redirect to={"/"} />;
               }
               return (
                 <TalentforTalent
@@ -137,7 +134,7 @@ class App extends React.Component {
             path="/admin/talent-list"
             render={props => {
               if (!this.state.userData) {
-                return <Redirect to={"/login"} />;
+                return <Redirect to={"/"} />;
               }
               return (
                 <TalentListPage
@@ -151,7 +148,7 @@ class App extends React.Component {
             path="/admin/client-list"
             render={props => {
               if (!this.state.userData) {
-                return <Redirect to={"/login"} />;
+                return <Redirect to={"/"} />;
               }
               return (
                 <ClientList
@@ -166,7 +163,7 @@ class App extends React.Component {
             path="/admin/client/:id"
             render={props => {
               if (!this.state.userData) {
-                return <Redirect to={"/login"} />;
+                return <Redirect to={"/"} />;
               }
               return (
                 <ClientforAdmin

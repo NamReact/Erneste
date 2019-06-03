@@ -32,7 +32,11 @@ class Login extends React.Component {
         permission: response.data.permission,
         id: response.data.id
       });
-
+      this.props.onLogIn({
+        token: response.data.token,
+        permission: response.data.permission,
+        id: response.data.id
+      });
       this.setState({ wrong: false });
     } catch (error) {
       this.setState({ wrong: true, password: "" });

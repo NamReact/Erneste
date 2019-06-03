@@ -3,7 +3,6 @@ import axios from "axios";
 import TalentInformations from "../components/TalentInformations";
 import TalentInfoDisplay from "../components/TalentInfoDisplay";
 import TalentDescription from "../components/TalentDescription";
-import HeaderAdmin from "../components/HeaderAdmin";
 
 /* Fiche qui apparait pour le Talent : il ne peut modifier que certains éléments de la description */
 
@@ -22,10 +21,6 @@ class TalentforTalent extends React.Component {
   render() {
     return (
       <div>
-        <HeaderAdmin
-          handleClickLogOut={this.props.handleClickLogOut}
-          pageType="talent"
-        />
         <div className="content">
           {false && this.state.validated}
           <div className="body-container">

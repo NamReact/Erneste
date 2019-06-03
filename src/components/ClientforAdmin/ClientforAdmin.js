@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import ReactFileReader from "react-file-reader";
-import HeaderAdmin from "../HeaderAdmin";
 
 /* Page to see client details, talents for client and add users */
 
