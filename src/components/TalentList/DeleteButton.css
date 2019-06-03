@@ -2,8 +2,13 @@
 .deleteButton {
   display: flex;
   align-items: center;
-  margin-left: 40px;
+  margin-left: 10px;
 }
 .deleteButton:hover {
   cursor: pointer;
+}
+
+.text-delete-button {
+  padding-left: 10px;
+  width: 150px;
 }

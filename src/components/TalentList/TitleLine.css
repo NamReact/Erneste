@@ -7,57 +7,67 @@
   --container-background: rgb(254, 254, 254);
   --placeholder-grey: #a8b0d0;
   --shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
+  --medium-box-width: 125px;
+  --small-box-width: 85px;
 
   display: flex;
-
   padding-bottom: 10px;
   border-bottom: 2px solid var(--input-border-color);
-  justify-content: space-between;
+
+  align-items: center;
 }
 
-/* .talentList-right-block-name {
-  flex: 3;
+.talentList-right-block-name {
+  /*  flex: 3; */
+  width: var(--medium-box-width);
 }
 
 .talentList-right-block-actualTitle {
-  flex: 3;
+  /*  flex: 3; */
+  width: var(--medium-box-width);
 }
 
 .talentList-right-block-actualCompany {
-  flex: 3;
+  /*  flex: 3; */
+  width: var(--medium-box-width);
 }
 
 .talentList-right-block-wantedTitle-title {
-  flex: 2;
+  /*  flex: 3; */
+  width: var(--medium-box-width);
 }
 
 .talentList-right-block-validated {
-  flex: 1;
+  /* flex: 2; */
+  width: var(--small-box-width);
 }
 
 .talentList-right-block-status {
-  flex: 1;
+  /* flex: 1; */
+  width: var(--small-box-width);
 }
 
 .talentList-right-block-lastUpdate {
-  flex: 2;
-} */
+  /* flex: 2; */
+  width: var(--small-box-width);
+}
 
 .fas:hover {
   cursor: pointer;
 }
 
 .chevron-filter {
-  background-color: white;
+  background-color: var(--container-background);
   min-height: 200px;
   width: 200px;
   position: absolute;
   z-index: 2;
-  border: 2px solid lightgray;
+  border: 2px solid var(--input-border-color);
   top: 200px;
 }
 
 .filter-line {
   display: flex;
-  margin-bottom: 10px;
+  margin: 10px;
+  align-items: center;
 }

@@ -7,53 +7,64 @@
   --container-background: rgb(254, 254, 254);
   --placeholder-grey: #a8b0d0;
   --shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
+  --medium-box-width: 125px;
+  --small-box-width: 85px;
   display: flex;
   flex-direction: row;
   margin-top: 20px;
   padding-bottom: 20px;
-  border-bottom: 1px lightgray solid;
-}
-
-.talentList-right-block-name {
-  flex: 3;
-  display: flex;
+  border-bottom: 1px solid var(--input-border-color);
   align-items: center;
 }
 
+.talentList-right-block-name {
+  /* flex: 3; */
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333266;
+}
+
 .talentList-right-block-actualTitle {
-  flex: 3;
+  /* flex: 3; */
+  width: var(--medium-box-width);
   display: flex;
   align-items: center;
 }
 
 .talentList-right-block-actualCompany {
-  flex: 3;
+  /* flex: 3; */
+  width: var(--medium-box-width);
   display: flex;
   align-items: center;
 }
 
 .talentList-right-block-wantedTitle {
-  flex: 2;
+  /* flex: 3; */
+  width: var(--medium-box-width);
   display: flex;
   flex-direction: column;
 }
 
 .talentList-right-block-validated-line {
-  flex: 1;
+  /* flex: 2;  */
+  width: var(--small-box-width);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .talentList-right-block-status {
-  flex: 1;
+  width: var(--small-box-width);
+  /* flex: 1; */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .talentList-right-block-lastUpdate-line {
-  flex: 2;
+  width: var(--small-box-width);
+  /* flex: 2; */
   display: flex;
   align-items: center;
   justify-content: center;
