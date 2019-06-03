@@ -4,7 +4,7 @@ import "./TagFilter.css";
 function TagFilter(props) {
   const {
     tagFilterInputValue,
-    tagSuggestions,
+    tagFilterSelected,
     tagSuggestionsShown,
     onChangeTagInput,
     onClickTag,
@@ -54,8 +54,8 @@ function TagFilter(props) {
     <div className="tagList-filterBlock">
       <div className="tagList-filterTitle">Filtres</div>
       <div className="tagList">
-        {tagSuggestions.length > 0 &&
-          tagSuggestions.map((element, index) => {
+        {tagFilterSelected.length > 0 &&
+          tagFilterSelected.map((element, index) => {
             return (
               <div
                 key={element.name}

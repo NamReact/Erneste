@@ -43,7 +43,7 @@ class TalentListPage extends React.Component {
       /* Tag Filter State */
       tagList: [],
       tagFilterInputValue: "",
-      tagSuggestions: [],
+      tagFilterSelected: [],
       tagSuggestionsShown: false,
       tagListFiltered: [],
       tagActiveSuggestion: 0
@@ -351,11 +351,11 @@ class TalentListPage extends React.Component {
 
   // Function to put tag as a filter
   onClickTag = tag => {
-    let tagSuggestionsCopie = [...this.state.tagSuggestions];
+    let tagSuggestionsCopie = [...this.state.tagFilterSelected];
     tagSuggestionsCopie.push(tag);
 
     this.setState({
-      tagSuggestions: tagSuggestionsCopie,
+      tagFilterSelected: tagSuggestionsCopie,
       tagFilterInputValue: "",
       tagActiveSuggestion: 0,
       tagSuggestionsShown: false
@@ -366,12 +366,12 @@ class TalentListPage extends React.Component {
   onKeyDownTagInput = e => {
     // ENTER, it adds the tag
     if (e.keyCode === 13) {
-      let tagSuggestionsCopie = [...this.state.tagSuggestions];
+      let tagSuggestionsCopie = [...this.state.tagFilterSelected];
       tagSuggestionsCopie.push(
         this.state.tagListFiltered[this.state.tagActiveSuggestion]
       );
       this.setState({
-        tagSuggestions: tagSuggestionsCopie,
+        tagFilterSelected: tagSuggestionsCopie,
         tagFilterInputValue: "",
         tagActiveSuggestion: 0,
         tagSuggestionsShown: false
@@ -408,15 +408,15 @@ class TalentListPage extends React.Component {
 
   // Function to delete all tag from the filter
   onDeleteAllTagClick = () => {
-    let tagSuggestionsCopie = [...this.state.tagSuggestions];
+    let tagSuggestionsCopie = [...this.state.tagFilterSelected];
     tagSuggestionsCopie.splice(0, tagSuggestionsCopie.length);
-    this.setState({ tagSuggestions: tagSuggestionsCopie });
+    this.setState({ tagFilterSelected: tagSuggestionsCopie });
   };
   // Function to delete one tag
   onSingleTagDeleteClick = index => {
-    let tagSuggestionsCopie = [...this.state.tagSuggestions];
+    let tagSuggestionsCopie = [...this.state.tagFilterSelected];
     tagSuggestionsCopie.splice(index, 1);
-    this.setState({ tagSuggestions: tagSuggestionsCopie });
+    this.setState({ tagFilterSelected: tagSuggestionsCopie });
   };
 
   render() {
@@ -487,7 +487,7 @@ class TalentListPage extends React.Component {
       });
 
       // FILTER WITH TAGS
-      let tagFilter = this.state.tagSuggestions;
+      let tagFilter = this.state.tagFilterSelected;
 
       if (tagFilter.length > 0) {
         talentListCopieFilter = talentListCopieFilter.filter(element => {
@@ -604,7 +604,7 @@ class TalentListPage extends React.Component {
               <TagFilter
                 tagFilterInputValue={this.state.tagFilterInputValue}
                 tagListFiltered={this.state.tagListFiltered}
-                tagSuggestions={this.state.tagSuggestions}
+                tagFilterSelected={this.state.tagFilterSelected}
                 tagSuggestionsShown={this.state.tagSuggestionsShown}
                 onChangeTagInput={this.onChangeTagInput}
                 onClickTag={this.onClickTag}
