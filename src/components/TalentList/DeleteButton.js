@@ -6,6 +6,7 @@ function DeleteButton(props) {
     <div className="deleteButton">
       <i className="far fa-trash-alt fa-2x" />
       <div
+        className="text-delete-button"
         onClick={() => {
           props.deleteClick();
         }}
