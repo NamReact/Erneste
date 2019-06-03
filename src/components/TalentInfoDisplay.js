@@ -95,8 +95,8 @@ class TalentInfoDisplay extends React.Component {
             })}
           </div>
           <div className="display-div">
-            {informations.size ? (
-              informations.size + " entreprise"
+            {informations.wantedSize ? (
+              informations.wantedSize + " entreprise"
             ) : (
               <div style={{ color: "#a8b0d0" }}>Non renseigné</div>
             )}

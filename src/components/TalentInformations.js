@@ -4,15 +4,28 @@ import ReactFileReader from "react-file-reader";
 
 class TalentInformations extends React.Component {
   state = {
-    informations: null,
+    informations: {
+      photo: null,
+      firstName: "",
+      lastName: "",
+      linkedIn: "",
+      email: "",
+      phoneNumber: "",
+      salary: "",
+      actualCompany: "",
+      wantedSector: [],
+      wantedSize: "",
+      actualTitle: "",
+      wantedTitle: [],
+      status: ""
+    },
     arrayOfTitles: [],
     arrayOfSectors: [],
     sectorSelect: false,
     sizeSelect: false,
     titleSelect: false,
     statusSelect: false,
-    lastUpdate: null,
-    validated: null
+    lastUpdate: null
   };
 
   sectorSelect = () => {
@@ -55,7 +68,7 @@ class TalentInformations extends React.Component {
 
   handleSize = e => {
     const informations = this.state.informations;
-    informations.size = e.target.id;
+    informations.wantedSize = e.target.id;
     this.setState({ informations, sizeSelect: false });
   };
 
@@ -64,7 +77,7 @@ class TalentInformations extends React.Component {
   handleAvailability = e => {
     const informations = this.state.informations;
     informations.status = e.target.id;
-    this.setState({ informations });
+    this.setState({ informations, statusSelect: false });
   };
 
   handleWantedSector = e => {
@@ -80,22 +93,37 @@ class TalentInformations extends React.Component {
 
   post = async () => {
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://ernest-server.herokuapp.com/talent/update",
         {
-          id: this.state.id,
+          id: this.props.id,
           informations: this.state.informations
         },
-        { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
+        { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
       );
+      this.props.setUpdate();
     } catch (error) {
       console.log(error.message);
     }
   };
 
+  onSave = async () => {
+    await this.post();
+    this.props.setUpdate();
+    this.props.stopSave();
+  };
+
+  onCreate = () => {
+    this.props.getInformations(this.state.informations);
+  };
+
   render() {
-    if (this.state.informations === null) {
-      return <div>Loading</div>;
+    if (this.props.save === true) {
+      if (this.props.action === "update") {
+        this.onSave();
+      } else {
+        this.onCreate();
+      }
     }
     const informations = this.state.informations;
     const lastUpdate = this.state.lastUpdate;
@@ -141,7 +169,7 @@ class TalentInformations extends React.Component {
         <form className="talentDetails">
           <div>Prénom</div>
           <input
-            id="First Name"
+            placeholder="Prénom"
             name="First Name"
             value={informations.firstName}
             onChange={e => {
@@ -155,7 +183,7 @@ class TalentInformations extends React.Component {
           />
           <div>Nom</div>
           <input
-            id="Last Name"
+            placeholder="Nom"
             name="Last Name"
             value={informations.lastName}
             onChange={e => {
@@ -170,7 +198,7 @@ class TalentInformations extends React.Component {
 
           <div>Profil LinkedIn</div>
           <input
-            id="LinkedIn Profil"
+            placeholder="Mon LinkedIn"
             name="LinkedIn Profil"
             value={informations.linkedIn}
             onChange={e => {
@@ -184,7 +212,7 @@ class TalentInformations extends React.Component {
           />
           <div>Email</div>
           <input
-            id="email"
+            placeholder="Email"
             name="email"
             value={informations.email}
             onChange={e => {
@@ -198,7 +226,7 @@ class TalentInformations extends React.Component {
           />
           <div>Téléphone</div>
           <input
-            id="phone number"
+            placeholder="XX XX XX XX XX"
             name="phone number"
             value={informations.phoneNumber}
             onChange={e => {
@@ -212,7 +240,7 @@ class TalentInformations extends React.Component {
           />
           <div>Salaire</div>
           <input
-            id="Wage"
+            placeholder="Salaire"
             name="Wage"
             value={informations.salary}
             onChange={e => {
@@ -226,7 +254,7 @@ class TalentInformations extends React.Component {
           />
           <div>Entreprise actuelle</div>
           <input
-            id="Current company"
+            placeholder="Entreprise actuelle"
             name="Current company"
             value={informations.actualCompany}
             onChange={e => {
@@ -284,7 +312,7 @@ class TalentInformations extends React.Component {
               )}
             </div>
             {this.state.sectorSelect && (
-              <div id="sector-list" className="sector-list">
+              <div className="sector-list">
                 {this.state.arrayOfSectors.map((sector, index) => {
                   return (
                     <div
@@ -312,9 +340,9 @@ class TalentInformations extends React.Component {
               }}
               onClick={this.sizeSelect}
             >
-              {this.state.informations.size ? (
+              {this.state.informations.wantedSize ? (
                 <div style={{ color: "#333266" }}>
-                  {this.state.informations.size}
+                  {this.state.informations.wantedSize}
                 </div>
               ) : (
                 <div>Choisir une taille</div>
@@ -347,7 +375,7 @@ class TalentInformations extends React.Component {
 
           <div>Fonction actuelle</div>
           <input
-            id="Current position"
+            placeholder="Fonction actuelle"
             name="Current position"
             value={informations.actualTitle}
             onChange={e => {
@@ -498,16 +526,21 @@ class TalentInformations extends React.Component {
             </div>
           </div>
         )}
-        <div>Modifé le {lastUpdate.split(",").shift()}</div>
+        {this.state.lastUpdate && (
+          <div>{"Modifé le " + lastUpdate.split(",").shift()}</div>
+        )}
       </div>
     );
   }
 
   async componentDidMount() {
-    const response1 = await axios.get(
-      "https://ernest-server.herokuapp.com/talent/" + this.props.id,
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
-    );
+    if (this.props.id) {
+      const response1 = await axios.get(
+        "https://ernest-server.herokuapp.com/talent/" + this.props.id,
+        { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      );
+      this.setState({ informations: response1.data.informations });
+    }
 
     const response2 = await axios.get(
       "https://ernest-server.herokuapp.com/sector",
@@ -520,9 +553,6 @@ class TalentInformations extends React.Component {
     );
 
     this.setState({
-      informations: response1.data.informations,
-      validated: response1.data.validated,
-      lastUpdate: response1.data.lastUpdate,
       arrayOfSectors: response2.data,
       arrayOfTitles: response3.data
     });

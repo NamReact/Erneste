@@ -1,58 +1,65 @@
 import React from "react";
-import axios from "axios";
 import TalentInformations from "../components/TalentInformations";
 import TalentInfoDisplay from "../components/TalentInfoDisplay";
 import TalentDescription from "../components/TalentDescription";
 
-/* Fiche qui apparait pour le Talent : il ne peut modifier que certains éléments de la description */
+/* *** Page for Admin. Everything can be modified *** */
 
-class TalentforTalent extends React.Component {
+class TalentforAdmin extends React.Component {
   state = {
     validated: null,
-    isLoading: true,
-    isUpdating: false
+    isUpdating: false,
+    save: false
   };
 
   /* ** INTERRUPTERS ** */
+
   setUpdate = () => {
     this.setState({ isUpdating: !this.state.isUpdating });
+  };
+
+  save = () => {
+    this.setState({ save: true });
+  };
+
+  stopSave = () => {
+    this.setState({ save: false });
   };
 
   render() {
     return (
       <div className="content">
-        {false && this.state.validated}
         <div className="body-container">
           {this.state.isUpdating ? (
             <TalentInformations
-              action="update"
               id={this.props.match.params.id}
-              button={true}
+              button={false}
               setUpdate={this.setUpdate}
+              save={this.state.save}
+              setSave={this.save}
+              stopSave={this.stopSave}
             />
           ) : (
             <TalentInfoDisplay
               id={this.props.match.params.id}
               setUpdate={this.setUpdate}
+              isUpdating={this.state.isUpdating}
             />
           )}
 
-          <TalentDescription id={this.props.match.params.id} />
+          <TalentDescription
+            action="update"
+            id={this.props.match.params.id}
+            isUpdating={this.state.isUpdating}
+            save={this.state.save}
+            setSave={this.save}
+            setUpdate={this.setUpdate}
+            stopSave={this.stopSave}
+          />
         </div>
       </div>
     );
   }
-  async componentDidMount() {
-    const response = await axios.get(
-      "https://ernest-server.herokuapp.com/talent/" +
-        this.props.match.params.id,
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
-    );
-
-    this.setState({
-      validated: response.data.validated
-    });
-  }
 }
 
-export default TalentforTalent;
+export default TalentforAdmin;
