@@ -34,6 +34,7 @@ class TalentforAdmin extends React.Component {
         <div className="body-container">
           {this.state.isUpdating ? (
             <TalentInformations
+              action="update"
               id={this.props.match.params.id}
               button={false}
               setUpdate={this.setUpdate}
