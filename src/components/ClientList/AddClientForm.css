@@ -1,13 +1,12 @@
 .addClientFormContainer {
   max-width: 500px;
-  max-height: 500px;
-
+  height: 550px;
   box-shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  background-color: white;
-  z-index: auto;
+  background-color: rgb(254, 254, 254);
+  z-index: 3;
   position: absolute;
   left: 15%;
   right: 15%;
@@ -35,6 +34,7 @@
 .formContainer {
   display: flex;
   flex-direction: column;
+  margin: 10px;
 }
 
 .addClientFormContainer label {
@@ -52,6 +52,8 @@
   width: 350px;
   margin: 15px;
   padding: 0px;
+  outline: none;
+  border-color: rgba(168, 176, 208, 0.3);
 }
 
 .submitButtons {
@@ -90,6 +92,36 @@
 .addnewsector p {
   margin-left: 30px;
 }
-.formContainer select {
+/* .formContainer select {
   width: 370px;
+} */
+
+/* selector Div */
+.size-button {
+  width: 350px;
+  height: 25px;
+  border: 1px solid #333266;
+}
+.size-container {
+  position: relative;
+  margin: 15px;
+}
+.size-select {
+  position: absolute;
+  background-color: rgb(254, 254, 254);
+  border: 1px solid #333266;
+  width: 350px;
+  height: 40px;
+}
+
+.sector-select {
+  width: 350px;
+  height: 25px;
+  border: 1px solid #333266;
+  margin: 15px;
+}
+
+.sector-item-array {
+  width: 350px;
+  height: 25px;
 }

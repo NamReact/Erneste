@@ -7,13 +7,15 @@ class AddClientForm extends React.Component {
   state = {
     entreprise: "",
     secteur: [],
-    taille: "",
+    taille: null,
     email: "",
     sectorList: [],
+    sectorSelect: false,
+    sizeSelect: false,
     addNewSector: "",
     addNewSectorDiv: false,
     error: false,
-    valide: false,
+    valid: false,
     isLoading: false
   };
   // fonction pour changer les states des inputs
@@ -25,18 +27,36 @@ class AddClientForm extends React.Component {
     this.setState(statesToUpdate);
   };
 
+  // fonction apparation gestion select secteur
+  sectorSelect = () => {
+    this.setState({ sectorSelect: !this.state.sectorSelect });
+  };
+  // fonction apparation gestion select Taille
+  sizeSelect = () => {
+    this.setState({ sizeSelect: !this.state.sizeSelect });
+  };
+
+  // fonction pour gérer secteur
   setSector = event => {
-    const id = event.target.value;
+    const id = event.target.id;
     console.log(id);
     const sectorArray = this.state.secteur;
-    sectorArray.push(id);
+    sectorArray.push(this.state.sectorList[id]);
+    this.sectorSelect();
     this.setState({ secteur: sectorArray });
+    console.log(this.state.secteur);
+  };
+  /* Function to handle company size */
+
+  handleSize = e => {
+    const id = e.target.id;
+    console.log(id);
+    this.setState({ taille: id, sizeSelect: false });
   };
 
   // fonction pour valider le formulaire en envoyant les params en requette post
-  // et un message d'erreur ou validé à la soumission du formulaire
+  // et un message (d'erreur ou validé) à la soumission du formulaire
   handleSubmit = async event => {
-    event.preventDefault();
     if (
       this.state.entreprise === " " ||
       this.state.secteur === " " ||
@@ -44,12 +64,14 @@ class AddClientForm extends React.Component {
     ) {
       return this.setState({ error: true });
     } else {
+      const field = this.state.secteur[0]._id;
+      console.log(this.state.taille);
       const response = await axios.post(
         "https://ernest-server.herokuapp.com/client/create",
 
         {
           name: this.state.entreprise,
-          field: this.state.secteur,
+          field: field,
           size: this.state.taille,
           email: this.state.mail
         },
@@ -73,6 +95,15 @@ class AddClientForm extends React.Component {
     if (this.state.isLoading === true) {
       return "Loading....";
     }
+
+    const sectorArray = this.state.sectorList.map((item, index) => {
+      return (
+        <div id={index} key={item._id} onClick={this.setSector}>
+          {item.name}
+        </div>
+      );
+    });
+
     return (
       <div>
         <div className="addClientFormContainer">
@@ -85,30 +116,47 @@ class AddClientForm extends React.Component {
           </div>
 
           <div className="formContainer">
-            <form onSubmit={this.handleSubmit}>
-              <div>
-                <label for="entreprise"> Entreprise</label>
-                <input
-                  value={this.state.entreprise}
-                  onChange={this.handleChange}
-                  type="text"
-                  name="entreprise"
-                  id="name"
-                  required
-                />
-              </div>
-              <div>
-                {/* liste des secteurs : en attente du selector */}
+            <div>
+              <label for="entreprise"> Entreprise</label>
+              <input
+                value={this.state.entreprise}
+                onChange={this.handleChange}
+                type="text"
+                name="entreprise"
+                id="name"
+                required
+              />
+            </div>
+            <div>
+              {/* liste des secteurs */}
+              <div className="sector-container">
                 <label for="Secteur"> Secteur</label>
-                {/* <input
-                  value={this.state.secteur}
-                  onChange={this.handleChange}
-                  type="text"
-                  name="secteur"
-                  id="name"
-                  required
-                /> */}
-                <select
+                {this.state.secteur.map(sector => {
+                  return (
+                    <div key={sector._id} className="sector-item-array">
+                      {sector.name}
+                    </div>
+                  );
+                })}
+                <div className="sector-select" onClick={this.sectorSelect}>
+                  Choisir secteur
+                </div>
+                {this.state.sectorSelect ? (
+                  <div>
+                    {this.state.sectorList.map((item, index) => {
+                      return (
+                        <div id={index} key={item._id} onClick={this.setSector}>
+                          {item.name}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  false
+                )}
+              </div>
+
+              {/* <select
                   value={this.state.secteur}
                   onChange={this.setSector}
                   type="text"
@@ -127,47 +175,52 @@ class AddClientForm extends React.Component {
                       </option>
                     );
                   })}
-                </select>
+                </select> */}
+              {/* Proposition : fenêtre d'ajout d'un nouveau secteur en mode apparition */}
+              <div className="addnewsector" onClick={this.ShowNewSector}>
+                <p>
+                  <i class="fas fa-plus" />
+                </p>{" "}
+                <p>nouveau secteur</p>
               </div>
-              <div>
-                <div className="addnewsector" onClick={this.ShowNewSector}>
-                  <p>
-                    <i class="fas fa-plus" />
-                  </p>{" "}
-                  <p>nouveau secteur</p>
+              {this.state.addNewSectorDiv === true ? (
+                <div>
+                  <label for="newsector">Ajout d'un nouveau secteur </label>
+                  <input
+                    value={this.state.addNewSector}
+                    onChange={this.handleChange}
+                    type="email"
+                    name="email"
+                    id="email"
+                    required
+                  />
                 </div>
-                {this.state.addNewSectorDiv === true ? (
-                  <div>
-                    <label for="newsector">Ajout d'un nouveau secteur </label>
-                    <input
-                      value={this.state.addNewSector}
-                      onChange={this.handleChange}
-                      type="email"
-                      name="email"
-                      id="email"
-                      required
-                    />
+              ) : (
+                this.state.addNewSectorDiv
+              )}
+            </div>
+
+            {/* Taille de l'entreprise */}
+            <div className="size-container">
+              <div>Taille</div>
+              <div className="size-button" onClick={this.sizeSelect}>
+                {this.state.taille ? this.state.taille : "Select size"}
+              </div>
+              {this.state.sizeSelect && (
+                <div className="size-select">
+                  <div onClick={this.handleSize} id="Petite">
+                    Petite
                   </div>
-                ) : (
-                  this.state.addNewSectorDiv
-                )}
-              </div>
+                  <div onClick={this.handleSize} id="Grande">
+                    Grande
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div>
               <div>
-                <label for="Secteur"> Taille</label>
-                <select
-                  value={this.state.taille}
-                  onChange={this.handleChange}
-                  type="text"
-                  name="taille"
-                  id="taille"
-                  required
-                >
-                  <option value="">--choisir la taille--</option>
-                  <option value="Grande">Grande</option>
-                  <option value="Petite">Petite</option>
-                </select>
-              </div>
-              <div>
+                {/* Taille entreprise */}
                 <label for="email">Email du référent </label>
                 <input
                   value={this.state.email}
@@ -182,11 +235,12 @@ class AddClientForm extends React.Component {
                 <button onClick={this.props.closePopup} className="annuler">
                   Annuler
                 </button>
-                <button type="submit" className="ajouter">
+                <button onClick={this.handleSubmit} className="ajouter">
                   Ajouter
                 </button>
               </div>
-            </form>
+            </div>
+
             {/* affichage de l'état de la validation du formulaire */}
             <div>
               {this.state.error === true ? <p>error</p> : this.state.error}
