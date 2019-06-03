@@ -13,27 +13,28 @@ function TalentLine(props) {
   if (talent.informations.status === "0") {
     classNameStatus = "statut0";
   }
-  if (talent.informations.status === "1") {
+  if (talent.informations.status === "Recherche active") {
     classNameStatus = "statut1";
   }
-  if (talent.informations.status === "2") {
+  if (talent.informations.status === "Ouvert(e) aux opportunités") {
     classNameStatus = "statut2";
   }
-  if (talent.informations.status === "3") {
+  if (talent.informations.status === "Ne pas être contacter") {
     classNameStatus = "statut3";
   }
-  if (talent.informations.status === "4") {
+  if (talent.informations.status === "Embauché(e) par Erneste") {
     classNameStatus = "statut4";
   }
   return (
     <div className="talentList-right-block-line">
-      <div
-        className={deleteCheckBoxStyle}
-        onClick={() => {
-          props.deleteCheckBox(talent._id);
-        }}
-      />
-
+      <div className="ericTest">
+        <div
+          className={deleteCheckBoxStyle}
+          onClick={() => {
+            props.deleteCheckBox(talent._id);
+          }}
+        />
+      </div>
       {/* NAME */}
       <Link
         to={`/admin/talent/${talent._id}`}
