@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import TagList from "./TagList";
 import { Link } from "react-router-dom";
 
@@ -34,7 +33,7 @@ class TalentDescriptions extends React.Component {
         <div>Fiche talent</div>
         <form>
           <div className="wishes">
-            <h3>L'entreprise idéale</h3>
+            <h3 className="talentDescription-h3">L'entreprise idéale</h3>
             <textarea
               id="idealCompany"
               readOnly={!this.props.isUpdating}
@@ -43,7 +42,7 @@ class TalentDescriptions extends React.Component {
               onChange={e => this.props.setDescription(e)}
             />
 
-            <h3>Mon rôle idéal</h3>
+            <h3 className="talentDescription-h3">Mon rôle idéal</h3>
             <textarea
               id="idealRole"
               readOnly={!this.props.isUpdating}
@@ -54,7 +53,7 @@ class TalentDescriptions extends React.Component {
           </div>
           <div className="allWishes">
             <div className="sub-wishes">
-              <h3>Mes conditions idéales</h3>
+              <h3 className="talentDescription-h3">Mes conditions idéales</h3>
               <textarea
                 id="workingEnvironment"
                 readOnly={this.props.update}
@@ -63,7 +62,9 @@ class TalentDescriptions extends React.Component {
                 onChange={e => this.props.setDescription(e)}
               />
 
-              <h3>Mes ambitions d'évolution</h3>
+              <h3 className="talentDescription-h3">
+                Mes ambitions d'évolution
+              </h3>
               <textarea
                 id="development"
                 readOnly={!this.props.isUpdating}
@@ -73,7 +74,7 @@ class TalentDescriptions extends React.Component {
               />
             </div>
             <div className="skills">
-              <h3>Skills</h3>
+              <h3 className="talentDescription-h3">Skills</h3>
 
               {this.props.skills ? (
                 <div>
@@ -87,14 +88,22 @@ class TalentDescriptions extends React.Component {
                             tag.type === "hard" ? "#333266" : "#EF6364"
                         }}
                       >
-                        <div className="tag-name">{tag.name}</div>
+                        <div className="talentDescription-tag-name">
+                          {tag.name}
+                        </div>
                         {this.props.isUpdating && (
                           <div
                             id={index}
-                            className="remove-tag"
+                            className="talentDescription-remove-tag"
                             onClick={e => this.props.deleteSkills(e.target.id)}
                           >
-                            x
+                            <img
+                              src={
+                                tag.type === "hard"
+                                  ? require("../features/icons/blue-cross.svg")
+                                  : require("../features/icons/pink-cross.svg")
+                              }
+                            />
                           </div>
                         )}
                       </div>
@@ -113,12 +122,7 @@ class TalentDescriptions extends React.Component {
                       : "- Fermer la liste"}
                   </div>
                   {this.state.tagList === true ? (
-                    <TagList
-                      class="tag-pop-up"
-                      listClass="pop-up-list"
-                      buttons="tag-list-buttons"
-                      setTag={this.setTag}
-                    />
+                    <TagList setTag={this.setTag} />
                   ) : null}
                 </div>
               )}

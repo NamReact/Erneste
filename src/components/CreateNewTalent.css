@@ -12,6 +12,11 @@
   background-color: rgb(250, 250, 252);
 }
 
+input,
+textarea {
+  font-size: 14px;
+}
+
 .body-container {
   display: flex;
   justify-content: center;
@@ -21,8 +26,9 @@
   margin: auto;
 }
 
-h3 {
+.talentDescription-h3 {
   margin: 0;
+  font-weight: 600;
 }
 
 .relative-container {
@@ -209,10 +215,26 @@ h3 {
   position: relative;
 }
 
-.tag-option {
+.tagList-tag-option-hard {
   padding: 7px var(--input-padding);
   cursor: pointer;
   border-bottom: 1px solid var(--input-border-color);
+}
+
+.tagList-tag-option-hard:hover {
+  background-color: var(--dark-blue);
+  color: white;
+}
+
+.tagList-tag-option-soft {
+  padding: 7px var(--input-padding);
+  cursor: pointer;
+  border-bottom: 1px solid var(--input-border-color);
+}
+
+.tagList-tag-option-soft:hover {
+  background-color: var(--soft-skill-color);
+  color: white;
 }
 
 .tag-option:hover {
@@ -229,23 +251,23 @@ h3 {
   overflow: hidden;
 }
 
-.tag-name {
+.talentDescription-tag-name {
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
   height: var(--input-height);
-  padding: 0 20px;
+  padding-left: 20px;
 
   color: white;
   border-radius: 3px;
 }
 
-.remove-tag {
+.talentDescription-remove-tag {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20px;
+  /* width: 20px; */
   text-align: center;
   height: 100%;
   color: white;
@@ -262,7 +284,7 @@ h3 {
   cursor: pointer;
 }
 
-.tag-pop-up {
+.tagList-tag-pop-up {
   position: absolute;
   top: 30px;
   left: 0;
@@ -273,8 +295,9 @@ h3 {
   width: 200px;
 }
 
-.tag-pop-up input {
+.tagList-tag-pop-up input {
   padding: 8px var(--input-padding);
+  margin: 0;
   box-sizing: border-box;
   width: 200px;
   outline: none;
@@ -415,4 +438,16 @@ textarea {
   z-index: 2;
   box-shadow: 0px 3px 6px rgba(28, 28, 28, 0.1);
   cursor: pointer;
+}
+
+.leftContainer .talentInformations-error {
+  border: 1px solid var(--soft-skill-color);
+}
+
+.talentInformations-open-arrow {
+  transform: rotate(-90deg);
+}
+
+.talentInformations-close-arrow {
+  transform: rotate(90deg);
 }

@@ -54,30 +54,32 @@ class TagList extends React.Component {
           id={item._id}
           key={item._id}
           onClick={() => this.props.setTag(item)}
-          className="tag-option"
+          className={
+            item.type === "hard"
+              ? "tagList-tag-option-hard"
+              : "tagList-tag-option-soft "
+          }
         >
           {item.name}
         </div>
       );
     });
 
-    const addSoft = `${this.props.buttons} soft-skills`;
-    const addHard = `${this.props.buttons} hard-skills`;
-
     return (
-      <div className={this.props.class}>
+      <div className="tagList-tag-pop-up">
         <input
           name="tag search"
+          /* className=".tagList-tag-pop-up-input" */
           value={this.state.search}
           onChange={this.onChange}
-          placeholder="Recherche skills..."
+          placeholder="Recherche/Créer skills"
         />
 
-        <div className={this.props.listClass}>{filteredTagList}</div>
-        <div onClick={this.addSoftTag} className={addSoft}>
+        <div className="pop-up-list">{filteredTagList}</div>
+        <div onClick={this.addSoftTag} className="tag-list-buttons soft-skills">
           Ajouter un soft skill
         </div>
-        <div onClick={this.addHardTag} className={addHard}>
+        <div onClick={this.addHardTag} className="tag-list-buttons hard-skills">
           Ajouter un hard skill
         </div>
       </div>

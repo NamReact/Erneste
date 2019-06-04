@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import "./index.css";
+import style from "./index.css";
 
 class Login extends React.Component {
   state = {
@@ -53,8 +53,8 @@ class Login extends React.Component {
               alt="login-image"
             />
           </div>
-          <div className="input-container">
-            <h3>Just log you in</h3>
+          <div className="style.input-container">
+            <h3 className="login-h3">Just log you in</h3>
             <input
               name="email"
               value={this.state.email}

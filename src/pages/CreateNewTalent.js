@@ -34,7 +34,13 @@ class CreateNewTalent extends React.Component {
         development: ""
       },
       skills: null,
-      redirect: false
+      redirect: false,
+      lastUpdate: null,
+      error: {
+        firstName: false,
+        lastName: false,
+        email: false
+      }
     };
   }
   /* ** INTERRUPTERS ** */
@@ -105,18 +111,59 @@ class CreateNewTalent extends React.Component {
     this.setState({ skills });
   };
 
+  validateString = str => {
+    if (!str || str.match(/^ *$/) !== null) {
+      return false;
+    }
+    return true;
+  };
+
+  validateEmail = email => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
   post = async () => {
-    await axios.post(
-      "https://ernest-server.herokuapp.com/talent/create",
-      {
-        informations: this.state.informations,
-        description: this.state.description,
-        skills: this.state.skills
-      },
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
-    );
-    this.setState({ redirect: true });
-    return;
+    let error = this.state.error;
+    if (this.validateString(this.state.informations.firstName) === false) {
+      error.firstName = true;
+    } else {
+      error.firstName = false;
+    }
+
+    if (this.validateString(this.state.informations.lastName) === false) {
+      error.lastName = true;
+    } else {
+      error.lastName = false;
+    }
+
+    if (this.validateEmail(this.state.informations.email) === false) {
+      error.email = true;
+    } else {
+      error.email = false;
+    }
+
+    if (
+      error.firstName === true ||
+      error.lastName === true ||
+      error.email === true
+    ) {
+      this.setState({ error });
+      return;
+    } else {
+      this.setState({ error });
+      await axios.post(
+        "https://ernest-server.herokuapp.com/talent/create",
+        {
+          informations: this.state.informations,
+          description: this.state.description,
+          skills: this.state.skills
+        },
+        { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      );
+      this.setState({ redirect: true });
+      return;
+    }
   };
 
   render() {
@@ -127,6 +174,8 @@ class CreateNewTalent extends React.Component {
           <div className="body-container">
             <TalentInformations
               button={false}
+              error={this.state.error}
+              lastUpdate={this.state.lastUpdate}
               informations={this.state.informations}
               setInformations={this.setInformations}
               setPhoto={this.setPhoto}
