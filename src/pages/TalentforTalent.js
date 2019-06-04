@@ -30,7 +30,7 @@ class TalentforTalent extends React.Component {
       development: ""
     },
     skills: null,
-    validated: null,
+    validated: false,
     lastUpdate: null,
     isUpdating: false
   };
@@ -102,6 +102,20 @@ class TalentforTalent extends React.Component {
     return;
   };
 
+  onProfilValidation = async () => {
+    await this.setState({ validated: true });
+    await axios.post(
+      "https://ernest-server.herokuapp.com/talent/update",
+      {
+        id: this.props.match.params.id,
+        validated: this.state.validated
+      },
+      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+    );
+
+    return;
+  };
+
   render() {
     return (
       <div>
@@ -134,11 +148,34 @@ class TalentforTalent extends React.Component {
                 isUpdating={this.state.isUpdating}
               />
             )}
-
-            <TalentDescription
-              description={this.state.description}
-              skills={this.state.skills}
-            />
+            <div
+              className={
+                this.state.validated
+                  ? "right-container"
+                  : "right-container-to-validate"
+              }
+            >
+              <div
+                className="text-validation"
+                style={{ display: this.state.validated ? "none" : "display" }}
+              >
+                C'est votre première connexion ? Prenez le temps de lire les
+                informations que nous avons synthétisées de notre entretien et
+                de valider votre profil. Si vous avez besoin d'y apporter des
+                modifications, contactez-nous.
+              </div>
+              <TalentDescription
+                description={this.state.description}
+                skills={this.state.skills}
+              />
+              <div
+                className="validate-profil"
+                onClick={this.onProfilValidation}
+                style={{ display: this.state.validated ? "none" : "display" }}
+              >
+                Valider le profil
+              </div>
+            </div>
           </div>
         </div>
       </div>

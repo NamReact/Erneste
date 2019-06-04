@@ -1,12 +1,16 @@
 import React from "react";
 import "./TalentLine.css";
 import { Link } from "react-router-dom";
+import box from "../../features/icons/check_24px.svg";
+import checkedbox from "../../features/icons/check_24px copy.svg";
 
 function TalentLine(props) {
   const { talent } = props;
-  let deleteCheckBoxStyle = talent.delete
-    ? "deleteBox deleteCheck"
-    : "deleteBox deleteUncheck";
+  let deleteCheckBoxStyle = talent.delete ? (
+    <img className="deleteCheck " src={box} alt="box cochée" />
+  ) : (
+    <img className="deleteUncheck " src={checkedbox} alt="box non cochée" />
+  );
 
   let classNameStatus = "";
 
@@ -29,11 +33,13 @@ function TalentLine(props) {
     <div className="talentList-right-block-line">
       <div className="ericTest">
         <div
-          className={deleteCheckBoxStyle}
+          /* className={deleteCheckBoxStyle} */
           onClick={() => {
             props.deleteCheckBox(talent._id);
           }}
-        />
+        >
+          {deleteCheckBoxStyle}
+        </div>
       </div>
       {/* NAME */}
       <Link

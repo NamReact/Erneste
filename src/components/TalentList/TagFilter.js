@@ -1,5 +1,7 @@
 import React from "react";
 import "./TagFilter.css";
+import deletecross from "../../features/icons/Group.svg";
+import tagcross from "../../features/icons/blue-cross.svg";
 
 function TagFilter(props) {
   const {
@@ -70,7 +72,7 @@ function TagFilter(props) {
                   className="tagList-deleteSingleTag"
                   onClick={() => onSingleTagDeleteClick(index)}
                 >
-                  X
+                  x{" "}
                 </div>
               </div>
             );
@@ -88,8 +90,12 @@ function TagFilter(props) {
         </div>
       </div>
       <div>
-        <div className="tagList-deleteAllTag" onClick={onDeleteAllTagClick}>
-          <i class="fas fa-times" />
+        <div onClick={onDeleteAllTagClick}>
+          <img
+            className="tagList-deleteAllTag"
+            src={deletecross}
+            alt="delete all tag"
+          />
         </div>
       </div>
     </div>
