@@ -62,8 +62,8 @@ function TalentLine(props) {
 
       {/* VALIDATED */}
       <div className="talentList-right-block-validated-line">
-        {talent.validated === true && <i className="fas fa-check fa-2x" />}
-        {talent.validated === false && <i className="fas fa-times fa-2x" />}
+        {talent.validated === true && <i className="fas fa-check" />}
+        {talent.validated === false && <i className="fas fa-times" />}
       </div>
 
       {/* STATUS */}

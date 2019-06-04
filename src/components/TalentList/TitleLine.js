@@ -200,7 +200,7 @@ function TitleLine(props) {
 
   return (
     <div className="talentList-right-block-title">
-      <div className="deleteBox deleteUncheck" />
+      <div className="invisibleBox" />
       {/* NAME */}
       <div className="talentList-right-block-name">{titleArray[0].value}</div>
 
@@ -208,9 +208,10 @@ function TitleLine(props) {
       <div className="talentList-right-block-actualTitle">
         {titleArray[1].value}
         <i
-          className="fas fa-chevron-down"
+          className="fas fa-sort-down"
           onClick={() => props.chevronClick(titleArray[1].value)}
         />
+
         {chevronClicked && chevronClickedPosition === 1 && (
           <div className="chevron-filter">
             {actualTitleArray.map((element, index) => {
@@ -248,9 +249,10 @@ function TitleLine(props) {
       <div className="talentList-right-block-actualCompany">
         {titleArray[2].value}
         <i
-          className="fas fa-chevron-down"
+          className="fas fa-sort-down"
           onClick={() => props.chevronClick(titleArray[2].value)}
         />
+
         {chevronClicked && chevronClickedPosition === 2 && (
           <div className="chevron-filter">
             {actualCompanyArray.map((element, index) => {
@@ -288,9 +290,10 @@ function TitleLine(props) {
       <div className="talentList-right-block-wantedTitle-title">
         {titleArray[3].value}
         <i
-          className="fas fa-chevron-down"
+          className="fas fa-sort-down"
           onClick={() => props.chevronClick(titleArray[3].value)}
         />
+
         {chevronClicked && chevronClickedPosition === 3 && (
           <div className="chevron-filter">
             {wantedTitleArray.map((element, index) => {
@@ -328,9 +331,10 @@ function TitleLine(props) {
       <div className="talentList-right-block-validated">
         {titleArray[4].value}
         <i
-          className="fas fa-chevron-down"
+          className="fas fa-sort-down"
           onClick={() => props.chevronClick(titleArray[4].value)}
         />
+
         {chevronClicked && chevronClickedPosition === 4 && (
           <div className="chevron-filter">
             {validatedArray.map((element, index) => {
@@ -368,9 +372,10 @@ function TitleLine(props) {
       <div className="talentList-right-block-status">
         {titleArray[5].value}
         <i
-          className="fas fa-chevron-down"
+          className="fas fa-sort-down"
           onClick={() => props.chevronClick(titleArray[5].value)}
         />
+
         {chevronClicked && chevronClickedPosition === 5 && (
           <div className="chevron-filter">
             {statusArray.map((element, index) => {
@@ -409,9 +414,10 @@ function TitleLine(props) {
       <div className="talentList-right-block-lastUpdate">
         {titleArray[6].value}
         <i
-          className="fas fa-chevron-down"
+          class="fas fa-sort-down"
           onClick={() => props.chevronClick(titleArray[6].value)}
         />
+
         {chevronClicked && chevronClickedPosition === 6 && (
           <div className="chevron-filter">
             {lastUpdateArray.map((element, index) => {
