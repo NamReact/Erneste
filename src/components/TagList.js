@@ -12,24 +12,49 @@ class TagList extends React.Component {
     this.setState({ search: e.target.value });
   };
 
+  validateString = str => {
+    if (!str || str.match(/^ *$/) !== null) {
+      return false;
+    }
+    return true;
+  };
+
   // fonctions permettant de rajouter un nouveau tag à la base de données.
   // le post reçoit en réponse la liste de tout les tags et met à jour le state.
   addSoftTag = async () => {
-    const response = await axios.post(
-      "https://ernest-server.herokuapp.com/tag/create",
-      { name: this.state.search, type: "soft" },
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
-    );
-    this.setState({ data: response.data });
+    if (this.validateString(this.state.search) === false) {
+      return;
+    } else {
+      for (let i = 0; i < this.state.data.length; i++) {
+        if (this.state.search === this.state.data[i].name) {
+          return;
+        }
+      }
+      const response = await axios.post(
+        "https://ernest-server.herokuapp.com/tag/create",
+        { name: this.state.search, type: "soft" },
+        { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      );
+      this.setState({ data: response.data });
+    }
   };
 
   addHardTag = async () => {
-    const response = await axios.post(
-      "https://ernest-server.herokuapp.com/tag/create",
-      { name: this.state.search, type: "hard" },
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
-    );
-    this.setState({ data: response.data });
+    if (this.validateString(this.state.search) === false) {
+      return;
+    } else {
+      for (let i = 0; i < this.state.data.length; i++) {
+        if (this.state.search === this.state.data[i].name) {
+          return;
+        }
+      }
+      const response = await axios.post(
+        "https://ernest-server.herokuapp.com/tag/create",
+        { name: this.state.search, type: "hard" },
+        { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      );
+      this.setState({ data: response.data });
+    }
   };
 
   render() {
@@ -69,7 +94,6 @@ class TagList extends React.Component {
       <div className="tagList-tag-pop-up">
         <input
           name="tag search"
-          /* className=".tagList-tag-pop-up-input" */
           value={this.state.search}
           onChange={this.onChange}
           placeholder="Recherche/Créer skills"
@@ -77,10 +101,10 @@ class TagList extends React.Component {
 
         <div className="pop-up-list">{filteredTagList}</div>
         <div onClick={this.addSoftTag} className="tag-list-buttons soft-skills">
-          Ajouter un soft skill
+          Créer un soft skill
         </div>
         <div onClick={this.addHardTag} className="tag-list-buttons hard-skills">
-          Ajouter un hard skill
+          Créer un hard skill
         </div>
       </div>
     );
