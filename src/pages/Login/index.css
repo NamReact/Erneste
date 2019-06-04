@@ -92,7 +92,7 @@
   padding: 7px 0 7px 0;
   margin: 40px 0 25px 0;
   border: none;
-  border-bottom: 1px solid var(--dark-blue);
+  border-bottom: 2px solid #6e78ad;
   outline: none;
 }
 
