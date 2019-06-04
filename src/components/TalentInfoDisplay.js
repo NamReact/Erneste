@@ -54,7 +54,7 @@ class TalentInfoDisplay extends React.Component {
           </div>
         )}
         <div className="update-profile" onClick={this.props.setUpdate}>
-          *
+          <i class="fas fa-cog" />
         </div>
         <div className="talentDetails talent-detail-display">
           <div className="first-name">

@@ -178,6 +178,35 @@ textarea {
   margin: 100px 0;
 }
 
+.right-container-to-validate {
+  height: 70%;
+  position: relative;
+}
+
+.text-validation {
+  margin: 100px 0 30px 0;
+  border: solid 1px var(--soft-skill-color);
+  border-radius: 3px;
+  color: var(--soft-skill-color);
+  padding: 20px;
+}
+
+.validate-profil {
+  width: 150px;
+  height: var(--input-height);
+  color: var(--container-background);
+  border: solid 1px var(--dark-blue);
+  background-color: var(--dark-blue);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 40px;
+  left: 700px;
+  cursor: pointer;
+}
+
 .allWishes {
   display: flex;
   flex-direction: row;
@@ -257,7 +286,8 @@ textarea {
   align-items: center;
   box-sizing: border-box;
   height: var(--input-height);
-  padding-left: 20px;
+
+  padding: 0 20px;
 
   color: white;
   border-radius: 3px;

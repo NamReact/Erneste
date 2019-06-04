@@ -111,12 +111,11 @@
 }
 
 .tagList-deleteAllTag {
-  height: 24px;
-  width: 24px;
-  background-color: #a8b0d0d2;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin-top: 10px;
+}
+
+.tag-cross {
+  margin-top: 1px;
+  height: 20px;
+  fill: red;
 }
