@@ -118,8 +118,8 @@ class TalentDescriptions extends React.Component {
                 <div className="add-skills">
                   <div onClick={this.showTagList} className="add-skills-button">
                     {this.state.tagList === false
-                      ? "+ Ajouter skills"
-                      : "- Fermer la liste"}
+                      ? "Ajouter des skills"
+                      : "Fermer la liste"}
                   </div>
                   {this.state.tagList === true ? (
                     <TagList setTag={this.setTag} />
