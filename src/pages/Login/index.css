@@ -15,7 +15,7 @@
   color: #6e78ad;
 }
 
-h3 {
+.login-h3 {
   color: var(--dark-blue);
   font-weight: 600;
   font-size: 20px;
@@ -27,7 +27,7 @@ h3 {
   height: auto;
 }
 
-img {
+.login-img img {
   width: 100%;
   height: auto;
   object-fit: cover;

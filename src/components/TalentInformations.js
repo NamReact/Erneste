@@ -81,6 +81,16 @@ class TalentInformations extends React.Component {
   render() {
     const informations = this.props.informations;
     const lastUpdate = this.props.lastUpdate;
+    let errorFirstName = false;
+    let errorLastName = false;
+    let errorEmail = false;
+
+    if (this.props.error) {
+      errorFirstName = this.props.error.firstName;
+      errorLastName = this.props.error.lastName;
+      errorEmail = this.props.error.email;
+    }
+
     let formatUpdate = null;
     if (lastUpdate !== null) {
       formatUpdate = lastUpdate
@@ -128,20 +138,28 @@ class TalentInformations extends React.Component {
           )}
         </ReactFileReader>
 
-        <form className="talentDetails">
+        <div className="talentDetails">
           <div>Prénom</div>
           <input
             id="firstName"
-            placeholder="Prénom"
+            placeholder={
+              errorFirstName === true ? "Champs obligatoire" : "Prénom"
+            }
             name="First Name"
+            className={
+              errorFirstName === true ? "talentInformations-error" : null
+            }
             value={informations.firstName}
             onChange={e => this.props.setInformations(e)}
           />
           <div>Nom</div>
           <input
             id="lastName"
-            placeholder="Nom"
+            placeholder={errorLastName === true ? "Champs obligatoire" : "Nom"}
             name="Last Name"
+            className={
+              errorLastName === true ? "talentInformations-error" : null
+            }
             value={informations.lastName}
             onChange={e => this.props.setInformations(e)}
           />
@@ -157,8 +175,9 @@ class TalentInformations extends React.Component {
           <div>Email</div>
           <input
             id="email"
-            placeholder="Email"
+            placeholder={errorEmail === true ? "Champs obligatoire" : "Email"}
             name="email"
+            className={errorEmail === true ? "talentInformations-error" : null}
             value={informations.email}
             onChange={e => this.props.setInformations(e)}
           />
@@ -215,9 +234,13 @@ class TalentInformations extends React.Component {
             >
               <div>Ajouter un secteur</div>
               {this.state.sectorSelect === false ? (
-                <div>{">"}</div>
+                <div className="talentInformations-open-arrow">
+                  <i class="fas fa-sort-down" />
+                </div>
               ) : (
-                <div>{"<"}</div>
+                <div className="talentInformations-close-arrow">
+                  <i class="fas fa-sort-down" />
+                </div>
               )}
             </div>
             {this.state.sectorSelect && (
@@ -257,9 +280,13 @@ class TalentInformations extends React.Component {
                 <div>Choisir une taille</div>
               )}
               {this.state.sizeSelect === false ? (
-                <div>{">"}</div>
+                <div className="talentInformations-open-arrow">
+                  <i class="fas fa-sort-down" />
+                </div>
               ) : (
-                <div>{"<"}</div>
+                <div className="talentInformations-close-arrow">
+                  <i class="fas fa-sort-down" />
+                </div>
               )}
             </div>
             {this.state.sizeSelect && (
@@ -277,6 +304,13 @@ class TalentInformations extends React.Component {
                   className="tag-option"
                 >
                   Grande
+                </div>
+                <div
+                  id="Indifférent"
+                  onClick={this.handleSize}
+                  className="tag-option"
+                >
+                  Indifférent
                 </div>
               </div>
             )}
@@ -319,9 +353,13 @@ class TalentInformations extends React.Component {
             >
               <div>Ajouter une fonction</div>
               {this.state.titleSelect === false ? (
-                <div>{">"}</div>
+                <div className="talentInformations-open-arrow">
+                  <i class="fas fa-sort-down" />
+                </div>
               ) : (
-                <div>{"<"}</div>
+                <div className="talentInformations-close-arrow">
+                  <i class="fas fa-sort-down" />
+                </div>
               )}
             </div>
             {this.state.titleSelect && (
@@ -341,7 +379,7 @@ class TalentInformations extends React.Component {
               </div>
             )}
           </div>
-        </form>
+        </div>
 
         <div>Statut</div>
 
@@ -370,9 +408,13 @@ class TalentInformations extends React.Component {
             )}
 
             {this.state.statusSelect === false ? (
-              <div>{">"}</div>
+              <div className="talentInformations-open-arrow">
+                <i class="fas fa-sort-down" />
+              </div>
             ) : (
-              <div>{"<"}</div>
+              <div className="talentInformations-close-arrow">
+                <i class="fas fa-sort-down" />
+              </div>
             )}
           </div>
           {this.state.statusSelect && (
