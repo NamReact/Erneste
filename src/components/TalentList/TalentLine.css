@@ -115,3 +115,13 @@
   background-color: #6a6a8f;
   border-radius: 50%;
 }
+
+.fa-times {
+  color: #6e78ad;
+  font-size: 25px;
+}
+
+.fa-check {
+  color: #6e78ad;
+  font-size: 25px;
+}

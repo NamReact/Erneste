@@ -79,7 +79,7 @@ function TagFilter(props) {
         <div className="tagList-input-block">
           <input
             className="tagFilterInput"
-            placeholder="Write your tag"
+            placeholder="Ecrivez votre tag ici"
             value={tagFilterInputValue}
             onChange={event => onChangeTagInput(event.target.value)}
             onKeyDown={onKeyDownTagInput}

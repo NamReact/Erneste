@@ -52,10 +52,13 @@
   width: var(--small-box-width);
 }
 
-.fas:hover {
+.fa-sort-down:hover {
   cursor: pointer;
 }
 
+.fa-sort-down {
+  color: var(--placeholder-grey);
+}
 .chevron-filter {
   background-color: var(--container-background);
   min-height: 200px;
@@ -70,4 +73,11 @@
   display: flex;
   margin: 10px;
   align-items: center;
+}
+
+.invisibleBox {
+  height: 24px;
+  width: 24px;
+  border: 2px solid var(--container-background);
+  margin-right: 20px;
 }
