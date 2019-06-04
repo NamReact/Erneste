@@ -2,11 +2,6 @@ import React from "react";
 import axios from "axios";
 
 class TalentInfoDisplay extends React.Component {
-  state = {
-    informations: null,
-    lastUpdate: null
-  };
-
   infoCheck = info => {
     if (!info) {
       return <div style={{ color: "#a8b0d0" }}>Non renseigné</div>;
@@ -15,28 +10,32 @@ class TalentInfoDisplay extends React.Component {
   };
 
   render() {
-    if (this.state.informations === null) {
+    /* if (this.state.informations === null) {
       return <div />;
+    } */
+    const informations = this.props.informations;
+    const lastUpdate = this.props.lastUpdate;
+    let formatUpdate = null;
+    if (lastUpdate !== null) {
+      formatUpdate = lastUpdate
+        .split(",")
+        .shift()
+        .split(" ")
+        .join("/");
     }
-    const informations = this.state.informations;
-    const lastUpdate = this.state.lastUpdate;
-    const formatUpdate = lastUpdate
-      .split(",")
-      .shift()
-      .split(" ")
-      .join("/");
+
     let dotColor = "";
 
-    if (this.state.informations.status === "Recherche active") {
+    if (informations.status === "Recherche active") {
       dotColor = "#9EBA83";
     }
-    if (this.state.informations.status === "Ouvert(e) aux opportunités") {
+    if (informations.status === "Ouvert(e) aux opportunités") {
       dotColor = "#F2E9A7";
     }
-    if (this.state.informations.status === "Ne pas être contacter") {
+    if (informations.status === "Ne pas être contacter") {
       dotColor = "#FF9D9D";
     }
-    if (this.state.informations.status === "Embauché(e) par Erneste") {
+    if (informations.status === "Embauché(e) par Erneste") {
       dotColor = "#6A6A8F";
     }
     return (
@@ -68,11 +67,11 @@ class TalentInfoDisplay extends React.Component {
             <div
               style={{
                 backgroundColor: dotColor,
-                borderWidth: this.state.informations.status ? "none" : "1px",
-                borderStyle: this.state.informations.status ? "none" : "solid"
+                borderWidth: informations.status ? "none" : "1px",
+                borderStyle: informations.status ? "none" : "solid"
               }}
             />
-            {this.state.informations.status}
+            {informations.status}
           </div>
           <div className="display-div">
             {this.infoCheck(informations.linkedIn)}
@@ -90,7 +89,7 @@ class TalentInfoDisplay extends React.Component {
             {this.infoCheck(informations.actualCompany)}
           </div>
           <div className="display-div">
-            {this.state.informations.wantedSector.map((item, index) => {
+            {informations.wantedSector.map((item, index) => {
               return <div key={index}>{item.name}</div>;
             })}
           </div>
@@ -105,7 +104,7 @@ class TalentInfoDisplay extends React.Component {
             {this.infoCheck(informations.actualTitle)}
           </div>
           <div className="display-div">
-            {this.state.informations.wantedTitle.map((item, index) => {
+            {informations.wantedTitle.map((item, index) => {
               return <div key={index}>{item.name}</div>;
             })}
           </div>
@@ -113,17 +112,6 @@ class TalentInfoDisplay extends React.Component {
         <div className="display-update">Modifé le {formatUpdate}</div>
       </div>
     );
-  }
-
-  async componentDidMount() {
-    const response = await axios.get(
-      "https://ernest-server.herokuapp.com/talent/" + this.props.id,
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
-    );
-    this.setState({
-      informations: response.data.informations,
-      lastUpdate: response.data.lastUpdate
-    });
   }
 }
 
