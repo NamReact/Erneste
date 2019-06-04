@@ -200,10 +200,7 @@ class ClientList extends React.Component {
     return;
   };
 
-  /*   renderStars(item) {
-
   renderStars(item) {
-
     const stars = [];
     for (let i = 0; i < 5; i++) {
       if (i < item.rating) {
@@ -225,13 +222,12 @@ class ClientList extends React.Component {
 
     // ----------filtre-----------------
 
-    {
-      /* copie des données pour filtre */
-    }
+    /* copie des données pour filtre */
+
     let clientListArray = [...this.state.clientListData];
-    {
-      /*  filtre "Taille" , "Entreprise" et "Secteur" */
-    }
+
+    /*  filtre "Taille" , "Entreprise" et "Secteur" */
+
     let result = clientListArray.filter(search => {
       return (
         search.Taille.toLowerCase().indexOf(
@@ -375,12 +371,10 @@ class ClientList extends React.Component {
           <div>
             {/* Clientlist array Entries--start */}
             <ul className="clientArrayEntries">
-
               {this.displayTitle(
                 this.state.filterChoice,
                 ArrayOfFilteredClientList
               )}
-
             </ul>
             {/* Clientlist array boxEntries--end */}
 
@@ -393,11 +387,9 @@ class ClientList extends React.Component {
                   return (
                     <ul key={client._id} className="clientListItem">
                       <li>
-
                         {/* <button className="deleteAll" /> */}
                         {/* {client.rating ? client.rating : "lol"} */}
                         {this.renderStars(client)}
-
                       </li>
 
                       <li>
@@ -415,12 +407,7 @@ class ClientList extends React.Component {
             </div>
             {/* clientList array item---end*/}
           </div>
-
-          {/* Clientlistarraybox fulllength--end*/}
-          {/* page-end */}
         </div>
-
-        {/* Search bar & button--start */}
       </div>
     );
   }
