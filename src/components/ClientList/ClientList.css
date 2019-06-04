@@ -61,10 +61,13 @@
   border: solid 1px var(--input-border-color);
   border-radius: 5px;
   height: var(--input-height);
-
+  margin: 0px;
   width: 400px;
   margin-right: 30px;
   align-items: center;
+}
+.research input {
+  margin: 0px;
 }
 
 .loupe {
@@ -91,6 +94,8 @@
   font-size: 20px;
   margin: 0 10px;
 }
+
+/* Text color */
 .addClientButton {
   color: white;
   font-size: 16px;
@@ -128,6 +133,7 @@
   height: 38px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .clientArrayEntries span {
@@ -154,6 +160,7 @@
   height: 38px;
   display: flex;
   align-items: center;
+  justify-content: center;
   margin: 15px 0;
 }
 

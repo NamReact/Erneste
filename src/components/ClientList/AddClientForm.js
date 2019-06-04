@@ -6,7 +6,8 @@ import "./AddClientForm.css";
 class AddClientForm extends React.Component {
   state = {
     entreprise: "",
-    secteur: [],
+    secteur: "",
+    secteurId: "",
     taille: null,
     email: "",
     sectorList: [],
@@ -37,15 +38,18 @@ class AddClientForm extends React.Component {
   };
 
   // fonction pour gérer secteur
-  setSector = event => {
-    const id = event.target.id;
-    console.log(id);
-    const sectorArray = this.state.secteur;
-    sectorArray.push(this.state.sectorList[id]);
-    this.sectorSelect();
-    this.setState({ secteur: sectorArray });
-    console.log(this.state.secteur);
-  };
+  // setSector = event => {
+  //   const value = event.target.value;
+  //   // console.log(id);
+  //   // const sectorArray = this.state.secteur;
+  //   // sectorArray.push(this.state.sectorList[id].name);
+  //   this.setState({
+  //     secteur: value,
+  //     sectorSelect: false
+  //   });
+  //   console.log("le secteur :");
+  //   console.log(this.state.secteur);
+  // };
   /* Function to handle company size */
 
   handleSize = e => {
@@ -64,14 +68,14 @@ class AddClientForm extends React.Component {
     ) {
       return this.setState({ error: true });
     } else {
-      const field = this.state.secteur[0]._id;
+      // const field = this.state.secteur[0]._id;
       console.log(this.state.taille);
       const response = await axios.post(
         "https://ernest-server.herokuapp.com/client/create",
 
         {
           name: this.state.entreprise,
-          field: field,
+          field: this.state.secteurId,
           size: this.state.taille,
           email: this.state.mail
         },
@@ -96,28 +100,28 @@ class AddClientForm extends React.Component {
       return "Loading....";
     }
 
-    const sectorArray = this.state.sectorList.map((item, index) => {
-      return (
-        <div id={index} key={item._id} onClick={this.setSector}>
-          {item.name}
-        </div>
-      );
-    });
+    // const sectorArray = this.state.sectorList.map((item, index) => {
+    //   return (
+    //     <div id={index} key={item._id} onClick={this.setSector}>
+    //       {item.name}
+    //     </div>
+    //   );
+    // });
 
     return (
       <div>
         <div className="addClientFormContainer">
           <div className="formHeader">
-            <p>Ajouter un nouveau client</p>
+            <h3>Ajouter un nouveau client</h3>
 
             <button className="closingButton" onClick={this.props.closePopup}>
-              <i class="fas fa-times" />
+              <i className="fas fa-times" />
             </button>
           </div>
 
           <div className="formContainer">
             <div>
-              <label for="entreprise"> Entreprise</label>
+              <label> Entreprise</label>
               <input
                 value={this.state.entreprise}
                 onChange={this.handleChange}
@@ -130,68 +134,73 @@ class AddClientForm extends React.Component {
             <div>
               {/* liste des secteurs */}
               <div className="sector-container">
-                <label for="Secteur"> Secteur</label>
-                {this.state.secteur.map(sector => {
-                  return (
-                    <div key={sector._id} className="sector-item-array">
-                      {sector.name}
-                    </div>
-                  );
-                })}
+                <label> Secteur</label>
+                {/* <div className="sector-select" onClick={this.sectorSelect} /> */}
                 <div className="sector-select" onClick={this.sectorSelect}>
-                  Choisir secteur
+                  {this.state.secteur ? this.state.secteur : "Select secteur"}
                 </div>
-                {this.state.sectorSelect ? (
-                  <div>
-                    {this.state.sectorList.map((item, index) => {
+                {this.state.sectorSelect && (
+                  <div id={this.state.secteur}>
+                    {this.state.sectorList.map(item => {
                       return (
-                        <div id={index} key={item._id} onClick={this.setSector}>
+                        <div
+                          id={item.name}
+                          key={item._id}
+                          onClick={e => {
+                            this.setState(
+                              { secteur: item.name, secteurId: item._id },
+                              () => {
+                                console.log(
+                                  this.state.secteur,
+                                  this.state.secteurId
+                                );
+                              }
+                            );
+                          }}
+                        >
                           {item.name}
                         </div>
                       );
                     })}
                   </div>
-                ) : (
-                  false
-                )}
+                )
+                //  : (
+                //   false
+                // )
+                }
               </div>
 
               {/* <select
-                  value={this.state.secteur}
-                  onChange={this.setSector}
-                  type="text"
-                  name="secteur"
-                  id="secteur"
-                  required
-                >
-                  {this.state.sectorList.map((sector, id) => {
-                    return (
-                      <option
-                        id={sector._id}
-                        key={sector._id}
-                        value={sector._id}
-                      >
-                        {sector.name}
-                      </option>
-                    );
-                  })}
-                </select> */}
+                value={this.state.secteur}
+                onChange={this.setSector}
+                type="text"
+                name="secteur"
+                id="secteur"
+                required
+              > */}
+              {/* {this.state.sectorList.map((sector, id) => {
+                  return (
+                    <option id={sector._id} key={sector._id} value={sector._id}>
+                      {sector.name}
+                    </option>
+                  );
+                })}
+              </select> */}
               {/* Proposition : fenêtre d'ajout d'un nouveau secteur en mode apparition */}
               <div className="addnewsector" onClick={this.ShowNewSector}>
                 <p>
-                  <i class="fas fa-plus" />
+                  <i className="fas fa-plus" />
                 </p>{" "}
                 <p>nouveau secteur</p>
               </div>
               {this.state.addNewSectorDiv === true ? (
                 <div>
-                  <label for="newsector">Ajout d'un nouveau secteur </label>
+                  <label>Ajout d'un nouveau secteur </label>
                   <input
                     value={this.state.addNewSector}
                     onChange={this.handleChange}
-                    type="email"
-                    name="email"
-                    id="email"
+                    type="texte"
+                    id="texte"
                     required
                   />
                 </div>
@@ -221,7 +230,7 @@ class AddClientForm extends React.Component {
             <div>
               <div>
                 {/* Taille entreprise */}
-                <label for="email">Email du référent </label>
+                <label>Email du référent </label>
                 <input
                   value={this.state.email}
                   onChange={this.handleChange}

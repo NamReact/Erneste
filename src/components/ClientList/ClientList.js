@@ -26,24 +26,20 @@ class ClientList extends React.Component {
     });
   };
 
-  /*   renderStars(item) {
+  renderStars(item) {
     const stars = [];
-
     for (let i = 0; i < 5; i++) {
-      if (i < item.ratingValue) {
-        stars.push(<i class="fas fa-star"></i>);
+      if (i < item.rating) {
+        stars.push(<i class="fas fa-star" />);
       } else {
-        stars.push(<<i class="far fa-star"></i>);
+        stars.push(<i class="far fa-star" />);
       }
     }
 
     return (
-      <div style={{ flexDirection: "row", alignItems: "center" }}>
-        {stars}
-       
-      </div>
+      <div style={{ flexDirection: "row", alignItems: "center" }}>{stars}</div>
     );
-  } */
+  }
 
   render() {
     if (this.state.isLoading === true) {
@@ -80,8 +76,11 @@ class ClientList extends React.Component {
     let sorteRating = liste1.sort((a, b) => {
       return b.rating - a.rating;
     });
-    let Sorterecruited = liste1.sort((a, b) => {
+    let sorteRecruited = liste1.sort((a, b) => {
       return b.recruited - a.recruited;
+    });
+    let sorteSize = liste1.sort((a, b) => {
+      return a.size > b.size;
     });
 
     return (
@@ -147,7 +146,7 @@ class ClientList extends React.Component {
 
             <ul className="clientArrayEntries">
               <li className="button-and-note">
-                <button className="deleteAll" />
+                {/* <button className="deleteAll" /> */}
                 <div>Note</div>
                 <span>
                   <i class="fas fa-sort-down" />
@@ -196,8 +195,9 @@ class ClientList extends React.Component {
                   return (
                     <ul key={client._id} className="clientListItem">
                       <li>
-                        <button className="deleteAll" />
-                        {client.rating ? client.numberOfUser : "0"}
+                        {/* <button className="deleteAll" /> */}
+                        {/* {client.rating ? client.rating : "lol"} */}
+                        {this.renderStars(client)}
                       </li>
 
                       <li>

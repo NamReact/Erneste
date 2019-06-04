@@ -1,6 +1,6 @@
 .addClientFormContainer {
   max-width: 500px;
-  height: 550px;
+  max-height: 650px;
   box-shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
   border-radius: 10px;
   display: flex;
@@ -96,7 +96,7 @@
   width: 370px;
 } */
 
-/* selector Div */
+/* selector Div "taille" */
 .size-button {
   width: 350px;
   height: 25px;
@@ -113,7 +113,7 @@
   width: 350px;
   height: 40px;
 }
-
+/* selector Div "secteur" */
 .sector-select {
   width: 350px;
   height: 25px;
@@ -122,6 +122,8 @@
 }
 
 .sector-item-array {
+  position: relative;
   width: 350px;
   height: 25px;
+  background-color: red;
 }
