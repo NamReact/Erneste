@@ -119,10 +119,18 @@
   display: flex;
   align-items: center;
 }
-.deleteAll {
+.deleteOne {
   width: 24px;
   height: 24px;
   border: solid 1px #a8b0d0;
+  border-radius: 2px;
+  margin: 0 20px 0 0;
+}
+
+.deleteAll {
+  width: 24px;
+  height: 24px;
+  border: solid 1px var(--background-color);
   border-radius: 2px;
   margin: 0 20px 0 0;
 }
@@ -167,4 +175,22 @@
 .clientListItem a {
   text-decoration: none;
   color: #31313c;
+}
+
+.clientList-chevronBox {
+  z-index: 1;
+}
+
+.clientList-chevronBox-element {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+}
+
+.testChecked {
+  background-color: red;
+}
+
+.testUnchecked {
+  background-color: blue;
 }
