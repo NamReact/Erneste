@@ -120,7 +120,27 @@ class TalentforTalent extends React.Component {
     return (
       <div>
         <div className="content">
-          {false && this.state.validated}
+          {this.state.validated ? (
+            false
+          ) : (
+            <div className=" body-container">
+              <p className="text-validation">
+                C'est votre première connexion ? Prenez le temps de lire les
+                informations que nous avons synthétisées de notre entretien et
+                de valider votre profil. Si vous avez besoin d'y apporter des
+                modifications, contactez-nous.
+              </p>
+
+              <div
+                className="validate-profil"
+                onClick={this.onProfilValidation}
+                style={{ display: this.state.validated ? "none" : "display" }}
+              >
+                Valider le profil
+              </div>
+            </div>
+          )}
+
           <div className="body-container">
             {this.state.isUpdating ? (
               <TalentInformations
@@ -148,34 +168,11 @@ class TalentforTalent extends React.Component {
                 isUpdating={this.state.isUpdating}
               />
             )}
-            <div
-              className={
-                this.state.validated
-                  ? "right-container"
-                  : "right-container-to-validate"
-              }
-            >
-              <div
-                className="text-validation"
-                style={{ display: this.state.validated ? "none" : "display" }}
-              >
-                C'est votre première connexion ? Prenez le temps de lire les
-                informations que nous avons synthétisées de notre entretien et
-                de valider votre profil. Si vous avez besoin d'y apporter des
-                modifications, contactez-nous.
-              </div>
-              <TalentDescription
-                description={this.state.description}
-                skills={this.state.skills}
-              />
-              <div
-                className="validate-profil"
-                onClick={this.onProfilValidation}
-                style={{ display: this.state.validated ? "none" : "display" }}
-              >
-                Valider le profil
-              </div>
-            </div>
+
+            <TalentDescription
+              description={this.state.description}
+              skills={this.state.skills}
+            />
           </div>
         </div>
       </div>
