@@ -69,11 +69,6 @@ class Login extends React.Component {
                 <div>Erneste donne vie à vos ambitions de carrière.</div>
               </div>
             </div>
-
-            {/*  <img
-              src={require("../../features/img/loginbackground.png")}
-              alt="login-image"
-            /> */}
           </div>
           <div className="login-input-container">
             <h3 className="login-h3">Connectez vous</h3>
@@ -98,7 +93,7 @@ class Login extends React.Component {
                 onMouseDown={this.showPassword}
                 onMouseUp={this.hidePassword}
               >
-                +
+                <img src={require("../../features/icons/oeil.svg")} />
               </span>
             </div>
 

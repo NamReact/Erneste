@@ -102,10 +102,9 @@
 
 .login-password-eye {
   padding: 5px 10px;
-  background-color: yellow;
   position: absolute;
-  bottom: 30px;
-  right: 0px;
+  bottom: 20px;
+  right: -8px;
   cursor: pointer;
 }
 
