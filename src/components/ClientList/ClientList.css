@@ -194,3 +194,11 @@
 .testUnchecked {
   background-color: blue;
 }
+
+.clientList-titleSorted {
+  font-weight: 600;
+}
+
+.fa-sort {
+  color: #a8afcf;
+}

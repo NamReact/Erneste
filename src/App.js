@@ -174,6 +174,20 @@ class App extends React.Component {
               );
             }}
           />
+          <Route
+            path="/admin/config"
+            render={props => {
+              if (!this.state.userData) {
+                return <Redirect to={"/"} />;
+              }
+              return (
+                <TalentListPage
+                  permission={this.state.userData.permission}
+                  setPageActive={this.setPageActive}
+                />
+              );
+            }}
+          />
         </Switch>
       </Router>
     );

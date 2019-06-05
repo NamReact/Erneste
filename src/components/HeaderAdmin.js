@@ -7,6 +7,7 @@ import "./HeaderAdmin.css";
 function HeaderAdmin(props) {
   let classNameClient = "";
   let classNameTalent = "";
+  let classNameConfig = "";
   if (props.pageType === "admin/client") {
     classNameClient = "headerAdmin-tools-active";
   } else {
@@ -17,12 +18,19 @@ function HeaderAdmin(props) {
   } else {
     classNameTalent = "headerAdmin-tools-inactive";
   }
+  if (props.pageType === "admin/config") {
+    classNameConfig = "headerAdmin-tools-active";
+  } else {
+    classNameConfig = "headerAdmin-tools-inactive";
+  }
+
   return (
     <header>
       <div className="headerAdmin-container">
         <img className="headerAdmin-image" src={logo} alt="Erneste Logo" />
         {(props.pageType === "admin/talent" ||
-          props.pageType === "admin/client") && (
+          props.pageType === "admin/client" ||
+          props.pageType === "admin/config") && (
           <div className="headerAdmin-tools">
             {/* Lien vers Talent-List */}
             <Link className="linkDecoration" to={`/admin/talent-list`}>
@@ -31,6 +39,10 @@ function HeaderAdmin(props) {
             {/* Lien vers Client-List */}
             <Link className="linkDecoration" to={`/admin/client-list`}>
               <span className={classNameClient}>Clients</span>
+            </Link>
+            {/* Lien vers Config */}
+            <Link className="linkDecoration" to={`/admin/config`}>
+              <i className={`fas fa-cog ${classNameConfig}`} />
             </Link>
             {/* Log Out Bouton */}
             <div

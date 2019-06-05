@@ -25,7 +25,11 @@ class ClientList extends React.Component {
     filterBoxShown: false,
     filterOrder: 0,
     ArrayOfFilteredClientList: [],
-    chevronFilterChosen: []
+    chevronFilterChosen: [],
+    /* ----- State for sort lists ----- */
+    sortOrder: null,
+    sortList: [],
+    buttonDeleteFilter: false
   };
   handleChange = event => {
     const value = event.target.value;
@@ -49,44 +53,108 @@ class ClientList extends React.Component {
 
   /* ----- One filterChoice display ----- */
   title = (filter, arrayOfList) => {
-    if (filter === this.state.filterChoice[0]) {
+    let sortClass = "";
+    if (filter === "Note") {
+      if (
+        this.state.sortList
+          .map(e => {
+            return e.title;
+          })
+          .indexOf(filter) !== -1
+      ) {
+        sortClass = "button-and-note clientList-titleSorted";
+      }
       return (
-        <li className="button-and-note">
+        <li className={sortClass}>
           <button className="deleteAll" />
           <div>{filter}</div>
           <i
+            className="fas fa-sort"
+            onClick={() => {
+              this.onChevronSortClick(filter);
+            }}
+          />
+        </li>
+      );
+    } else if (
+      filter === "Entreprise" ||
+      filter === "Secteur" ||
+      filter === "Taille"
+    ) {
+      if (
+        this.state.chevronFilterChosen
+          .map(e => {
+            return e.title;
+          })
+          .indexOf(filter) !== -1
+      ) {
+        sortClass = "clientList-titleSorted";
+      }
+      return (
+        <li className={sortClass}>
+          {filter}
+          <i
             className="fas fa-sort-down"
             onClick={() => {
-              this.onChevronClick(filter);
+              this.onChevronFilterClick(filter);
             }}
           />
           {this.state.filterBoxShown === filter &&
             this.chevronClickBox(filter, arrayOfList)}
         </li>
       );
-    } else {
+    } else if (filter === "Comptes" || filter === "Recrutement") {
+      if (
+        this.state.sortList
+          .map(e => {
+            return e.title;
+          })
+          .indexOf(filter) !== -1
+      ) {
+        sortClass = "clientList-titleSorted";
+      }
       return (
-        <li>
+        <li className={sortClass}>
           {filter}
           <i
-            className="fas fa-sort-down"
+            className="fas fa-sort"
             onClick={() => {
-              this.onChevronClick(filter);
+              this.onChevronSortClick(filter);
             }}
           />
-          {this.state.filterBoxShown === filter &&
-            this.chevronClickBox(filter, arrayOfList)}
         </li>
       );
     }
   };
 
-  onChevronClick = async toto => {
+  /* ------ Function for list we want to filter ------ */
+  onChevronFilterClick = async toto => {
     if (toto !== this.state.filterBoxShown) {
       await this.setState({ filterBoxShown: toto });
     } else {
       await this.setState({ filterBoxShown: null });
     }
+  };
+
+  /* ------ Function for list we want to sort ------ */
+  onChevronSortClick = async toto => {
+    let sortList = [...this.state.sortList];
+    let position = sortList
+      .map(e => {
+        return e.title;
+      })
+      .indexOf(toto);
+    // toto = "Name" , "Comptes", "Recrutement"
+    if (position === -1) {
+      sortList.push({ title: toto, order: "descending" });
+    } else {
+      if (sortList[position].order === "descending") {
+        sortList[position].order = "ascending";
+      } else if (sortList[position].order === "ascending") {
+        sortList.splice(position, 1);
+      }
+    }
+    await this.setState({ sortList: sortList });
   };
 
   /* ----- Box that appears/unappears when chevron clicked ----- */
@@ -136,7 +204,7 @@ class ClientList extends React.Component {
     console.log(arrayOfList);
     console.log(this.state.chevronFilterChosen);
 
-    // On cherche la position du filtre
+    // We look for the position of the filter type
     let position = this.state.chevronFilterChosen
       .map(e => {
         return e.title;
@@ -196,6 +264,12 @@ class ClientList extends React.Component {
         }
       }
     }
+    if (result.length > 0) {
+      this.setState({ buttonDeleteFilter: true });
+    } else {
+      this.setState({ buttonDeleteFilter: false });
+    }
+
     this.setState({ chevronFilterChosen: result });
     return;
   };
@@ -241,6 +315,30 @@ class ClientList extends React.Component {
         ) !== -1
       );
     });
+
+    // *------ SORT LIST ------* //
+    if (this.state.filterOrder.length > 0) {
+      for (let i = 0; i < this.state.sortList.length; i++) {
+        let title = this.state.sortList[i].title;
+        if (this.state.sortList[i].order === "ascending") {
+          result = result
+            .map(element => {
+              return element.title;
+            })
+            .sort((a, b) => {
+              return a - b;
+            });
+        } else if (this.state.sortList[i] === "descending") {
+          result = result
+            .map(element => {
+              return element.title;
+            })
+            .sort((a, b) => {
+              return b - a;
+            });
+        }
+      }
+    }
 
     // *------ Filtre le result avec les filtres
     // On crée un tableau qui stock les différentes listes filtrées
@@ -295,21 +393,6 @@ class ClientList extends React.Component {
       }
     }
 
-    // ----------classement-----------------
-    let liste1 = [...this.state.clientListData];
-    let sorteUser = liste1.sort((a, b) => {
-      return b.numberOfUser - a.numberOfUser;
-    });
-    let sorteRating = liste1.sort((a, b) => {
-      return b.rating - a.rating;
-    });
-    let sorteRecruited = liste1.sort((a, b) => {
-      return b.recruited - a.recruited;
-    });
-    let sorteSize = liste1.sort((a, b) => {
-      return a.size > b.size;
-    });
-
     return (
       <div className="content">
         {/* header  */}
@@ -352,6 +435,14 @@ class ClientList extends React.Component {
                   Ajouter un client
                 </button>
               </div>
+              {/* 3-Delete Filter */}
+              <div className="deleteFilter">
+                {this.state.buttonDeleteFilter ? (
+                  <div className="clientList-deleteFilter">
+                    Supprimer les filtres
+                  </div>
+                ) : null}
+              </div>
             </div>
 
             {/* 2-1 page ajout client */}
@@ -365,6 +456,7 @@ class ClientList extends React.Component {
               ) : null}
             </div>
           </div>
+
           {/* Search bar & button---end */}
 
           {/* Clientlist array fulllength box--start */}
@@ -425,9 +517,15 @@ class ClientList extends React.Component {
       responseCopie[i].Entreprise = response.data[i].name;
       responseCopie[i].Secteur = response.data[i].field;
       responseCopie[i].Taille = response.data[i].size;
+      responseCopie[i].Note = response.data[i].rating;
+      responseCopie[i].Comptes = response.data[i].numberOfUser;
+      responseCopie[i].Recrutement = response.data[i].recruited;
       delete responseCopie[i]["name"];
       delete responseCopie[i]["field"];
       delete responseCopie[i]["size"];
+      delete responseCopie[i]["rating"];
+      delete responseCopie[i]["numberOfUser"];
+      delete responseCopie[i]["recruited"];
     }
 
     this.setState({

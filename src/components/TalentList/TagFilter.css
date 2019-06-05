@@ -112,4 +112,6 @@
 
 .tagList-deleteAllTag {
   margin-top: 10px;
+  width: 24px;
+  fill: #343365;
 }
