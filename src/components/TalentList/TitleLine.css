@@ -82,7 +82,6 @@
   margin-right: 20px;
 }
 
-
 .clientList-deleteFilter {
   text-decoration: none;
   outline: none;
@@ -96,7 +95,7 @@
   height: 35px;
   display: flex;
   align-items: center;
-
+}
 .deleteCheck {
   height: 24px;
   width: 24px;
@@ -113,5 +112,4 @@
   border: 2px solid var(--input-border-color);
   border-radius: 3px;
   margin-right: 20px;
-
 }
