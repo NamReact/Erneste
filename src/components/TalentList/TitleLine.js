@@ -183,7 +183,6 @@ function TitleLine(props) {
     })
     .indexOf("lastUpdate");
   let lastUpdateListOfReference = [];
-
   if (lastUpdatePosition === -1) {
     lastUpdateListOfReference =
       ArrayOfFilteredTalentList[ArrayOfFilteredTalentList.length - 1];
@@ -357,6 +356,7 @@ function TitleLine(props) {
           </div>
         )}
       </div>
+
       {/* VALIDATED */}
       <div className="talentList-right-block-validated">
         {titleArray[4].value}
@@ -364,7 +364,6 @@ function TitleLine(props) {
           className="fas fa-sort-down"
           onClick={() => props.chevronClick(titleArray[4].value)}
         />
-
         {chevronClicked && chevronClickedPosition === 4 && (
           <div className="chevron-filter">
             {validatedArray.map((element, index) => {
@@ -372,7 +371,7 @@ function TitleLine(props) {
               for (let i = 0; i < chevronFilter.length; i++) {
                 for (let j = 0; j < chevronFilter[i].filter.length; j++) {
                   if (
-                    chevronFilter[i].filter[j] === element &&
+                    chevronFilter[i].filter[j] === element.toString() &&
                     chevronFilter[i].title === "validated"
                   ) {
                     clicked = true;

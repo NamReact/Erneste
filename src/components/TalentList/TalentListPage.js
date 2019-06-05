@@ -496,8 +496,6 @@ class TalentListPage extends React.Component {
           if (element.skills.length > 0) {
             for (let i = 0; i < tagFilter.length; i++) {
               for (let j = 0; j < element.skills.length; j++) {
-                console.log(element.skills[j]);
-                console.log(tagFilter[i]);
                 if (tagFilter[i]._id === element.skills[j]) {
                   bool[i] = true;
                   break;
@@ -559,8 +557,16 @@ class TalentListPage extends React.Component {
                 j < this.state.chevronFilter[i].filter.length;
                 j++
               ) {
+                console.log(
+                  "element",
+                  element[this.state.chevronFilter[i].title]
+                );
+                console.log(
+                  "chevronFilter",
+                  this.state.chevronFilter[i].filter[j]
+                );
                 if (
-                  element[this.state.chevronFilter[i].title] ===
+                  element[this.state.chevronFilter[i].title].toString() ===
                   this.state.chevronFilter[i].filter[j]
                 ) {
                   bool = true;
@@ -589,11 +595,8 @@ class TalentListPage extends React.Component {
         }
       }
     }
-    console.log("test", this.props.handleClickLogOut);
     return (
-
       <div className="content">
-
         <div className="container">
           <div className="talentList-container">
             <div className="talentList-left-block">
