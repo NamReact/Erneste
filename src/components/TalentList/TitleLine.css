@@ -81,3 +81,21 @@
   border: 2px solid var(--container-background);
   margin-right: 20px;
 }
+
+.deleteCheck {
+  height: 24px;
+  width: 24px;
+  background-color: #333366;
+  border: 2px solid var(--input-border-color);
+  border-radius: 3px;
+  margin-right: 20px;
+}
+
+.deleteUncheck {
+  height: 24px;
+  width: 24px;
+  background-color: var(--container-background);
+  border: 2px solid var(--input-border-color);
+  border-radius: 3px;
+  margin-right: 20px;
+}

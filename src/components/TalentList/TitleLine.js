@@ -1,5 +1,7 @@
 import React from "react";
 import "./TitleLine.css";
+import box from "../../features/icons/check_24px.svg";
+import checkedbox from "../../features/icons/check_24px copy.svg";
 
 function TitleLine(props) {
   const {
@@ -229,15 +231,25 @@ function TitleLine(props) {
               return (
                 <div key={index} className="filter-line">
                   <div
-                    className={
-                      clicked
-                        ? "deleteBox deleteCheck"
-                        : "deleteBox deleteUncheck"
-                    }
                     onClick={() => {
                       props.filterCheckBox("actualTitle", element);
                     }}
-                  />
+                  >
+                    {clicked ? (
+                      <img
+                        className="deleteCheck "
+                        src={box}
+                        alt="box cochée"
+                      />
+                    ) : (
+                      <img
+                        className="deleteUncheck "
+                        src={checkedbox}
+                        alt="box non cochée"
+                      />
+                    )}
+                  </div>
+
                   <div>{element}</div>
                 </div>
               );
@@ -270,15 +282,24 @@ function TitleLine(props) {
               return (
                 <div key={index} className="filter-line">
                   <div
-                    className={
-                      clicked
-                        ? "deleteBox deleteCheck"
-                        : "deleteBox deleteUncheck"
-                    }
                     onClick={() => {
                       props.filterCheckBox("actualCompany", element);
                     }}
-                  />
+                  >
+                    {clicked ? (
+                      <img
+                        className="deleteCheck "
+                        src={box}
+                        alt="box cochée"
+                      />
+                    ) : (
+                      <img
+                        className="deleteUncheck "
+                        src={checkedbox}
+                        alt="box non cochée"
+                      />
+                    )}
+                  </div>
                   <span>{element}</span>
                 </div>
               );
@@ -311,15 +332,24 @@ function TitleLine(props) {
               return (
                 <div key={index} className="filter-line">
                   <div
-                    className={
-                      clicked
-                        ? "deleteBox deleteCheck"
-                        : "deleteBox deleteUncheck"
-                    }
                     onClick={() => {
                       props.filterCheckBox("wantedTitle", element);
                     }}
-                  />
+                  >
+                    {clicked ? (
+                      <img
+                        className="deleteCheck "
+                        src={box}
+                        alt="box cochée"
+                      />
+                    ) : (
+                      <img
+                        className="deleteUncheck "
+                        src={checkedbox}
+                        alt="box non cochée"
+                      />
+                    )}
+                  </div>
                   <span>{element}</span>
                 </div>
               );
@@ -352,15 +382,24 @@ function TitleLine(props) {
               return (
                 <div key={index} className="filter-line">
                   <div
-                    className={
-                      clicked
-                        ? "deleteBox deleteCheck"
-                        : "deleteBox deleteUncheck"
-                    }
                     onClick={() => {
                       props.filterCheckBox("validated", element);
                     }}
-                  />
+                  >
+                    {clicked ? (
+                      <img
+                        className="deleteCheck "
+                        src={box}
+                        alt="box cochée"
+                      />
+                    ) : (
+                      <img
+                        className="deleteUncheck "
+                        src={checkedbox}
+                        alt="box non cochée"
+                      />
+                    )}
+                  </div>
                   <span>{element}</span>
                 </div>
               );
@@ -393,15 +432,24 @@ function TitleLine(props) {
               return (
                 <div key={index} className="filter-line">
                   <div
-                    className={
-                      clicked
-                        ? "deleteBox deleteCheck"
-                        : "deleteBox deleteUncheck"
-                    }
                     onClick={() => {
                       props.filterCheckBox("status", element);
                     }}
-                  />
+                  >
+                    {clicked ? (
+                      <img
+                        className="deleteCheck "
+                        src={box}
+                        alt="box cochée"
+                      />
+                    ) : (
+                      <img
+                        className="deleteUncheck "
+                        src={checkedbox}
+                        alt="box non cochée"
+                      />
+                    )}
+                  </div>
                   <span>{element}</span>
                 </div>
               );
@@ -435,15 +483,24 @@ function TitleLine(props) {
               return (
                 <div key={index} className="filter-line">
                   <div
-                    className={
-                      clicked
-                        ? "deleteBox deleteCheck"
-                        : "deleteBox deleteUncheck"
-                    }
                     onClick={() => {
                       props.filterCheckBox("lastUpdate", element);
                     }}
-                  />
+                  >
+                    {clicked ? (
+                      <img
+                        className="deleteCheck "
+                        src={box}
+                        alt="box cochée"
+                      />
+                    ) : (
+                      <img
+                        className="deleteUncheck "
+                        src={checkedbox}
+                        alt="box non cochée"
+                      />
+                    )}
+                  </div>
                   <span>{element}</span>
                 </div>
               );
