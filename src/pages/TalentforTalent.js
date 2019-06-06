@@ -3,38 +3,41 @@ import axios from "axios";
 import TalentInformations from "../components/TalentInformations";
 import TalentInfoDisplay from "../components/TalentInfoDisplay";
 import TalentDescription from "../components/TalentDescription";
+import { Redirect } from "react-router-dom";
 
 /* Fiche qui apparait pour le Talent : il ne peut modifier que certains éléments de la description */
 
 class TalentforTalent extends React.Component {
-  state = {
-    informations: {
-      photo: null,
-      firstName: "",
-      lastName: "",
-      linkedIn: "",
-      email: "",
-      phoneNumber: "",
-      salary: "",
-      actualCompany: "",
-      wantedSector: [],
-      wantedSize: "",
-      actualTitle: "",
-      wantedTitle: [],
-      status: ""
-    },
-    description: {
-      idealCompany: "",
-      idealRole: "",
-      workingEnvironment: "",
-      development: ""
-    },
-    skills: null,
-    validated: false,
-    lastUpdate: null,
-    isUpdating: false
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      informations: {
+        photo: null,
+        firstName: "",
+        lastName: "",
+        linkedIn: "",
+        email: "",
+        phoneNumber: "",
+        salary: "",
+        actualCompany: "",
+        wantedSector: [],
+        wantedSize: "",
+        actualTitle: "",
+        wantedTitle: [],
+        status: ""
+      },
+      description: {
+        idealCompany: "",
+        idealRole: "",
+        workingEnvironment: "",
+        development: ""
+      },
+      skills: null,
+      validated: false,
+      lastUpdate: null,
+      isUpdating: false
+    };
+  }
   /* ** INTERRUPTERS ** */
   setUpdate = () => {
     this.setState({ isUpdating: !this.state.isUpdating });
@@ -96,7 +99,7 @@ class TalentforTalent extends React.Component {
         id: this.props.match.params.id,
         informations: this.state.informations
       },
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     this.setState({ isUpdating: false });
     return;
@@ -110,13 +113,17 @@ class TalentforTalent extends React.Component {
         id: this.props.match.params.id,
         validated: this.state.validated
       },
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
 
     return;
   };
 
   render() {
+    /* Permission test */
+    if (this.props.permission !== "talent") {
+      return <Redirect to={"/"} />;
+    }
     return (
       <div>
         <div className="content">
@@ -183,7 +190,7 @@ class TalentforTalent extends React.Component {
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/talent/" +
         this.props.match.params.id,
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
 
     this.setState({

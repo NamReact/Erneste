@@ -505,7 +505,7 @@ class ClientList extends React.Component {
     this.props.setPageActive("admin/client");
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/client",
-      { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
 
     /* ----- On change le Name en Entreprise le field en Secteur le Size en Taille ----- */

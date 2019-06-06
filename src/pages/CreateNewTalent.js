@@ -167,6 +167,11 @@ class CreateNewTalent extends React.Component {
   };
 
   render() {
+    /* Permission test */
+    if (this.props.permission !== "Admin") {
+      return <Redirect to={"/"} />;
+    }
+
     return (
       <div>
         <div className="content">
@@ -206,12 +211,12 @@ class CreateNewTalent extends React.Component {
     this.props.setPageActive("admin/talent");
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/sector",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
 
     const response2 = await axios.get(
       "https://ernest-server.herokuapp.com/title",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
 
     this.setState({

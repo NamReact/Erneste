@@ -3,6 +3,7 @@ import TalentInformations from "../components/TalentInformations";
 import TalentInfoDisplay from "../components/TalentInfoDisplay";
 import TalentDescription from "../components/TalentDescription";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
 /* *** Page for Admin. Everything can be modified *** */
 
@@ -118,13 +119,17 @@ class TalentforAdmin extends React.Component {
         description: this.state.description,
         skills: this.state.skills
       },
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     this.setState({ isUpdating: false });
     return;
   };
 
   render() {
+    /* Permission test */
+    if (this.props.permission !== "Admin") {
+      return <Redirect to={"/"} />;
+    }
     return (
       <div className="content">
         <div className="body-container">
@@ -173,7 +178,7 @@ class TalentforAdmin extends React.Component {
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/talent/" +
         this.props.match.params.id,
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     this.setState({
       informations: response.data.informations,

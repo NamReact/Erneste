@@ -53,7 +53,7 @@ class TalentListPage extends React.Component {
     this.setState({ isLoading: true });
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/talent/",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     // We switch the wantedTitle ID by its name
 
@@ -167,7 +167,7 @@ class TalentListPage extends React.Component {
     this.setState({ isLoading: true });
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/tag",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     this.setState({
       isLoading: false,
@@ -180,7 +180,7 @@ class TalentListPage extends React.Component {
     this.setState({ isLoading: true });
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/title",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     await this.setState({
       isLoading: false,
@@ -210,7 +210,7 @@ class TalentListPage extends React.Component {
       {
         id: toto
       },
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
   };
 
@@ -421,7 +421,7 @@ class TalentListPage extends React.Component {
   render() {
     /* Permission test */
     if (this.props.permission !== "Admin") {
-      return <Redirect to={"/login"} />;
+      return <Redirect to={"/"} />;
     }
 
     /* Test of Loading... */

@@ -5,25 +5,37 @@ import logo from "../features/img/logo.svg";
 import "./HeaderAdmin.css";
 
 function HeaderAdmin(props) {
-  let classNameClient = "";
-  let classNameTalent = "";
-  let classNameConfig = "";
+  let classNameAdminClient = "";
+  let classNameAdminTalent = "";
+  let classNameAdminConfig = "";
+  let classNameTalentOpportunities = "";
+  let classNameTalentProfil = "";
   if (props.pageType === "admin/client") {
-    classNameClient = "headerAdmin-tools-active";
+    classNameAdminClient = "headerAdmin-tools-active";
   } else {
-    classNameClient = "headerAdmin-tools-inactive";
+    classNameAdminClient = "headerAdmin-tools-inactive";
   }
   if (props.pageType === "admin/talent") {
-    classNameTalent = "headerAdmin-tools-active";
+    classNameAdminTalent = "headerAdmin-tools-active";
   } else {
-    classNameTalent = "headerAdmin-tools-inactive";
+    classNameAdminTalent = "headerAdmin-tools-inactive";
   }
   if (props.pageType === "admin/config") {
-    classNameConfig = "headerAdmin-tools-active";
+    classNameAdminConfig = "headerAdmin-tools-active";
   } else {
-    classNameConfig = "headerAdmin-tools-inactive";
+    classNameAdminConfig = "headerAdmin-tools-inactive";
   }
 
+  if (props.pageType === "talent") {
+    classNameTalentProfil = "headerAdmin-tools-active";
+  } else {
+    classNameTalentOpportunities = "headerAdmin-tools-inactive";
+  }
+  if (props.pageType === "talent/opportunities") {
+    classNameTalentProfil = "headerAdmin-tools-active";
+  } else {
+    classNameTalentOpportunities = "headerAdmin-tools-inactive";
+  }
   return (
     <header>
       <div className="headerAdmin-container">
@@ -34,15 +46,15 @@ function HeaderAdmin(props) {
           <div className="headerAdmin-tools">
             {/* Lien vers Talent-List */}
             <Link className="linkDecoration" to={`/admin/talent-list`}>
-              <span className={classNameTalent}>Talents</span>
+              <span className={classNameAdminTalent}>Talents</span>
             </Link>
             {/* Lien vers Client-List */}
             <Link className="linkDecoration" to={`/admin/client-list`}>
-              <span className={classNameClient}>Clients</span>
+              <span className={classNameAdminClient}>Clients</span>
             </Link>
             {/* Lien vers Config */}
             <Link className="linkDecoration" to={`/admin/config`}>
-              <i className={`fas fa-cog ${classNameConfig}`} />
+              <i className={`fas fa-cog ${classNameAdminConfig}`} />
             </Link>
             {/* Log Out Bouton */}
             <div
@@ -55,32 +67,15 @@ function HeaderAdmin(props) {
         )}
         {props.pageType === "talent" && (
           <div className="headerAdmin-tools">
-            {/* Lien vers Talent-List */}
-            <Link className="linkDecoration" to={`/admin/talent-list`}>
-              <span className={classNameTalent}>Talents</span>
+            {/* Lien vers Opportunités */}
+            <Link className="linkDecoration" to={`/talent/opportunities/`}>
+              <i
+                className={`fas fa-envelope ${classNameTalentOpportunities} `}
+              />
             </Link>
-            {/* Lien vers Client-List */}
-            <Link className="linkDecoration" to={`/admin/client-list`}>
-              <span className={classNameClient}>Clients</span>
-            </Link>
-            {/* Log Out Bouton */}
-            <div
-              onClick={props.handleClickLogOut}
-              className="headerAdmin-tools-logOut"
-            >
-              <i className="fas fa-power-off" />
-            </div>
-          </div>
-        )}
-        {props.pageType === "client" && (
-          <div className="headerAdmin-tools">
-            {/* Lien vers Talent-List */}
-            <Link className="linkDecoration" to={`/admin/talent-list`}>
-              <span className={classNameTalent}>Talents</span>
-            </Link>
-            {/* Lien vers Client-List */}
-            <Link className="linkDecoration" to={`/admin/client-list`}>
-              <span className={classNameClient}>Clients</span>
+            {/* Lien vers son Profil */}
+            <Link className="linkDecoration" to={`/talent/${props.userID}`}>
+              <i className={`fas fa-user ${classNameTalentProfil}`} />
             </Link>
             {/* Log Out Bouton */}
             <div
