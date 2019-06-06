@@ -228,10 +228,8 @@ class ClientList extends React.Component {
           chevronBoxArray.push(filterListComplete[i]);
         }
       } else {
-        for (let j = 0; j < filterListComplete[i].length; j++) {
-          if (chevronBoxArray.indexOf(filterListComplete[i][j].name) === -1) {
-            chevronBoxArray.push(filterListComplete[i][j].name);
-          }
+        if (chevronBoxArray.indexOf(filterListComplete[i].name) === -1) {
+          chevronBoxArray.push(filterListComplete[i].name);
         }
       }
     }
@@ -310,9 +308,9 @@ class ClientList extends React.Component {
         search.Entreprise.toLowerCase().indexOf(
           this.state.searchFilter.toLowerCase()
         ) !== -1 ||
-        search.Secteur[0].Entreprise.toLowerCase().indexOf(
-          this.state.searchFilter.toLowerCase()
-        ) !== -1
+        search.Secteur.name
+          .toLowerCase()
+          .indexOf(this.state.searchFilter.toLowerCase()) !== -1
       );
     });
 
@@ -487,7 +485,7 @@ class ClientList extends React.Component {
                       <li>
                         <a href="#">{client.Entreprise}</a>
                       </li>
-                      <li>{Secteur[0].name}</li>
+                      <li>{Secteur.name}</li>
 
                       <li>{client.Taille}</li>
                       <li>{client.numberOfUser ? client.numberOfUser : "0"}</li>
