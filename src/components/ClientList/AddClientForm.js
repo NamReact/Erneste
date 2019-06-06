@@ -126,9 +126,9 @@ class AddClientForm extends React.Component {
       <div className="popup-new-client">
         <div className="addClientFormContainer">
           {/* Header */}
+
           <div className="formHeader">
             <h4>Ajouter un nouveau client</h4>
-
             <button className="closingButton" onClick={this.props.closePopup}>
               <i className="fas fa-times" />
             </button>
@@ -141,51 +141,60 @@ class AddClientForm extends React.Component {
                 className="addclient-form-input"
                 value={this.state.entreprise}
                 onChange={this.handleChange}
+                placeholder="Entreprise"
                 type="text"
                 name="entreprise"
                 id="name"
                 required
               />
             </div>
-            <div className="addclient-form-whole-sector">
+            {/* className="addclient-form-whole-sector" */}
+            <div>
               <div clasName="addclient-sector-big">
                 {/* liste des secteurs */}
                 <div className="sector-container">
-                  <label className="addclient-form-label"> Secteur</label>
+                  <div className="addclient-form-label"> Secteur</div>
                   {/* <div className="sector-select" onClick={this.sectorSelect} /> */}
                   <div className="sector-select" onClick={this.sectorSelect}>
-                    {this.state.secteur ? this.state.secteur : "Select secteur"}
+                    {this.state.secteur ? (
+                      <p className="placeholder-selector">
+                        {this.state.secteur}
+                      </p>
+                    ) : (
+                      <p className="placeholder-selector">
+                        Sélection du secteur
+                      </p>
+                    )}
                   </div>
-                  {this.state.sectorSelect && (
-                    <div id={this.state.secteur}>
-                      {this.state.sectorList.map(item => {
-                        return (
-                          <div
-                            id={item.name}
-                            key={item._id}
-                            className="sector-item-array"
-                            onClick={e => {
-                              this.setState(
-                                { secteur: item.name, secteurId: item._id },
-                                () => {
-                                  console.log(
-                                    this.state.secteur,
-                                    this.state.secteurId
-                                  );
-                                }
-                              );
-                            }}
-                          >
-                            {item.name}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )
-                  //  : (
-                  //   false
-                  // )
-                  }
+                  <div>
+                    {this.state.sectorSelect && (
+                      <div className="overflow-sector" id={this.state.secteur}>
+                        {this.state.sectorList.map(item => {
+                          return (
+                            <div
+                              id={item.name}
+                              key={item._id}
+                              className="sector-item-array"
+                              onClick={e => {
+                                this.sectorSelect();
+                                this.setState({
+                                  secteur: item.name,
+                                  secteurId: item._id
+                                });
+                              }}
+                            >
+                              {item.name}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )
+
+                    //  : (
+                    //   false
+                    // )
+                    }
+                  </div>
                 </div>
 
                 {/* <select
@@ -209,17 +218,17 @@ class AddClientForm extends React.Component {
                 <div className="addnewsector" onClick={this.ShowNewSector}>
                   <button className="button-new-sector">
                     <i className="fas fa-plus" />
+                    <p> Ajouter un nouveau secteur</p>
                   </button>
-                  <div className="addsector-p">
-                    <p>Ajouter un secteur</p>
-                  </div>
+
+                  <div className="addsector-p" />
                 </div>
               </div>
 
               {this.state.addNewSectorDiv === true ? (
                 <div className="addclient-new-sector-container">
                   <label className="addclient-form-label">
-                    Ajout d'un nouveau secteur{" "}
+                    Ajout d'un nouveau secteur
                   </label>
                   <input
                     className="addclient-form-input"
@@ -237,46 +246,59 @@ class AddClientForm extends React.Component {
 
             {/* Taille de l'entreprise */}
             <div className="size-container">
-              <div>Taille</div>
+              <div className="addclient-form-label">Taille</div>
               <div className="size-button" onClick={this.sizeSelect}>
-                {this.state.taille ? this.state.taille : "Select size"}
+                {this.state.taille ? (
+                  this.state.taille
+                ) : (
+                  <p>Sélection de la taille</p>
+                )}
               </div>
-              {this.state.sizeSelect && (
-                <div className="size-select">
-                  <div onClick={this.handleSize} id="Petite">
-                    Petite
+              <div>
+                {this.state.sizeSelect && (
+                  <div className="size-select">
+                    <div className="overflow-sector">
+                      <div
+                        className="sector-item-array"
+                        onClick={this.handleSize}
+                        id="Petite"
+                      >
+                        Petite
+                      </div>
+                      <div
+                        className="sector-item-array"
+                        onClick={this.handleSize}
+                        id="Grande"
+                      >
+                        Grande
+                      </div>
+                    </div>
                   </div>
-                  <div onClick={this.handleSize} id="Grande">
-                    Grande
-                  </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
 
-            <div>
-              <div className="addclient-container-email">
-                {/* Taille entreprise */}
-                <label className="addclient-form-label">
-                  Email du référent{" "}
-                </label>
-                <input
-                  value={this.state.email}
-                  onChange={this.handleChange}
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="addclient-form-input"
-                  required
-                />
-              </div>
-              <div className="submitButtons">
-                <button onClick={this.props.closePopup} className="annuler">
-                  Annuler
-                </button>
-                <button onClick={this.handleSubmit} className="ajouter">
-                  Ajouter
-                </button>
-              </div>
+            <div className="addclient-container-email">
+              {/* Taille entreprise */}
+              <label className="addclient-form-label">Email du référent </label>
+              <input
+                value={this.state.email}
+                onChange={this.handleChange}
+                placeholder="adresse de messagerie"
+                type="email"
+                name="email"
+                id="email"
+                className="addclient-form-input"
+                required
+              />
+            </div>
+            <div className="submitButtons">
+              <button onClick={this.props.closePopup} className="annuler">
+                Annuler
+              </button>
+              <button onClick={this.handleSubmit} className="ajouter">
+                Ajouter
+              </button>
             </div>
 
             {/* affichage de l'état de la validation du formulaire */}
