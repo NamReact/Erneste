@@ -113,6 +113,7 @@
   margin: 0 var(--margin-left);
   justify-content: space-between;
   padding-left: 0;
+  cursor: pointer;
 }
 
 .button-and-note {
@@ -151,6 +152,16 @@
 
 /* clientList array item*/
 
+/* .hover-clientList-right-block {
+  /* display: flex; */
+
+.hover-clientList-right-block:hover {
+  /* background: #3a87be; */
+  /* background: #687ec779; */
+
+  background: #d1daff;
+}
+
 /* box fulllength */
 
 .clientListItem {
@@ -169,6 +180,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   margin: 15px 0;
 }
 
@@ -185,20 +197,44 @@
   display: flex;
   flex-direction: row;
   background-color: white;
+  overflow: scroll;
 }
 
-.testChecked {
+/* .testChecked {
   background-color: red;
 }
 
 .testUnchecked {
   background-color: blue;
+} */
+
+.deleteCheck {
+  height: 14px;
+  width: 14px;
+  background-color: #333366;
+  border: 2px solid var(--input-border-color);
+  border-radius: 3px;
+  margin-right: 20px;
+}
+
+.deleteUncheck {
+  height: 14px;
+  width: 14px;
+  background-color: var(--container-background);
+  border: 2px solid var(--input-border-color);
+  border-radius: 3px;
+  margin-right: 20px;
 }
 
 .clientList-titleSorted {
   font-weight: 600;
+
+  cursor: pointer;
+
+
   display: flex;
   flex-direction: column;
+
 }
 
 .fa-sort {

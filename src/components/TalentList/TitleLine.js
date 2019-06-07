@@ -257,7 +257,10 @@ function TitleLine(props) {
         )}
       </div>
       {/* ACTUAL COMPANY */}
-      <div className="talentList-right-block-actualCompany">
+      <div
+        className="talentList-right-block-actualCompany"
+        onClick={() => props.chevronClick(titleArray[2].value)}
+      >
         {titleArray[2].value}
         <i
           className="fas fa-sort-down"

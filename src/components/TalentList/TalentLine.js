@@ -41,45 +41,46 @@ function TalentLine(props) {
           {deleteCheckBoxStyle}
         </div>
       </div>
-      {/* NAME */}
-      <Link
-        to={`/admin/talent/${talent._id}`}
-        className="talentList-right-block-name"
-      >
-        {`${talent.informations.firstName} ${talent.informations.lastName}`}
-      </Link>
+      <div className="hover-talentList-right-block">
+        {/* NAME */}
+        <Link
+          to={`/admin/talent/${talent._id}`}
+          className="talentList-right-block-name"
+        >
+          {`${talent.informations.firstName} ${talent.informations.lastName}`}
+        </Link>
 
-      {/* ACTUAL TITLE */}
-      <div className="talentList-right-block-actualTitle">
-        {talent.informations.actualTitle}
-      </div>
+        {/* ACTUAL TITLE */}
+        <div className="talentList-right-block-actualTitle">
+          {talent.informations.actualTitle}
+        </div>
+        {/* ACTUAL COMPANY */}
+        <div className="talentList-right-block-actualCompany">
+          {talent.informations.actualCompany}
+        </div>
 
-      {/* ACTUAL COMPANY */}
-      <div className="talentList-right-block-actualCompany">
-        {talent.informations.actualCompany}
-      </div>
+        {/* WANTED TITLE */}
+        <div className="talentList-right-block-wantedTitle">
+          {talent.informations.wantedTitle.map((element, index) => {
+            return <div key={index}>{element}</div>;
+          })}
+        </div>
 
-      {/* WANTED TITLE */}
-      <div className="talentList-right-block-wantedTitle">
-        {talent.informations.wantedTitle.map((element, index) => {
-          return <div key={index}>{element}</div>;
-        })}
-      </div>
+        {/* VALIDATED */}
+        <div className="talentList-right-block-validated-line">
+          {talent.validated === true && <i className="fas fa-check" />}
+          {talent.validated === false && <i className="fas fa-times" />}
+        </div>
 
-      {/* VALIDATED */}
-      <div className="talentList-right-block-validated-line">
-        {talent.validated === true && <i className="fas fa-check" />}
-        {talent.validated === false && <i className="fas fa-times" />}
-      </div>
+        {/* STATUS */}
+        <div className="talentList-right-block-status">
+          <div className={classNameStatus} />
+        </div>
 
-      {/* STATUS */}
-      <div className="talentList-right-block-status">
-        <div className={classNameStatus} />
-      </div>
-
-      {/* LAST UPDATE*/}
-      <div className="talentList-right-block-lastUpdate-line">
-        {talent.lastUpdate}
+        {/* LAST UPDATE*/}
+        <div className="talentList-right-block-lastUpdate-line">
+          {talent.lastUpdate}
+        </div>
       </div>
     </div>
   );

@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 
 import AddClientForm from "./AddClientForm";
+import box from "../../features/icons/check_24px.svg";
+import checkedbox from "../../features/icons/check_24px copy.svg";
 
 import "./ClientList.css";
 
@@ -65,15 +67,15 @@ class ClientList extends React.Component {
         sortClass = "button-and-note clientList-titleSorted";
       }
       return (
-        <li className={sortClass}>
+        <li
+          onClick={() => {
+            this.onChevronSortClick(filter);
+          }}
+          className={sortClass}
+        >
           <button className="deleteAll" />
           <div>{filter}</div>
-          <i
-            className="fas fa-sort"
-            onClick={() => {
-              this.onChevronSortClick(filter);
-            }}
-          />
+          <i className="fas fa-sort" />
         </li>
       );
     } else if (
@@ -91,17 +93,19 @@ class ClientList extends React.Component {
         sortClass = "clientList-titleSorted";
       }
       return (
-        <li className={sortClass}>
-          {filter}
-          <i
-            className="fas fa-sort-down"
+        <div>
+          <li
             onClick={() => {
               this.onChevronFilterClick(filter);
             }}
-          />
-          {this.state.filterBoxShown === filter &&
-            this.chevronClickBox(filter, arrayOfList)}
-        </li>
+            className={sortClass}
+          >
+            {filter}
+            <i className="fas fa-sort-down" />
+            {this.state.filterBoxShown === filter &&
+              this.chevronClickBox(filter, arrayOfList)}
+          </li>
+        </div>
       );
     } else if (filter === "Comptes" || filter === "Recrutement") {
       if (
@@ -114,14 +118,14 @@ class ClientList extends React.Component {
         sortClass = "clientList-titleSorted";
       }
       return (
-        <li className={sortClass}>
+        <li
+          onClick={() => {
+            this.onChevronSortClick(filter);
+          }}
+          className={sortClass}
+        >
           {filter}
-          <i
-            className="fas fa-sort"
-            onClick={() => {
-              this.onChevronSortClick(filter);
-            }}
-          />
+          <i className="fas fa-sort" />
         </li>
       );
     }
@@ -180,15 +184,20 @@ class ClientList extends React.Component {
             return (
               <div className="clientList-chevronBox-element">
                 <div
-                  className={
-                    clicked
-                      ? "deleteOne testChecked"
-                      : "deleteOne testUnchecked"
-                  }
                   onClick={() => {
                     this.onClickChevronFilter(toto, element);
                   }}
-                />
+                >
+                  {clicked ? (
+                    <img className="deleteCheck " src={box} alt="box cochée" />
+                  ) : (
+                    <img
+                      className="deleteUncheck "
+                      src={checkedbox}
+                      alt="box non cochée"
+                    />
+                  )}
+                </div>
                 {element}
               </div>
             );
@@ -272,6 +281,13 @@ class ClientList extends React.Component {
     return;
   };
 
+  onDeleteChevronFilterClick = () => {
+    let chevronFilterCopie = [...this.state.chevronFilterChosen];
+    chevronFilterCopie.splice(0, chevronFilterCopie.length);
+    this.setState({ chevronFilterChosen: chevronFilterCopie });
+  };
+  // ArrayOfFilteredClientList: [],
+  // chevronFilterChosen: [],
   renderStars(item) {
     const stars = [];
     for (let i = 0; i < 5; i++) {
@@ -352,20 +368,14 @@ class ClientList extends React.Component {
           if (this.state.chevronFilterChosen[i].title === "Secteur") {
             for (
               let j = 0;
-              j < element[this.state.chevronFilterChosen[i].title].length;
+              j < this.state.chevronFilterChosen[i].filter.length;
               j++
             ) {
-              for (
-                let k = 0;
-                k < this.state.chevronFilterChosen[i].filter.length;
-                k++
+              if (
+                element[this.state.chevronFilterChosen[i].title].name ===
+                this.state.chevronFilterChosen[i].filter[j]
               ) {
-                if (
-                  element[this.state.chevronFilterChosen[i].title][j].name ===
-                  this.state.chevronFilterChosen[i].filter[k]
-                ) {
-                  bool = true;
-                }
+                bool = true;
               }
             }
             return bool;
@@ -425,18 +435,19 @@ class ClientList extends React.Component {
               </div>
 
               {/* 2-button */}
-              <div className="all-button-add-client">
+              <div onClick={this.togglePopup} className="all-button-add-client">
                 <div>
                   <i className="fas fa-plus" />
                 </div>
-                <button onClick={this.togglePopup} className="addClientButton">
-                  Ajouter un client
-                </button>
+                <button className="addClientButton">Ajouter un client</button>
               </div>
               {/* 3-Delete Filter */}
               <div className="deleteFilter">
                 {this.state.buttonDeleteFilter ? (
-                  <div className="clientList-deleteFilter">
+                  <div
+                    onClick={this.onDeleteChevronFilterClick}
+                    className="clientList-deleteFilter"
+                  >
                     Supprimer les filtres
                   </div>
                 ) : null}
@@ -475,22 +486,25 @@ class ClientList extends React.Component {
                   const Secteur = { ...client.Secteur };
 
                   return (
-                    <ul key={client._id} className="clientListItem">
-                      <li>
-                        {/* <button className="deleteAll" /> */}
-                        {/* {client.rating ? client.rating : "lol"} */}
-                        {this.renderStars(client)}
-                      </li>
+                    <div className="hover-clientList-right-block">
+                      <ul key={client._id} className="clientListItem">
+                        <li>
+                          {/* <button className="deleteAll" /> */}
+                          {/* {client.rating ? client.rating : "lol"} */}
+                          {this.renderStars(client)}
+                        </li>
 
-                      <li>
-                        <a href="#">{client.Entreprise}</a>
-                      </li>
-                      <li>{Secteur.name}</li>
+                        <li>{client.Entreprise}</li>
+                        <li>{Secteur.name}</li>
 
-                      <li>{client.Taille}</li>
-                      <li>{client.numberOfUser ? client.numberOfUser : "0"}</li>
-                      <li>{client.recruited ? client.recruited : "0"}</li>
-                    </ul>
+                        <li>{client.Taille}</li>
+                        <li>
+                          {client.numberOfUser ? client.numberOfUser : "0"}
+                        </li>
+                        <li>{client.recruited ? client.recruited : "0"}</li>
+                      </ul>
+                    </div>
+
                   );
                 })}
               </div>
