@@ -25,6 +25,14 @@
   color: #333266;
 }
 
+.hover-talentList-right-block {
+  display: flex;
+}
+.hover-talentList-right-block:hover {
+  /* background: #3a87be; */
+  /* background: #687ec779; */
+  background: #d1daff;
+}
 .talentList-right-block-actualTitle {
   /* flex: 3; */
   width: var(--medium-box-width);

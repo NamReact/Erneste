@@ -2,8 +2,10 @@ import React from "react";
 import AdminBar from "../components/AdminBar";
 import AdminTalent from "../components/AdminTalent";
 import AdminInformation from "../components/AdminInformation";
+
 import AdminChanges from "../components/AdminChanges";
 import { Redirect } from "react-router-dom";
+
 
 class Admin extends React.Component {
   state = {
@@ -25,13 +27,19 @@ class Admin extends React.Component {
       <div>
         <AdminBar setPage={this.setPage} />
 
-        {this.state.page === "Talent" ? <AdminTalent /> : false}
-        {this.state.page === "Informations" ? (
-          <AdminInformation isUpdating={this.state.isUpdating} />
+        {this.state.page === "Talent" ? (
+          <AdminTalent token={this.props.token} />
         ) : (
           false
         )}
-        {this.state.page === "Mots clés" ? <AdminChanges /> : false}
+        {this.state.page === "Informations" ? (
+          <AdminInformation
+            isUpdating={this.state.isUpdating}
+            token={this.props.token}
+          />
+        ) : (
+          false
+        )}
       </div>
     );
   }

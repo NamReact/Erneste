@@ -16,7 +16,7 @@ class AdminTalent extends React.Component {
       {
         messages: messageToDelete
       },
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
   };
 
@@ -70,7 +70,7 @@ class AdminTalent extends React.Component {
   async componentDidMount() {
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/admin-messages",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     this.setState({ messages: response.data });
   }

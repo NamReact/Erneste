@@ -63,7 +63,7 @@ class AdminInformations extends React.Component {
         id: "5cf7cb227021d30017ef2223",
         user: user
       },
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
   };
 
@@ -149,7 +149,7 @@ class AdminInformations extends React.Component {
   async componentDidMount() {
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/user/5cf7cb227021d30017ef2223",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     this.setState({
       firstName: response.data.firstName,
