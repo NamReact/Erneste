@@ -107,7 +107,7 @@ class TalentInformations extends React.Component {
     if (informations.status === "Ouvert(e) aux opportunités") {
       dotColor = "#F2E9A7";
     }
-    if (informations.status === "Ne pas être contacter") {
+    if (informations.status === "Ne pas être contacté(e)") {
       dotColor = "#FF9D9D";
     }
     if (informations.status === "Embauché(e) par Erneste") {
@@ -402,7 +402,9 @@ class TalentInformations extends React.Component {
               />
             </div>
             {informations.status ? (
-              <div style={{ color: "#333266" }}>{informations.status}</div>
+              <div style={{ color: "#333266", fontSize: "11px" }}>
+                {informations.status}
+              </div>
             ) : (
               <div>Modifier le statut</div>
             )}
@@ -434,11 +436,11 @@ class TalentInformations extends React.Component {
                 Ouvert(e) aux opportunités
               </div>
               <div
-                id="Ne pas être contacter"
+                id="Ne pas être contacté(e)"
                 className="talent-information-list"
                 onClick={this.handleAvailability}
               >
-                Ne pas être contacter
+                Ne pas être contacté(e)
               </div>
               <div
                 id="Embauché(e) par Erneste"

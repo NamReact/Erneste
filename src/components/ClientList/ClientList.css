@@ -11,6 +11,9 @@
   --shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
 }
 
+input {
+  outline: none;
+}
 .header-of-page {
   width: var(--center-body);
   margin: auto;
@@ -103,6 +106,10 @@
   border: none;
 }
 
+button:focus {
+  outline: none;
+}
+
 /* Clientlist array box */
 
 /* clientArrayEntries* (note, entreprise, secteur, taille ect/ */
@@ -189,8 +196,18 @@
   color: #31313c;
 }
 
+.clientArrayEntries li {
+  position: relative;
+}
+
 .clientList-chevronBox {
   z-index: 1;
+  max-width: 200px;
+  padding: 5px 10px;
+  position: absolute;
+  top: 35px;
+  border: 2px solid var(--input-border-color);
+  background-color: var(--container-background);
 }
 
 .clientList-chevronBox-element {
@@ -228,13 +245,7 @@
 
 .clientList-titleSorted {
   font-weight: 600;
-
   cursor: pointer;
-
-
-  display: flex;
-  flex-direction: column;
-
 }
 
 .fa-sort {

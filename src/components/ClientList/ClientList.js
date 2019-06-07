@@ -504,7 +504,6 @@ class ClientList extends React.Component {
                         <li>{client.recruited ? client.recruited : "0"}</li>
                       </ul>
                     </div>
-
                   );
                 })}
               </div>

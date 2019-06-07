@@ -61,12 +61,13 @@
 }
 .chevron-filter {
   background-color: var(--container-background);
-  min-height: 200px;
+  max-height: 200px;
   width: 200px;
   position: absolute;
   z-index: 2;
   border: 2px solid var(--input-border-color);
-  top: 200px;
+  top: 210px;
+  overflow: scroll;
 }
 
 .filter-line {

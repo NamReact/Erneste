@@ -57,12 +57,12 @@ class AdminChanges extends React.Component {
       "https://ernest-server.herokuapp.com/tag/delete",
       { tags },
       {
-        headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" }
+        headers: { authorization: `Bearer ${this.props.token}` }
       }
     );
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/tag",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     this.setState({
       tag: response.data,
@@ -114,11 +114,11 @@ class AdminChanges extends React.Component {
       {
         tag
       },
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/tag",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     this.setState({
       tag: response.data,
@@ -148,11 +148,11 @@ class AdminChanges extends React.Component {
         name: this.state.newTagName,
         type: this.state.newTagType
       },
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/tag",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     this.setState({
       tag: response.data,

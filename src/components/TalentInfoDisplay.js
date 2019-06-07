@@ -32,7 +32,7 @@ class TalentInfoDisplay extends React.Component {
     if (informations.status === "Ouvert(e) aux opportunités") {
       dotColor = "#F2E9A7";
     }
-    if (informations.status === "Ne pas être contacter") {
+    if (informations.status === "Ne pas être contacté(e)") {
       dotColor = "#FF9D9D";
     }
     if (informations.status === "Embauché(e) par Erneste") {

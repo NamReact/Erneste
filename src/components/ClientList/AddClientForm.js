@@ -111,7 +111,7 @@ class AddClientForm extends React.Component {
 
   render() {
     if (this.state.isLoading === true) {
-      return "Loading....";
+      return false;
     }
 
     // const sectorArray = this.state.sectorList.map((item, index) => {
@@ -129,9 +129,9 @@ class AddClientForm extends React.Component {
 
           <div className="formHeader">
             <h4>Ajouter un nouveau client</h4>
-            <button className="closingButton" onClick={this.props.closePopup}>
+            <div className="closingButton" onClick={this.props.closePopup}>
               <i className="fas fa-times" />
-            </button>
+            </div>
           </div>
 
           <div className="formContainer">
@@ -216,10 +216,10 @@ class AddClientForm extends React.Component {
 
                 {/* Proposition : fenêtre d'ajout d'un nouveau secteur en mode apparition */}
                 <div className="addnewsector" onClick={this.ShowNewSector}>
-                  <button className="button-new-sector">
+                  <div className="button-new-sector">
                     <i className="fas fa-plus" />
                     <p> Ajouter un nouveau secteur</p>
-                  </button>
+                  </div>
 
                   <div className="addsector-p" />
                 </div>
@@ -293,12 +293,15 @@ class AddClientForm extends React.Component {
               />
             </div>
             <div className="submitButtons">
-              <button onClick={this.props.closePopup} className="annuler">
+              <div onClick={this.props.closePopup} className="cancel">
                 Annuler
-              </button>
-              <button onClick={this.handleSubmit} className="ajouter">
+              </div>
+              <div
+                onClick={this.handleSubmit}
+                className="validate addClientPopUp"
+              >
                 Ajouter
-              </button>
+              </div>
             </div>
 
             {/* affichage de l'état de la validation du formulaire */}

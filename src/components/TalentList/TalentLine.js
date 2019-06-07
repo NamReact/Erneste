@@ -23,7 +23,7 @@ function TalentLine(props) {
   if (talent.informations.status === "Ouvert(e) aux opportunités") {
     classNameStatus = "statut2";
   }
-  if (talent.informations.status === "Ne pas être contacter") {
+  if (talent.informations.status === "Ne pas être contacté(e)") {
     classNameStatus = "statut3";
   }
   if (talent.informations.status === "Embauché(e) par Erneste") {
