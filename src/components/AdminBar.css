@@ -2,7 +2,7 @@
   --input-padding: 10px;
   --container-background: rgb(254, 254, 254);
   display: flex;
-  width: 450px;
+  width: 480px;
   /* justify-content: space-around; */
   margin: auto;
   margin-top: 50px;
@@ -13,7 +13,7 @@
 
 .admin-bar-container div {
   display: flex;
-  width: 150px;
+  width: 160px;
   justify-content: center;
   align-items: center;
   padding: var(--input-padding) 40px;

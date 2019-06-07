@@ -2,6 +2,7 @@ import React from "react";
 import AdminBar from "../components/AdminBar";
 import AdminTalent from "../components/AdminTalent";
 import AdminInformation from "../components/AdminInformation";
+import AdminChanges from "../components/AdminChanges";
 
 class Admin extends React.Component {
   state = {
@@ -25,6 +26,7 @@ class Admin extends React.Component {
         ) : (
           false
         )}
+        {this.state.page === "Mots clés" ? <AdminChanges /> : false}
       </div>
     );
   }

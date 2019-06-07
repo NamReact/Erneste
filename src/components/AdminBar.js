@@ -8,8 +8,8 @@ class AdminBar extends React.Component {
         <div id="Talent" onClick={this.props.setPage}>
           Talent
         </div>
-        <div id="Mot clé" onClick={this.props.setPage}>
-          Mot clés
+        <div id="Mots clés" onClick={this.props.setPage}>
+          Mots clés
         </div>
         <div id="Informations" onClick={this.props.setPage}>
           Informations
