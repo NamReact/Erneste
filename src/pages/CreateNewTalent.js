@@ -9,40 +9,38 @@ import "../components/CreateNewTalent.css";
 /* Page to create a talent */
 
 class CreateNewTalent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      informations: {
-        photo: null,
-        firstName: "",
-        lastName: "",
-        linkedIn: "",
-        email: "",
-        phoneNumber: "",
-        salary: "",
-        actualCompany: "",
-        wantedSector: [],
-        wantedSize: "",
-        actualTitle: "",
-        wantedTitle: [],
-        status: ""
-      },
-      description: {
-        idealCompany: "",
-        idealRole: "",
-        workingEnvironment: "",
-        development: ""
-      },
-      skills: null,
-      redirect: false,
-      lastUpdate: null,
-      error: {
-        firstName: false,
-        lastName: false,
-        email: false
-      }
-    };
-  }
+  state = {
+    informations: {
+      photo: null,
+      firstName: "",
+      lastName: "",
+      linkedIn: "",
+      email: "",
+      phoneNumber: "",
+      salary: "",
+      actualCompany: "",
+      wantedSector: [],
+      wantedSize: "",
+      actualTitle: "",
+      wantedTitle: [],
+      status: ""
+    },
+    description: {
+      idealCompany: "",
+      idealRole: "",
+      workingEnvironment: "",
+      development: ""
+    },
+    skills: null,
+    redirect: false,
+    lastUpdate: null,
+    error: {
+      firstName: false,
+      lastName: false,
+      email: false
+    }
+  };
+
   /* ** INTERRUPTERS ** */
 
   setInformations = e => {

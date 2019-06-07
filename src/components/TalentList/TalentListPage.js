@@ -11,43 +11,41 @@ import { Redirect } from "react-router-dom";
 /* Page to see the Talent List (HomePage of Admin)*/
 
 class TalentListPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      /* State updated from the GET in ComponentDiMount*/
-      talentList: [],
-      titleList: [],
-      tagList: [],
-      isLoading: true,
+  state = {
+    /* State updated from the GET in ComponentDiMount*/
+    talentList: [],
+    titleList: [],
+    tagList: [],
+    isLoading: true,
 
-      /* State for delete a line of talent */
-      delete: false,
+    /* State for delete a line of talent */
+    delete: false,
 
-      searchInput: "",
-      titleArray: [
-        { value: "Nom", clicked: false, firstClicked: false },
-        { value: "Fonction", clicked: false, firstClicked: false },
-        { value: "Entreprise", clicked: false, firstClicked: false },
-        { value: "Souhait", clicked: false, firstClicked: false },
-        { value: "Validé", clicked: false, firstClicked: false },
-        { value: "Statut", clicked: false, firstClicked: false },
-        { value: "Dernière modif.", clicked: false, firstClicked: false }
-      ],
+    searchInput: "",
+    titleArray: [
+      { value: "Nom", clicked: false, firstClicked: false },
+      { value: "Fonction", clicked: false, firstClicked: false },
+      { value: "Entreprise", clicked: false, firstClicked: false },
+      { value: "Souhait", clicked: false, firstClicked: false },
+      { value: "Validé", clicked: false, firstClicked: false },
+      { value: "Statut", clicked: false, firstClicked: false },
+      { value: "Dernière modif.", clicked: false, firstClicked: false }
+    ],
 
-      /* Chevron Filter State */
-      chevronClikedPosition: null,
-      chevronFilter: [],
-      filterOrder: 0,
+    /* Chevron Filter State */
+    chevronClikedPosition: null,
+    chevronFilter: [],
+    filterOrder: 0,
 
-      /* Tag Filter State */
-      tagList: [],
-      tagFilterInputValue: "",
-      tagFilterSelected: [],
-      tagSuggestionsShown: false,
-      tagListFiltered: [],
-      tagActiveSuggestion: 0
-    };
-  }
+    /* Tag Filter State */
+    tagList: [],
+    tagFilterInputValue: "",
+    tagFilterSelected: [],
+    tagSuggestionsShown: false,
+    tagListFiltered: [],
+    tagActiveSuggestion: 0
+  };
+
   // Function to GET data from /talent
   getDataTalentList = async toto => {
     this.setState({ isLoading: true });
@@ -153,7 +151,7 @@ class TalentListPage extends React.Component {
     // Change lastUpdate from [[29,05,2019],[15,05,98]] to 29/05/2019
 
     for (let i = 0; i < responseSorted.length; i++) {
-      responseSorted[i].lastUpdate = responseSorted[i].lastUpdate[0].join("/");
+      responseSorted[i].lastUpdate = responseSorted[i].lastUpdate[0].join(".");
     }
 
     await this.setState({

@@ -172,6 +172,7 @@ class App extends React.Component {
                   match={props.match}
                   permission={this.state.userData.permission}
                   setPageActive={this.setPageActive}
+                  token={this.state.userData.token}
                 />
               );
             }}
@@ -186,6 +187,7 @@ class App extends React.Component {
                 <Admin
                   permission={this.state.userData.permission}
                   setPageActive={this.setPageActive}
+                  token={this.state.userData.token}
                 />
               );
             }}

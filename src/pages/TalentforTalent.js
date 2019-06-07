@@ -121,7 +121,7 @@ class TalentforTalent extends React.Component {
 
   render() {
     /* Permission test */
-    if (this.props.permission !== "talent") {
+    if (this.props.permission !== "Talent") {
       return <Redirect to={"/"} />;
     }
     return (
