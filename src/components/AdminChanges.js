@@ -169,7 +169,7 @@ class AdminChanges extends React.Component {
     ) {
       return <div>loading</div>;
     }
-    console.log(this.state.itemtodisplay);
+
     return (
       <div className="container-for-admin">
         <div className="left-changes-bdd">
