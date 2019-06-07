@@ -84,6 +84,7 @@ textarea {
 
 .talent-picture {
   position: absolute;
+  height: auto;
   width: 220px;
   object-fit: cover;
   top: 0;
@@ -236,6 +237,12 @@ textarea {
 .add-skills {
   display: flex;
   position: relative;
+}
+
+.talent-information-list {
+  padding: 7px var(--input-padding);
+  cursor: pointer;
+  border-bottom: 1px solid var(--input-border-color);
 }
 
 .tagList-tag-option-hard {

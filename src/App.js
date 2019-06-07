@@ -17,6 +17,7 @@ import Login from "../src/pages/Login";
 import ClientforAdmin from "./components/ClientforAdmin/ClientforAdmin";
 import Cookies from "js-cookie";
 import HeaderAdmin from "./components/HeaderAdmin";
+import Admin from "./pages/Admin";
 
 class App extends React.Component {
   constructor(props) {
@@ -182,7 +183,7 @@ class App extends React.Component {
                 return <Redirect to={"/"} />;
               }
               return (
-                <TalentListPage
+                <Admin
                   permission={this.state.userData.permission}
                   setPageActive={this.setPageActive}
                 />

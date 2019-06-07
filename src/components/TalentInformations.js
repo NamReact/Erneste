@@ -251,7 +251,7 @@ class TalentInformations extends React.Component {
                       id={sector._id}
                       key={index}
                       onClick={this.handleWantedSector}
-                      className="tag-option"
+                      className="talent-information-list"
                     >
                       {sector.name}
                     </div>
@@ -294,21 +294,21 @@ class TalentInformations extends React.Component {
                 <div
                   id="Petite"
                   onClick={this.handleSize}
-                  className="tag-option"
+                  className="talent-information-list"
                 >
                   Petite
                 </div>
                 <div
                   id="Grande"
                   onClick={this.handleSize}
-                  className="tag-option"
+                  className="talent-information-list"
                 >
                   Grande
                 </div>
                 <div
                   id="Indifférent"
                   onClick={this.handleSize}
-                  className="tag-option"
+                  className="talent-information-list"
                 >
                   Indifférent
                 </div>
@@ -370,7 +370,7 @@ class TalentInformations extends React.Component {
                       id={title._id}
                       key={index}
                       onClick={this.handleWantedTitle}
-                      className="tag-option"
+                      className="talent-information-list"
                     >
                       {title.name}
                     </div>
@@ -421,28 +421,28 @@ class TalentInformations extends React.Component {
             <div className="sector-list">
               <div
                 id="Recherche active"
-                className="tag-option"
+                className="talent-information-list"
                 onClick={this.handleAvailability}
               >
                 Recherche active
               </div>
               <div
                 id="Ouvert(e) aux opportunités"
-                className="tag-option"
+                className="talent-information-list"
                 onClick={this.handleAvailability}
               >
                 Ouvert(e) aux opportunités
               </div>
               <div
                 id="Ne pas être contacter"
-                className="tag-option"
+                className="talent-information-list"
                 onClick={this.handleAvailability}
               >
                 Ne pas être contacter
               </div>
               <div
                 id="Embauché(e) par Erneste"
-                className="tag-option"
+                className="talent-information-list"
                 onClick={this.handleAvailability}
               >
                 Embauché(e) par Erneste
