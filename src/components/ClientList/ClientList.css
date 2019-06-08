@@ -166,7 +166,7 @@ button:focus {
   /* background: #3a87be; */
   /* background: #687ec779; */
 
-  background: #d1daff;
+  background: #fafafc;
 }
 
 /* box fulllength */
@@ -178,6 +178,7 @@ button:focus {
   margin: 0 var(--margin-left);
   justify-content: space-between;
   padding-left: 0;
+  cursor: pointer;
 }
 
 .clientListItem li {

@@ -11,14 +11,19 @@
   --small-box-width: 85px;
   display: flex;
   flex-direction: row;
-  margin-top: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--input-border-color);
+  justify-content: center;
   align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--input-border-color);
+  cursor: pointer;
+}
+
+.talentList-right-block-line:hover {
+  background: #fafafc;
 }
 
 .talentList-right-block-name {
-  /* flex: 3; */
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -28,34 +33,26 @@
 .hover-talentList-right-block {
   display: flex;
 }
-.hover-talentList-right-block:hover {
-  /* background: #3a87be; */
-  /* background: #687ec779; */
-  background: #d1daff;
-}
+
 .talentList-right-block-actualTitle {
-  /* flex: 3; */
   width: var(--medium-box-width);
   display: flex;
   align-items: center;
 }
 
 .talentList-right-block-actualCompany {
-  /* flex: 3; */
   width: var(--medium-box-width);
   display: flex;
   align-items: center;
 }
 
 .talentList-right-block-wantedTitle {
-  /* flex: 3; */
   width: var(--medium-box-width);
   display: flex;
   flex-direction: column;
 }
 
 .talentList-right-block-validated-line {
-  /* flex: 2;  */
   width: var(--small-box-width);
   display: flex;
   align-items: center;
@@ -64,7 +61,6 @@
 
 .talentList-right-block-status {
   width: var(--small-box-width);
-  /* flex: 1; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,20 +68,10 @@
 
 .talentList-right-block-lastUpdate-line {
   width: var(--small-box-width);
-  /* flex: 2; */
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-/* .deleteBox {
-  height: 24px;
-  width: 24px;
-  background-color: var(--container-background);
-  border: 1px solid var(--input-border-color);
-  border-radius: 3px;
-  margin-right: 20px;
-} */
 
 .deleteCheck {
   height: 14px;

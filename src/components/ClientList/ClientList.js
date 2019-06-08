@@ -480,34 +480,32 @@ class ClientList extends React.Component {
             {/* Clientlist array boxEntries--end */}
 
             {/* clientList array item*/}
+
             <div>
-              <div>
-                {result.map((client, id) => {
-                  const Secteur = { ...client.Secteur };
+              {result.map((client, id) => {
+                const Secteur = { ...client.Secteur };
 
-                  return (
-                    <div className="hover-clientList-right-block">
-                      <ul key={client._id} className="clientListItem">
-                        <li>
-                          {/* <button className="deleteAll" /> */}
-                          {/* {client.rating ? client.rating : "lol"} */}
-                          {this.renderStars(client)}
-                        </li>
+                return (
+                  <div className="hover-clientList-right-block">
+                    <ul key={client._id} className="clientListItem">
+                      <li>
+                        {/* <button className="deleteAll" /> */}
+                        {/* {client.rating ? client.rating : "lol"} */}
+                        {this.renderStars(client)}
+                      </li>
 
-                        <li>{client.Entreprise}</li>
-                        <li>{Secteur.name}</li>
+                      <li>{client.Entreprise}</li>
+                      <li>{Secteur.name}</li>
 
-                        <li>{client.Taille}</li>
-                        <li>
-                          {client.numberOfUser ? client.numberOfUser : "0"}
-                        </li>
-                        <li>{client.recruited ? client.recruited : "0"}</li>
-                      </ul>
-                    </div>
-                  );
-                })}
-              </div>
+                      <li>{client.Taille}</li>
+                      <li>{client.numberOfUser ? client.numberOfUser : "0"}</li>
+                      <li>{client.recruited ? client.recruited : "0"}</li>
+                    </ul>
+                  </div>
+                );
+              })}
             </div>
+
             {/* clientList array item---end*/}
           </div>
         </div>
