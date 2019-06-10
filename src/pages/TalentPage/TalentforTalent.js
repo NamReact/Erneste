@@ -1,9 +1,10 @@
 import React from "react";
 import axios from "axios";
-import TalentInformations from "../components/TalentInformations";
-import TalentInfoDisplay from "../components/TalentInfoDisplay";
-import TalentDescription from "../components/TalentDescription";
+import TalentInformations from "../../components/TalentInformations/index";
+import TalentInfoDisplay from "../../components/TalentInfoDisplay/index";
+import TalentDescription from "../../components/TalentDescription/index";
 import { Redirect } from "react-router-dom";
+import "./index.css";
 
 /* Fiche qui apparait pour le Talent : il ne peut modifier que certains éléments de la description */
 
@@ -125,62 +126,60 @@ class TalentforTalent extends React.Component {
       return <Redirect to={"/"} />;
     }
     return (
-      <div>
-        <div className="content">
-          {this.state.validated ? (
-            false
-          ) : (
-            <div className=" body-container">
-              <p className="text-validation">
-                C'est votre première connexion ? Prenez le temps de lire les
-                informations que nous avons synthétisées de notre entretien et
-                de valider votre profil. Si vous avez besoin d'y apporter des
-                modifications, contactez-nous.
-              </p>
+      <div className="talent-for-talent-content">
+        {this.state.validated ? (
+          false
+        ) : (
+          <div className="talent-for-talent-body-container">
+            <p className="talent-for-talent-text-validation">
+              C'est votre première connexion ? Prenez le temps de lire les
+              informations que nous avons synthétisées de notre entretien et de
+              valider votre profil. Si vous avez besoin d'y apporter des
+              modifications, contactez-nous.
+            </p>
 
-              <div
-                className="validate-profil"
-                onClick={this.onProfilValidation}
-                style={{ display: this.state.validated ? "none" : "display" }}
-              >
-                Valider le profil
-              </div>
+            <div
+              className="talent-for-talent-validate-profil"
+              onClick={this.onProfilValidation}
+              style={{ display: this.state.validated ? "none" : "display" }}
+            >
+              Valider le profil
             </div>
+          </div>
+        )}
+
+        <div className="talent-for-talent-body-container">
+          {this.state.isUpdating ? (
+            <TalentInformations
+              button={true}
+              update={this.update}
+              setUpdate={this.setUpdate}
+              lastUpdate={this.state.lastUpdate}
+              informations={this.state.informations}
+              setInformations={this.setInformations}
+              lastUpdate={this.state.lastUpdate}
+              setPhoto={this.setPhoto}
+              setTitle={this.setTitle}
+              deleteTitle={this.deleteTitle}
+              setSize={this.setSize}
+              setStatus={this.setStatus}
+              setSector={this.setSector}
+              deleteSector={this.deleteSector}
+            />
+          ) : (
+            <TalentInfoDisplay
+              setUpdate={this.setUpdate}
+              informations={this.state.informations}
+              lastUpdate={this.state.lastUpdate}
+              setUpdate={this.setUpdate}
+              isUpdating={this.state.isUpdating}
+            />
           )}
 
-          <div className="body-container">
-            {this.state.isUpdating ? (
-              <TalentInformations
-                button={true}
-                update={this.update}
-                setUpdate={this.setUpdate}
-                lastUpdate={this.state.lastUpdate}
-                informations={this.state.informations}
-                setInformations={this.setInformations}
-                lastUpdate={this.state.lastUpdate}
-                setPhoto={this.setPhoto}
-                setTitle={this.setTitle}
-                deleteTitle={this.deleteTitle}
-                setSize={this.setSize}
-                setStatus={this.setStatus}
-                setSector={this.setSector}
-                deleteSector={this.deleteSector}
-              />
-            ) : (
-              <TalentInfoDisplay
-                setUpdate={this.setUpdate}
-                informations={this.state.informations}
-                lastUpdate={this.state.lastUpdate}
-                setUpdate={this.setUpdate}
-                isUpdating={this.state.isUpdating}
-              />
-            )}
-
-            <TalentDescription
-              description={this.state.description}
-              skills={this.state.skills}
-            />
-          </div>
+          <TalentDescription
+            description={this.state.description}
+            skills={this.state.skills}
+          />
         </div>
       </div>
     );

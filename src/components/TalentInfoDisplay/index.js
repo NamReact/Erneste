@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import "./index.css";
 
 class TalentInfoDisplay extends React.Component {
   infoCheck = info => {
@@ -39,31 +39,34 @@ class TalentInfoDisplay extends React.Component {
       dotColor = "#6A6A8F";
     }
     return (
-      <div className="leftContainer display-container">
+      <div className="talent-display-container">
         {informations.photo !== null ? (
-          <span className="talent-picture-container">
+          <span className="talent-info-picture-container">
             <img
-              className="talent-picture"
+              className="talent-info-picture"
               src={informations.photo}
               alt="portrait of talent"
             />
           </span>
         ) : (
-          <div className="empty-photo">
-            <div className="text-empty-picture">Pas de photo</div>
+          <div className="talent-info-empty-photo">
+            <div className="talent-info-text-empty-picture">Pas de photo</div>
           </div>
         )}
-        <div className="update-profile" onClick={this.props.setUpdate}>
+        <div
+          className="talent-info-update-profile"
+          onClick={this.props.setUpdate}
+        >
           <i class="fas fa-cog" />
         </div>
-        <div className="talentDetails talent-detail-display">
-          <div className="first-name">
+        <div className="talent-info-detail-display">
+          <div className="talent-info-first-name">
             {this.infoCheck(informations.firstName)}
           </div>
-          <div className="first-name">
+          <div className="talent-info-first-name">
             {this.infoCheck(informations.lastName)}
           </div>
-          <div className="availability-dot display-dot">
+          <div className="talent-info-availability-dot">
             <div
               style={{
                 backgroundColor: dotColor,
@@ -73,43 +76,45 @@ class TalentInfoDisplay extends React.Component {
             />
             {informations.status}
           </div>
-          <div className="display-div">
+          <div className="talent-info-display-div">
             {this.infoCheck(informations.linkedIn)}
           </div>
-          <div className="display-div">
+          <div className="talent-info-display-div">
             {this.infoCheck(informations.email)}
           </div>
-          <div className="display-div">
+          <div className="talent-info-display-div">
             {this.infoCheck(informations.phoneNumber)}
           </div>
-          <div className="display-div">
+          <div className="talent-info-display-div">
             {this.infoCheck(informations.salary)}
           </div>
-          <div className="display-div">
+          <div className="talent-info-display-div">
             {this.infoCheck(informations.actualCompany)}
           </div>
-          <div className="display-div">
+          <div className="talent-info-display-div">
             {informations.wantedSector.map((item, index) => {
               return <div key={index}>{item.name}</div>;
             })}
           </div>
-          <div className="display-div">
+          <div className="talent-info-display-div">
             {informations.wantedSize ? (
               informations.wantedSize + " entreprise"
             ) : (
               <div style={{ color: "#a8b0d0" }}>Non renseigné</div>
             )}
           </div>
-          <div className="display-div">
+          <div className="talent-info-display-div">
             {this.infoCheck(informations.actualTitle)}
           </div>
-          <div className="display-div">
+          <div className="talent-info-display-div">
             {informations.wantedTitle.map((item, index) => {
               return <div key={index}>{item.name}</div>;
             })}
           </div>
         </div>
-        <div className="display-update">Modifé le {formatUpdate}</div>
+        <div className="talent-info-display-update">
+          Modifé le {formatUpdate}
+        </div>
       </div>
     );
   }

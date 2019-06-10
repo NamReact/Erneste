@@ -26,11 +26,6 @@ textarea {
   margin: auto;
 }
 
-.talentDescription-h3 {
-  margin: 0;
-  font-weight: 600;
-}
-
 .relative-container {
   position: relative;
 }
@@ -41,7 +36,6 @@ textarea {
   background-color: var(--container-background);
   margin: 100px 20px;
   border-radius: 2px;
-  /* width: 19%; */
   box-shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
 }
 
@@ -179,65 +173,7 @@ textarea {
   margin: 100px 0;
 }
 
-.text-validation {
-  border: solid 1px var(--soft-skill-color);
-  border-radius: 3px;
-  color: var(--soft-skill-color);
-  padding: 20px;
-  width: 700px;
-  margin: 30px 30px 0 0;
-}
-
-.validate-profil {
-  width: 170px;
-  height: var(--input-height);
-  color: var(--container-background);
-  border: solid 1px var(--dark-blue);
-  background-color: var(--dark-blue);
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 55px;
-  cursor: pointer;
-}
-
-.allWishes {
-  display: flex;
-  flex-direction: row;
-}
-
 /* ideal environment and ambitions */
-
-.wishes {
-  display: flex;
-  flex-direction: column;
-  margin-top: 50px;
-}
-
-.sub-wishes {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  margin-right: 50px;
-}
-
-.skills {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.skills > div {
-  display: flex;
-  flex-wrap: wrap;
-  margin: var(--input-margin) 0;
-}
-
-.add-skills {
-  display: flex;
-  position: relative;
-}
 
 .talent-information-list {
   padding: 7px var(--input-padding);
@@ -279,40 +215,6 @@ textarea {
   box-sizing: border-box;
   margin: 0 10px 7px 0;
   overflow: hidden;
-}
-
-.talentDescription-tag-name {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  height: var(--input-height);
-
-  padding: 0 20px;
-
-  color: white;
-  border-radius: 3px;
-}
-
-.talentDescription-remove-tag {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* width: 20px; */
-  text-align: center;
-  height: 100%;
-  color: white;
-  cursor: pointer;
-}
-
-.add-skills-button {
-  border: 1px solid var(--placeholder-grey);
-  padding: 4px 10px;
-  width: 120px;
-  border-radius: 3px;
-  color: var(--dark-blue);
-  text-align: center;
-  cursor: pointer;
 }
 
 .tagList-tag-pop-up {
@@ -396,19 +298,7 @@ textarea {
   padding-right: 20px;
 }
 
-textarea {
-  border: 1px solid var(--input-border-color);
-  border-radius: 5px;
-  margin: var(--input-margin) 0;
-  padding: var(--input-padding);
-  resize: none;
-  padding: 10px;
-  height: 80px;
-  outline: none;
-  overflow: scroll;
-  font-size: 14px;
-  color: #31313c;
-}
+/*  */
 
 /* A EXTRAIRE POUR TALENT-INFO-DISPLAY */
 

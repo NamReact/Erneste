@@ -1,7 +1,7 @@
 import React from "react";
-import TalentInformations from "../components/TalentInformations";
-import TalentInfoDisplay from "../components/TalentInfoDisplay";
-import TalentDescription from "../components/TalentDescription";
+import TalentInformations from "../components/TalentInformations/index";
+import TalentInfoDisplay from "../components/TalentInfoDisplay/index";
+import TalentDescription from "../components/TalentDescription/index";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 

@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import TalentDescription from "../components/TalentDescription";
-import TalentInformations from "../components/TalentInformations";
+import TalentDescription from "../components/TalentDescription/index";
+import TalentInformations from "../components/TalentInformations/index";
 
 import "../components/CreateNewTalent.css";
 

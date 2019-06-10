@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import ReactFileReader from "react-file-reader";
+import "./index.css";
 
 class TalentInformations extends React.Component {
   constructor(props) {
@@ -114,7 +115,7 @@ class TalentInformations extends React.Component {
       dotColor = "#6A6A8F";
     }
     return (
-      <div className="leftContainer">
+      <div className="talent-informations-container">
         <ReactFileReader
           fileTypes={[".png", ".jpg"]}
           base64={true}
@@ -122,23 +123,23 @@ class TalentInformations extends React.Component {
           handleFiles={this.handleFiles}
         >
           {informations.photo !== null ? (
-            <span className="talent-picture-container">
+            <span className="talent-informations-picture-container">
               <img
-                className="talent-picture"
+                className="talent-informations-picture"
                 src={informations.photo}
                 alt="portrait of talent"
               />
             </span>
           ) : (
-            <div className="empty-photo">
-              <div className="text-empty-picture">
+            <div className="talent-informations-empty-picture">
+              <div className="talent-informations-text-empty-picture">
                 Cliquez pour ajouter une photo
               </div>
             </div>
           )}
         </ReactFileReader>
 
-        <div className="talentDetails">
+        <div className="talent-informations-details-container">
           <div>Prénom</div>
           <input
             id="firstName"
@@ -147,7 +148,7 @@ class TalentInformations extends React.Component {
             }
             name="First Name"
             className={
-              errorFirstName === true ? "talentInformations-error" : null
+              errorFirstName === true ? "talent-informations-error" : null
             }
             value={informations.firstName}
             onChange={e => this.props.setInformations(e)}
@@ -158,7 +159,7 @@ class TalentInformations extends React.Component {
             placeholder={errorLastName === true ? "Champs obligatoire" : "Nom"}
             name="Last Name"
             className={
-              errorLastName === true ? "talentInformations-error" : null
+              errorLastName === true ? "talent-informations-error " : null
             }
             value={informations.lastName}
             onChange={e => this.props.setInformations(e)}
@@ -177,7 +178,9 @@ class TalentInformations extends React.Component {
             id="email"
             placeholder={errorEmail === true ? "Champs obligatoire" : "Email"}
             name="email"
-            className={errorEmail === true ? "talentInformations-error" : null}
+            className={
+              errorEmail === true ? "talent-informations-error " : null
+            }
             value={informations.email}
             onChange={e => this.props.setInformations(e)}
           />
@@ -210,22 +213,25 @@ class TalentInformations extends React.Component {
           <div>
             {informations.wantedSector.map((item, index) => {
               return (
-                <div className="displayed-array" key={index}>
+                <div
+                  className="talent-informations-displayed-array"
+                  key={index}
+                >
                   {item.name}
-                  <div
+                  <img
                     id={index}
-                    className="displayed-array-delete"
+                    className="talent-informations-displayed-array-delete"
                     onClick={e => this.props.deleteSector(e.target.id)}
-                  >
-                    X
-                  </div>
+                    src={require("../../features/icons/blue-cross.svg")}
+                    alt="Delete sector button"
+                  />
                 </div>
               );
             })}
           </div>
-          <div className="relative-container">
+          <div className="talent-informations-relative-container">
             <div
-              className="select-container"
+              className="talent-informations-select-container"
               style={{
                 borderColor: this.state.sectorSelect && "#333266",
                 color: this.state.sectorSelect && "#333266"
@@ -234,24 +240,24 @@ class TalentInformations extends React.Component {
             >
               <div>Ajouter un secteur</div>
               {this.state.sectorSelect === false ? (
-                <div className="talentInformations-open-arrow">
+                <div className="talent-informations-open-arrow">
                   <i class="fas fa-sort-down" />
                 </div>
               ) : (
-                <div className="talentInformations-close-arrow">
+                <div className="talent-informations-close-arrow">
                   <i class="fas fa-sort-down" />
                 </div>
               )}
             </div>
             {this.state.sectorSelect && (
-              <div className="sector-list">
+              <div className="talent-informations-list">
                 {this.state.arrayOfSectors.map((sector, index) => {
                   return (
                     <div
                       id={sector._id}
                       key={index}
                       onClick={this.handleWantedSector}
-                      className="talent-information-list"
+                      className="talent-informations-list-element"
                     >
                       {sector.name}
                     </div>
@@ -263,9 +269,9 @@ class TalentInformations extends React.Component {
 
           <div>Taille d'entreprise souhaitée</div>
 
-          <div className="relative-container">
+          <div className="talent-informations-relative-container">
             <div
-              className="select-container"
+              className="talent-informations-select-container"
               style={{
                 borderColor: this.state.sizeSelect && "#333266",
                 color: this.state.sizeSelect && "#333266"
@@ -280,35 +286,35 @@ class TalentInformations extends React.Component {
                 <div>Choisir une taille</div>
               )}
               {this.state.sizeSelect === false ? (
-                <div className="talentInformations-open-arrow">
+                <div className="talent-informations-open-arrow">
                   <i class="fas fa-sort-down" />
                 </div>
               ) : (
-                <div className="talentInformations-close-arrow">
+                <div className="talent-informations-close-arrow">
                   <i class="fas fa-sort-down" />
                 </div>
               )}
             </div>
             {this.state.sizeSelect && (
-              <div className="size-list">
+              <div className="talent-informations-size-list">
                 <div
                   id="Petite"
                   onClick={this.handleSize}
-                  className="talent-information-list"
+                  className="talent-informations-list-element"
                 >
                   Petite
                 </div>
                 <div
                   id="Grande"
                   onClick={this.handleSize}
-                  className="talent-information-list"
+                  className="talent-informations-list-element"
                 >
                   Grande
                 </div>
                 <div
                   id="Indifférent"
                   onClick={this.handleSize}
-                  className="talent-information-list"
+                  className="talent-informations-list-element"
                 >
                   Indifférent
                 </div>
@@ -329,22 +335,25 @@ class TalentInformations extends React.Component {
           <div>
             {informations.wantedTitle.map((item, index) => {
               return (
-                <div className="displayed-array" key={index}>
+                <div
+                  className="talent-informations-displayed-array"
+                  key={index}
+                >
                   {item.name}
-                  <div
+                  <img
                     id={index}
-                    className="displayed-array-delete"
+                    className="talent-informations-displayed-array-delete"
                     onClick={e => this.props.deleteTitle(e.target.id)}
-                  >
-                    X
-                  </div>
+                    src={require("../../features/icons/blue-cross.svg")}
+                    alt="Delete title button"
+                  />
                 </div>
               );
             })}
           </div>
-          <div className="relative-container">
+          <div className="talent-informations-relative-container">
             <div
-              className="select-container"
+              className="talent-informations-select-container"
               style={{
                 borderColor: this.state.titleSelect && "#333266",
                 color: this.state.titleSelect && "#333266"
@@ -353,24 +362,24 @@ class TalentInformations extends React.Component {
             >
               <div>Ajouter une fonction</div>
               {this.state.titleSelect === false ? (
-                <div className="talentInformations-open-arrow">
+                <div className="talent-informations-open-arrow">
                   <i class="fas fa-sort-down" />
                 </div>
               ) : (
-                <div className="talentInformations-close-arrow">
+                <div className="talent-informations-close-arrow">
                   <i class="fas fa-sort-down" />
                 </div>
               )}
             </div>
             {this.state.titleSelect && (
-              <div className="sector-list">
+              <div className="talent-informations-list">
                 {this.state.arrayOfTitles.map((title, index) => {
                   return (
                     <div
                       id={title._id}
                       key={index}
                       onClick={this.handleWantedTitle}
-                      className="talent-information-list"
+                      className="talent-informations-list-element"
                     >
                       {title.name}
                     </div>
@@ -383,16 +392,16 @@ class TalentInformations extends React.Component {
 
         <div>Statut</div>
 
-        <div className="relative-container">
+        <div className="talent-informations-relative-container">
           <div
-            className="select-container"
+            className="talent-informations-select-container"
             style={{
               borderColor: this.state.statusSelect && "#333266",
               color: this.state.statusSelect && "#333266"
             }}
             onClick={this.statusSelect}
           >
-            <div className="availability-dot">
+            <div className="talent-informations-availability-dot">
               <div
                 style={{
                   backgroundColor: dotColor,
@@ -410,17 +419,17 @@ class TalentInformations extends React.Component {
             )}
 
             {this.state.statusSelect === false ? (
-              <div className="talentInformations-open-arrow">
+              <div className="talent-informations-open-arrow">
                 <i class="fas fa-sort-down" />
               </div>
             ) : (
-              <div className="talentInformations-close-arrow">
+              <div className="talent-informations-close-arrow">
                 <i class="fas fa-sort-down" />
               </div>
             )}
           </div>
           {this.state.statusSelect && (
-            <div className="sector-list">
+            <div className="talent-informations-list">
               <div
                 id="Recherche active"
                 className="talent-information-list"
@@ -453,16 +462,16 @@ class TalentInformations extends React.Component {
           )}
         </div>
         {this.props.button && (
-          <div className="buttons button-update-talent">
+          <div className="talent-informations-buttons ">
             <div
               onClick={this.props.setUpdate}
-              className="cancel button-update-talent"
+              className="talent-informations-cancel button-update-talent"
             >
               Annuler
             </div>
             <div
               onClick={this.props.update}
-              className="validate button-update-talent"
+              className="talent-informations-validate button-update-talent"
             >
               Mettre à jour
             </div>

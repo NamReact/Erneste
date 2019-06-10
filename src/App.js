@@ -12,7 +12,7 @@ import TalentforAdmin from "./pages/TalentforAdmin";
 import CreateNewTalent from "./pages/CreateNewTalent";
 import TalentListPage from "./components/TalentList/TalentListPage";
 import ClientList from "./components/ClientList/ClientList";
-import TalentforTalent from "./pages/TalentforTalent";
+import TalentforTalent from "./pages/TalentPage/TalentforTalent";
 import Login from "../src/pages/Login";
 import ClientforAdmin from "./components/ClientforAdmin/ClientforAdmin";
 import Cookies from "js-cookie";
