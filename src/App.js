@@ -18,6 +18,8 @@ import ClientforAdmin from "./components/ClientforAdmin/ClientforAdmin";
 import Cookies from "js-cookie";
 import HeaderAdmin from "./components/HeaderAdmin";
 import Admin from "./pages/Admin";
+import ClientWelcome from "./pages/ClientWelcome";
+import ClientMail from "./pages/ClientMail";
 
 class App extends React.Component {
   constructor(props) {
@@ -47,6 +49,7 @@ class App extends React.Component {
         {this.state.userData && (
           <HeaderAdmin
             pageType={this.state.pageActive}
+            /* userID is the talent's profile page ID / user ID id the client's profile page ID */
             userID={this.state.userData.profile}
             handleClickLogOut={this.handleClickLogOut}
           />
@@ -80,6 +83,7 @@ class App extends React.Component {
               );
             }}
           />
+          {/* ------ ADMIN ROADS ------ */}
           <Route
             exact={true}
             path="/admin/talent-create"
@@ -105,23 +109,6 @@ class App extends React.Component {
               }
               return (
                 <TalentforAdmin
-                  match={props.match}
-                  permission={this.state.userData.permission}
-                  setPageActive={this.setPageActive}
-                  token={this.state.userData.token}
-                />
-              );
-            }}
-          />
-          <Route
-            exact={true}
-            path="/talent/:id"
-            render={props => {
-              if (!this.state.userData) {
-                return <Redirect to={"/"} />;
-              }
-              return (
-                <TalentforTalent
                   match={props.match}
                   permission={this.state.userData.permission}
                   setPageActive={this.setPageActive}
@@ -185,6 +172,59 @@ class App extends React.Component {
               }
               return (
                 <Admin
+                  permission={this.state.userData.permission}
+                  setPageActive={this.setPageActive}
+                  token={this.state.userData.token}
+                />
+              );
+            }}
+          />
+          {/* ------TALENT ROADS ----- */}
+          <Route
+            exact={true}
+            path="/talent/:id"
+            render={props => {
+              if (!this.state.userData) {
+                return <Redirect to={"/"} />;
+              }
+              return (
+                <TalentforTalent
+                  match={props.match}
+                  permission={this.state.userData.permission}
+                  setPageActive={this.setPageActive}
+                  token={this.state.userData.token}
+                />
+              );
+            }}
+          />
+          {/* ------CLIENT ROADS ----- */}
+          <Route
+            exact={true}
+            path="/client/:id"
+            render={props => {
+              if (!this.state.userData) {
+                return <Redirect to={"/"} />;
+              }
+              return (
+                <ClientWelcome
+                  match={props.match}
+                  permission={this.state.userData.permission}
+                  setPageActive={this.setPageActive}
+                  token={this.state.userData.token}
+                />
+              );
+            }}
+          />
+          <Route
+            exact={true}
+            path="/client/mail/:id"
+            render={props => {
+              if (!this.state.userData) {
+                return <Redirect to={"/"} />;
+              }
+              return (
+                <ClientMail
+                  match={props.match}
                   permission={this.state.userData.permission}
                   setPageActive={this.setPageActive}
                   token={this.state.userData.token}

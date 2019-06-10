@@ -12,7 +12,7 @@ function TitleLine(props) {
     ArrayOfFilteredTalentList
   } = props;
 
-  // test if a chevron is clicked. If it is, the chvronClicked becomes true to enable the filter choice to appear
+  // test if a chevron is clicked. If it is, the chevronClicked becomes true to enable the filter choice to appear
   let chevronClicked = false;
   for (let i = 0; i < titleArray.length; i++) {
     if (titleArray[i].clicked === true) {
@@ -402,7 +402,8 @@ function TitleLine(props) {
                       />
                     )}
                   </div>
-                  <span>{element}</span>
+                  {element === "false" && <span>Non-validé</span>}
+                  {element === "true" && <span>Validé</span>}
                 </div>
               );
             })}

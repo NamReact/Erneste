@@ -12,12 +12,14 @@ header {
   flex-direction: row;
   align-items: center;
   margin: auto;
+  position: relative;
 }
 
 .headerAdmin-image {
-  padding-left: 10px;
   height: 35px;
   width: 140px;
+  position: absolute;
+  left: -22px;
 }
 
 .headerAdmin-tools {
@@ -25,7 +27,6 @@ header {
   margin-left: auto;
   text-decoration: none;
   font-weight: 600;
-  padding-right: 10px;
 }
 
 .headerAdmin-tools:hover {
@@ -48,6 +49,8 @@ header {
 
 .headerAdmin-tools-logOut {
   color: #a8b0d0;
+  position: absolute;
+  right: -8px;
 }
 .notSelected {
   color: #c3c3d2;

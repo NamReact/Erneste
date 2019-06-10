@@ -10,6 +10,10 @@ function HeaderAdmin(props) {
   let classNameAdminConfig = "";
   let classNameTalentOpportunities = "";
   let classNameTalentProfil = "";
+  let classNameClientWelcome = "";
+  let classNameClientMail = "";
+
+  // ------ ADMIN ------ //
   if (props.pageType === "admin/client") {
     classNameAdminClient = "headerAdmin-tools-active";
   } else {
@@ -25,34 +29,52 @@ function HeaderAdmin(props) {
   } else {
     classNameAdminConfig = "headerAdmin-tools-inactive";
   }
-
+  // ------ TALENT ------ //
   if (props.pageType === "talent") {
     classNameTalentProfil = "headerAdmin-tools-active";
   } else {
     classNameTalentOpportunities = "headerAdmin-tools-inactive";
   }
   if (props.pageType === "talent/opportunities") {
-    classNameTalentProfil = "headerAdmin-tools-active";
+    classNameTalentProfil = "headerAdmin-tools-inactive";
   } else {
-    classNameTalentOpportunities = "headerAdmin-tools-inactive";
+    classNameTalentOpportunities = "headerAdmin-tools-active";
+  }
+
+  // ------- CLIENT ------ //
+
+  if (props.pageType === "client") {
+    classNameClientWelcome = "headerAdmin-tools-active";
+  } else {
+    classNameClientMail = "headerAdmin-tools-inactive";
+  }
+  if (props.pageType === "client/mail") {
+    classNameClientWelcome = "headerAdmin-tools-active";
+  } else {
+    classNameClientMail = "headerAdmin-tools-inactive";
   }
   return (
     <header>
       <div className="headerAdmin-container">
         <img className="headerAdmin-image" src={logo} alt="Erneste Logo" />
+
+        {/* ------------------------- */}
+        {/* ------ ADMIN PAGES ------ */}
+        {/* ------------------------- */}
+
         {(props.pageType === "admin/talent" ||
           props.pageType === "admin/client" ||
           props.pageType === "admin/config") && (
           <div className="headerAdmin-tools">
-            {/* Lien vers Talent-List */}
+            {/* Link to Talent-List */}
             <Link className="linkDecoration" to={`/admin/talent-list`}>
               <span className={classNameAdminTalent}>Talents</span>
             </Link>
-            {/* Lien vers Client-List */}
+            {/* Link to Client-List */}
             <Link className="linkDecoration" to={`/admin/client-list`}>
               <span className={classNameAdminClient}>Clients</span>
             </Link>
-            {/* Lien vers Config */}
+            {/* Link to Configuration */}
             <Link className="linkDecoration" to={`/admin/config`}>
               <i className={`fas fa-cog ${classNameAdminConfig}`} />
             </Link>
@@ -65,17 +87,49 @@ function HeaderAdmin(props) {
             </div>
           </div>
         )}
+
+        {/* ------------------------- */}
+        {/* ------ TALENT PAGES ----- */}
+        {/* ------------------------- */}
+
         {props.pageType === "talent" && (
           <div className="headerAdmin-tools">
-            {/* Lien vers Opportunités */}
+            {/* Link to Opportunities */}
             <Link className="linkDecoration" to={`/talent/opportunities/`}>
               <i
                 className={`fas fa-envelope ${classNameTalentOpportunities} `}
               />
             </Link>
-            {/* Lien vers son Profil */}
+            {/* Link to the Profile */}
             <Link className="linkDecoration" to={`/talent/${props.userID}`}>
               <i className={`fas fa-user ${classNameTalentProfil}`} />
+            </Link>
+            {/* Log Out Bouton */}
+            <div
+              onClick={props.handleClickLogOut}
+              className="headerAdmin-tools-logOut"
+            >
+              <i className="fas fa-power-off" />
+            </div>
+          </div>
+        )}
+
+        {/* ------------------------- */}
+        {/* ------ CLIENT PAGES ----- */}
+        {/* ------------------------- */}
+
+        {props.pageType === "client" && (
+          <div className="headerAdmin-tools">
+            {/* Link to Welcome page */}
+            <Link className="linkDecoration" to={`/client/${props.userID}`}>
+              <span className={classNameClientWelcome}>Accueil</span>
+            </Link>
+            {/* Link to Mail page */}
+            <Link
+              className="linkDecoration"
+              to={`/client/mail/${props.userID}`}
+            >
+              <i className={`fas fa-envelope ${classNameClientMail} `} />
             </Link>
             {/* Log Out Bouton */}
             <div
