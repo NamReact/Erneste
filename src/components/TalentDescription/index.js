@@ -1,5 +1,5 @@
 import React from "react";
-import TagList from "../TagList";
+import TagList from "../TagList/index";
 import { Link } from "react-router-dom";
 import "./index.css";
 
@@ -81,7 +81,7 @@ class TalentDescriptions extends React.Component {
                   return (
                     <div
                       key={tag._id}
-                      className="tag"
+                      className="talent-description-tag"
                       style={{
                         backgroundColor:
                           tag.type === "hard" ? "#333266" : "#EF6364"

@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import "./index.css";
 
 class TagList extends React.Component {
   state = {
@@ -81,8 +82,8 @@ class TagList extends React.Component {
           onClick={() => this.props.setTag(item)}
           className={
             item.type === "hard"
-              ? "tagList-tag-option-hard"
-              : "tagList-tag-option-soft "
+              ? "tag-list-tag-option-hard"
+              : "tag-list-tag-option-soft"
           }
         >
           {item.name}
@@ -91,7 +92,7 @@ class TagList extends React.Component {
     });
 
     return (
-      <div className="tagList-tag-pop-up">
+      <div className="tag-list-pop-up">
         <input
           name="tag search"
           value={this.state.search}
@@ -99,11 +100,17 @@ class TagList extends React.Component {
           placeholder="Recherche/Créer skills"
         />
 
-        <div className="pop-up-list">{filteredTagList}</div>
-        <div onClick={this.addSoftTag} className="tag-list-buttons soft-skills">
+        <div className="tag-list-pop-up-list">{filteredTagList}</div>
+        <div
+          onClick={this.addSoftTag}
+          className="tag-list-buttons tag-list-soft-skills"
+        >
           Créer un soft skill
         </div>
-        <div onClick={this.addHardTag} className="tag-list-buttons hard-skills">
+        <div
+          onClick={this.addHardTag}
+          className="tag-list-buttons tag-list-hard-skills"
+        >
           Créer un hard skill
         </div>
       </div>

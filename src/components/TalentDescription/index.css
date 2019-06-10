@@ -56,6 +56,16 @@
   flex: 1;
 }
 
+.talent-description-tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  box-sizing: border-box;
+  margin: 0 10px 7px 0;
+  overflow: hidden;
+}
+
 .talent-description-skills > div {
   display: flex;
   flex-wrap: wrap;
