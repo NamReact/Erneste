@@ -21,7 +21,7 @@
   max-width: 1200px;
   flex-direction: row;
   margin: auto;
-  padding: 70px 0px 0px 0px;
+  padding: 50px 0px 0px 0px;
 }
 
 /* ------ LEFT BLOCK ------- */
@@ -81,20 +81,48 @@
   flex-direction: column;
 }
 
+.client-welcome-leftBlock-talentBlock-list-title-interestedBy {
+  width: 160px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
 .client-welcome-leftBlock-talentBlock-list-talent-checkBox {
   min-width: 30px;
+  display: flex;
+  align-items: center;
 }
+
 .client-welcome-leftBlock-talentBlock-list-talent-name {
-  min-width: 120px;
+  min-width: 160px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.client-welcome-leftBlock-talentBlock-list-talent-name-text {
+  flex-wrap: wrap;
 }
 .client-welcome-leftBlock-talentBlock-list-talent-actualTitle {
-  min-width: 120px;
+  width: 120px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
 .client-welcome-leftBlock-talentBlock-list-talent-actualCompany {
-  min-width: 120px;
+  width: 120px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
 .client-welcome-leftBlock-talentBlock-list-talent-interestedBy {
-  min-width: 120px;
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* LEFT BLOCK - TALENT BLOCK - LIST - TITLE */
@@ -106,6 +134,8 @@
   padding: 0;
   padding-bottom: 20px;
   border-bottom: solid 1px #6e78ad;
+  background-color: var(--container-background);
+  transition: background-color 0.5s;
 }
 
 .client-welcome-leftBlock-talentBlock-list-title > ul > li {
@@ -131,20 +161,21 @@
   margin: 0;
   padding: 10px 0px;
   border-bottom: solid 1px var(--placeholder-grey);
+  background-color: var(--container-background);
+  transition: background-color 0.5s;
+}
+.client-welcome-leftBlock-talentBlock-list-talent > ul:hover {
+  background-color: #fafafc;
 }
 
 /* LEFT BLOCK - TALENT BLOCK - LIST - TALENT -TALENTLINE - ELEMENT */
 .client-welcome-leftBlock-talentBlock-list-talent > ul > li {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
   margin: 0;
   padding: 0;
 }
 
 /* Chosen Box */
-.client-welcome-leftblock-box {
+.client-welcome-leftblock-box-checked {
   height: 12px;
   width: 12px;
   background-color: #333366;
@@ -152,6 +183,15 @@
   border-radius: 3px;
 }
 
+.client-welcome-leftblock-box-unChecked {
+  height: 12px;
+  width: 12px;
+  background-color: var(--container-background);
+  border: 2px solid var(--input-border-color);
+  border-radius: 3px;
+}
+
+/* Status dot color */
 .client-welcome-statut1 {
   height: 14px;
   width: 14px;
@@ -183,19 +223,16 @@
   margin-right: 10px;
 }
 
-/* Chosen Box */
-.client-welcome-leftblock-box {
-  height: 12px;
-  width: 12px;
-  background-color: #333366;
-  border: 2px solid var(--input-border-color);
-  border-radius: 3px;
-}
-
 /* ------ RIGHT BLOCK ------- */
 .client-welcome-rightBlock {
   width: 49%;
   box-shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
+  background-color: var(--container-background);
+}
+
+/* RIGHT BLOCK - ONGLET */
+.client-welcome-rightBlock-onglet {
+  background-color: rgb(250, 250, 252);
 }
 
 /* RIGHT BLOCK - HEADER */

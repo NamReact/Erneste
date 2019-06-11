@@ -4,7 +4,7 @@ import "./index.css";
 import box from "../../features/icons/check_24px.svg";
 import checkedbox from "../../features/icons/check_24px copy.svg";
 import ReactFileReader from "react-file-reader";
-import { Link } from "react-router-dom";
+import ContactPopUp from "../../components/ClientWelcome/ContactPopUp";
 
 class ClientWelcome extends React.Component {
   state = {
@@ -12,8 +12,12 @@ class ClientWelcome extends React.Component {
     titleList: ["Nom", "Fonction", "Entreprise", "Intéressé(e) par"],
     clientData: null,
     talentList: null,
-    talentShownData: null,
-    hoverContact: false
+    wantedTitleList: null,
+    talentShown: [],
+    talentOnScreen: null,
+    positionShown: 0,
+    hoverContact: false,
+    contactPopUp: false
   };
 
   getTalentList = async () => {
@@ -24,7 +28,7 @@ class ClientWelcome extends React.Component {
         headers: { authorization: `Bearer ${this.props.token}` }
       }
     );
-    this.setState({ talentList: response.data });
+    await this.setState({ talentList: response.data });
     this.setState({ isLoading: false });
   };
 
@@ -35,10 +39,19 @@ class ClientWelcome extends React.Component {
         this.props.match.params.id,
       { headers: { authorization: `Bearer ${this.props.token}` } }
     );
-    this.setState({ clientData: response.data });
+    await this.setState({ clientData: response.data });
     this.setState({ isLoading: false });
   };
 
+  getTitleList = async () => {
+    this.setState({ isLoading: true });
+    const response = await axios.get(
+      "https://ernest-server.herokuapp.com/title/",
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    await this.setState({ wantedTitleList: response.data });
+    this.setState({ isLoading: false });
+  };
   // Function that displays the list of selected Talent
 
   displayTitle = titleList => {
@@ -51,7 +64,7 @@ class ClientWelcome extends React.Component {
             alt="box cochée"
           />
         </li>
-        {titleList.map(element => {
+        {titleList.map((element, index) => {
           let columnClass = "";
           if (titleList.indexOf(element) === 0) {
             columnClass =
@@ -67,10 +80,10 @@ class ClientWelcome extends React.Component {
           }
           if (titleList.indexOf(element) === 3) {
             columnClass =
-              "client-welcome-leftBlock-talentBlock-list-talent-interestedBy";
+              "client-welcome-leftBlock-talentBlock-list-title-interestedBy";
           }
           return (
-            <li className={columnClass}>
+            <li key={index} className={columnClass}>
               {element}
               <i className="fas fa-sort-down" />
             </li>
@@ -81,7 +94,7 @@ class ClientWelcome extends React.Component {
   };
 
   displayTalent = selectedTalentList => {
-    return selectedTalentList.map(element => {
+    return selectedTalentList.map((element, index) => {
       let statusClass = "";
       // Get the status
       if (element.informations.status === "0") {
@@ -99,26 +112,48 @@ class ClientWelcome extends React.Component {
       if (element.informations.status === "Embauché(e) par Erneste") {
         statusClass = "client-welcome-statut4";
       }
+
+      let clicked = null;
+      if (this.state.talentShown) {
+        if (
+          this.state.talentShown
+            .map(e => {
+              return e.profil;
+            })
+            .indexOf(element) === -1
+        ) {
+          clicked = false;
+        } else {
+          clicked = true;
+        }
+      }
+
       return (
-        <ul>
+        <ul
+          key={index}
+          onClick={() => {
+            this.handleTalentClick(element, selectedTalentList);
+          }}
+        >
           <li className="client-welcome-leftBlock-talentBlock-list-talent-checkBox">
             <img
-              className="client-welcome-leftblock-box"
+              className={
+                clicked
+                  ? "client-welcome-leftblock-box-checked"
+                  : "client-welcome-leftblock-box-unChecked"
+              }
               src={box}
-              alt="box cochée"
+              alt={clicked ? "box cochée" : "box non cochée"}
             />
           </li>
           <li
-            onClick={() => {
-              this.handleTalentClick(element);
-            }}
             className="client-welcome-leftBlock-talentBlock-list-talent-name"
             key={element}
           >
             <div className={statusClass} />
-            {`${element.informations.firstName} ${
-              element.informations.lastName
-            }`}
+            <div className="client-welcome-leftBlock-talentBlock-list-talent-name-text">{`${
+              element.informations.firstName
+            } ${element.informations.lastName}`}</div>
           </li>
           <li className="client-welcome-leftBlock-talentBlock-list-talent-actualTitle">
             {element.informations.actualTitle}
@@ -127,15 +162,60 @@ class ClientWelcome extends React.Component {
             {element.informations.actualCompany}
           </li>
           <li className="client-welcome-leftBlock-talentBlock-list-talent-interestedBy">
-            {this.state.clientData.name}
+            {element.informations.wantedTitle.map(e => {
+              return <div>{e}</div>;
+            })}
           </li>
         </ul>
       );
     });
   };
 
-  handleTalentClick = element => {
-    this.setState({ talentShownData: element });
+  // Function that select a talent
+  handleTalentClick = (element, selectedTalentList) => {
+    const talentShownCopie = [...this.state.talentShown];
+    let bool = false;
+    let position = talentShownCopie
+      .map(e => {
+        return e.profil;
+      })
+      .indexOf(element);
+
+    if (position === -1) {
+      talentShownCopie.push({
+        profil: element,
+        position: selectedTalentList.indexOf(element)
+      });
+      position = talentShownCopie
+        .map(e => {
+          return e.profil;
+        })
+        .indexOf(element);
+    } else {
+      bool = true;
+
+      if (this.state.positionShown === this.state.talentShown.length - 1) {
+        if (this.state.positionShown !== 0) {
+          this.setState({ positionShown: this.state.positionShown - 1 });
+        } else {
+          this.setState({ positionShown: 0 });
+        }
+      }
+      talentShownCopie.splice(position, 1);
+    }
+    // Sort the array to match the initial order
+    let talentShownSorted = talentShownCopie.sort((a, b) => {
+      return a.position - b.position;
+    });
+    position = talentShownSorted
+      .map(e => {
+        return e.profil;
+      })
+      .indexOf(element);
+    if (bool === false) {
+      this.setState({ positionShown: position });
+    }
+    this.setState({ talentShown: talentShownSorted });
   };
 
   hoverOn = () => {
@@ -145,20 +225,40 @@ class ClientWelcome extends React.Component {
   hoverOff = () => {
     this.setState({ hoverContact: false });
   };
-  render() {
-    if (this.state.talentShownData) {
-      console.log(this.state.talentShownData.informations.linkedIn);
+
+  positionShownDown = () => {
+    if (this.state.positionShown > 0) {
+      this.setState({ positionShown: this.state.positionShown - 1 });
     }
+  };
+  positionShownUp = () => {
+    if (this.state.positionShown < this.state.talentShown.length - 1) {
+      this.setState({ positionShown: this.state.positionShown + 1 });
+    }
+  };
+
+  togglePopUp = () => {
+    this.setState({ contactPopUp: true });
+  };
+
+  cancelPopUp = () => {
+    this.setState({ contactPopUp: false });
+  };
+
+  render() {
     /* Test of Loading... */
 
     if (this.state.isLoading === true) {
       return "En cours de chargement....";
     }
-
     // Filter TalentList to become an array of selectedTalent for this client
     let selectedTalent = [];
-    let clientSize = this.state.clientData.size;
-    let clientSector = this.state.clientData.field._id;
+    let clientSize = "";
+    let clientSector = "";
+    if (this.state.clientData) {
+      clientSize = this.state.clientData.size;
+      clientSector = this.state.clientData.field._id;
+    }
 
     if (this.state.clientData && this.state.talentList) {
       for (let i = 0; i < this.state.talentList.length; i++) {
@@ -185,9 +285,38 @@ class ClientWelcome extends React.Component {
       }
     }
 
+    // Change the ID of the wantedTitle into its value
+
+    if (this.state.wantedTitleList) {
+      console.log();
+      for (let i = 0; i < selectedTalent.length; i++) {
+        for (
+          let j = 0;
+          j < selectedTalent[i].informations.wantedTitle.length;
+          j++
+        ) {
+          let titleTested = selectedTalent[i].informations.wantedTitle[j];
+          let position = this.state.wantedTitleList
+            .map(e => {
+              return e._id;
+            })
+            .indexOf(titleTested);
+          if (position !== -1) {
+            selectedTalent[i].informations.wantedTitle[
+              j
+            ] = this.state.wantedTitleList[position].name;
+          }
+        }
+      }
+    }
+
+    console.log(selectedTalent);
     return (
       <div className="client-welcome-content">
         <div className="client-welcome-body-container">
+          {this.state.contactPopUp && (
+            <ContactPopUp cancelPopUp={this.cancelPopUp} />
+          )}
           <div className="client-welcome-leftBlock">
             <div className="client-welcome-leftBlock-title">Accueil</div>
             <div className="client-welcome-leftBlock-talentBlock">
@@ -211,7 +340,7 @@ class ClientWelcome extends React.Component {
             </div>
           </div>
           <div className="client-welcome-rightBlock">
-            {this.state.talentShownData && (
+            {this.state.talentShown.length > 0 && (
               <div>
                 <div className="client-welcome-rightBlock-header">
                   <div className="client-welcome-rightBlock-header-left">
@@ -221,11 +350,14 @@ class ClientWelcome extends React.Component {
                         base64={true}
                         multipleFiles={false}
                       >
-                        {this.state.talentShownData.informations.photo !==
-                        null ? (
+                        {this.state.talentShown[this.state.positionShown].profil
+                          .informations.photo !== null ? (
                           <img
                             className="client-welcome-rightBlock-header-left-picture-picture"
-                            src={this.state.talentShownData.informations.photo}
+                            src={
+                              this.state.talentShown[this.state.positionShown]
+                                .profil.informations.photo
+                            }
                             alt="portrait of talent"
                           />
                         ) : (
@@ -238,38 +370,62 @@ class ClientWelcome extends React.Component {
                     <div className="client-welcome-rightBlock-header-left-comments">
                       <span className="client-welcome-rightBlock-header-left-comments-name">
                         {`${
-                          this.state.talentShownData.informations.firstName
-                        } ${this.state.talentShownData.informations.lastName}`}
-                        <a
-                          href={
-                            this.state.talentShownData.informations.linkedIn
-                          }
-                          target="_blank"
-                        >
+                          this.state.talentShown[this.state.positionShown]
+                            .profil.informations.firstName
+                        } ${
+                          this.state.talentShown[this.state.positionShown]
+                            .profil.informations.lastName
+                        }`}
+                        {this.state.talentShown[this.state.positionShown].profil
+                          .informations.linkedIn ? (
+                          <a
+                            href={
+                              this.state.talentShown[this.state.positionShown]
+                                .profil.informations.linkedIn
+                            }
+                            target="_blank"
+                          >
+                            <i className="fab fa-linkedin client-welcome-rightBlock-header-left-comments-linkedin" />
+                          </a>
+                        ) : (
                           <i className="fab fa-linkedin client-welcome-rightBlock-header-left-comments-linkedin" />
-                        </a>
+                        )}
                       </span>
                       <span className="client-welcome-rightBlock-header-left-comments-features">
-                        {this.state.talentShownData.informations.actualCompany}
+                        {
+                          this.state.talentShown[this.state.positionShown]
+                            .profil.informations.actualCompany
+                        }
                       </span>
                       <span className="client-welcome-rightBlock-header-left-comments-features">
-                        € {this.state.talentShownData.informations.salary}
+                        €{" "}
+                        {
+                          this.state.talentShown[this.state.positionShown]
+                            .profil.informations.salary
+                        }
                       </span>
                     </div>
                   </div>
                   <div className="client-welcome-rightBlock-header-right">
                     <div className="client-welcome-rightBlock-header-right-arrows">
-                      <div className="client-welcome-rightBlock-header-right-arrows-left">
-                        <i class="fas fa-arrow-left" />
+                      <div
+                        className="client-welcome-rightBlock-header-right-arrows-left"
+                        onClick={this.positionShownDown}
+                      >
+                        <i className="fas fa-arrow-left" />
                       </div>
-                      <div className="client-welcome-rightBlock-header-right-arrows-right">
-                        <i class="fas fa-arrow-right" />
+                      <div
+                        className="client-welcome-rightBlock-header-right-arrows-right"
+                        onClick={this.positionShownUp}
+                      >
+                        <i className="fas fa-arrow-right" />
                       </div>
                     </div>
                     <div className="client-welcome-rightBlock-header-right-contact-block">
                       <div
                         onMouseEnter={this.hoverOn}
                         onMouseLeave={this.hoverOff}
+                        onClick={this.togglePopUp}
                         className="client-welcome-rightBlock-header-right-contact-button"
                       >
                         Contacter
@@ -296,7 +452,10 @@ class ClientWelcome extends React.Component {
                     L'entreprise idéale
                   </h3>
                   <div className="client-welcome-rightBlock-text">
-                    {this.state.talentShownData.description.idealCompany}
+                    {
+                      this.state.talentShown[this.state.positionShown].profil
+                        .description.idealCompany
+                    }
                   </div>
                 </div>
                 <div className="client-welcome-rightBlock-idealRole">
@@ -304,7 +463,10 @@ class ClientWelcome extends React.Component {
                     Mon rôle idéal
                   </h3>
                   <div className="client-welcome-rightBlock-text">
-                    {this.state.talentShownData.description.idealRole}
+                    {
+                      this.state.talentShown[this.state.positionShown].profil
+                        .description.idealRole
+                    }
                   </div>
                 </div>
                 <div className="client-welcome-rightBlock-workingEnvironment">
@@ -312,7 +474,10 @@ class ClientWelcome extends React.Component {
                     Mes conditions idéales
                   </h3>
                   <div className="client-welcome-rightBlock-text">
-                    {this.state.talentShownData.description.workingEnvironment}
+                    {
+                      this.state.talentShown[this.state.positionShown].profil
+                        .description.workingEnvironment
+                    }
                   </div>
                 </div>
                 <div className="client-welcome-rightBlock-development">
@@ -320,7 +485,10 @@ class ClientWelcome extends React.Component {
                     Mes ambitions d'évolution
                   </h3>
                   <div className="client-welcome-rightBlock-text">
-                    {this.state.talentShownData.description.development}
+                    {
+                      this.state.talentShown[this.state.positionShown].profil
+                        .description.development
+                    }
                   </div>
                 </div>
                 <div className="client-welcome-rightBlock-skills">skills</div>
@@ -334,202 +502,10 @@ class ClientWelcome extends React.Component {
 
   async componentDidMount() {
     this.props.setPageActive("client");
+    this.getTitleList();
     this.getClientData();
     this.getTalentList();
   }
 }
 
 export default ClientWelcome;
-
-/*
-
-
-    // Array to display, display by column
-
-    //Array of Status
-    let statusArray = selectedTalent.map(element => {
-      if (element.informations.status) {
-        return element.informations.status;
-      } else {
-        return "Non mentionné";
-      }
-    });
-    //Array of box
-    let boxArray = selectedTalent.map(element => {
-      return (
-        <img
-          className="client-welcome-leftblock-box"
-          src={box}
-          alt="box cochée"
-        />
-      );
-    });
-
-    // Array of Name
-    let nameArray = selectedTalent.map(element => {
-      return `${element.informations.firstName} ${
-        element.informations.lastName
-      }`;
-    });
-    // Array of actualFonction
-    let actualFonctionArray = selectedTalent.map(element => {
-      if (element.informations.actualCompany) {
-        return element.informations.actualTitle;
-      } else {
-        return "Non mentionné";
-      }
-    });
-    //Array of actualCompany
-    let actualCompanyArray = selectedTalent.map(element => {
-      if (element.informations.actualCompany) {
-        return element.informations.actualCompany;
-      } else {
-        return "Non mentionné";
-      }
-    });
-
-    // Array of Interested by
-    let interestedByArray = Array(selectedTalent.length).fill(
-      this.state.clientData.name
-    );
-
-    // Array that will be displayed in list
-    let displayedArray = [
-      statusArray,
-      boxArray,
-      nameArray,
-      actualFonctionArray,
-      actualCompanyArray,
-      interestedByArray
-    ];
-    console.log(displayedArray);
-
-    for (let i = 0; i < displayedArray.length; i++) {
-      if (i === 0) {
-        displayedArray[i].unshift(this.state.titleList[i]);
-      } else if (i === 1) {
-        displayedArray[i].unshift(
-          <img
-            className="client-welcome-leftblock-box"
-            src={box}
-            alt="box cochée"
-          />
-        );
-      } else if (i > 1) {
-        displayedArray[i].unshift(this.state.titleList[i - 1]);
-      }
-    }
-
-    // Array=[[Nom, Elon Musk, John Tilda, etc...],[Fonction,...,...,..],....]
-
-
-
-
-    displayList = toto => {
-    let statusClass = "";
-
-    for (let i = 1; i < toto.length; i++) {
-      toto[i] = toto[i].map(element => {
-        let position = toto[i].indexOf(element);
-        // Box cases
-        if (i === 1) {
-          if (position === 0) {
-            return (
-              <li
-                className="client-welcome-leftBlock-talentBlock-list-column-title"
-                key={element}
-              >
-                {element}
-              </li>
-            );
-          }
-          return (
-            <li
-              key={element}
-              className="client-welcome-leftBlock-talentBlock-list-column-element"
-            >
-              {element}
-            </li>
-          );
-        }
-
-        // Case Name
-        else if (i === 2) {
-          // Case titles
-          if (position === 0) {
-            return (
-              <li
-                className="client-welcome-leftBlock-talentBlock-list-column-title"
-                key={element}
-              >
-                {element}
-                <i className="fas fa-sort-down" />
-              </li>
-            );
-          }
-          // Get the status
-          if (toto[0][position] === "0") {
-            statusClass = "client-welcome-statut0";
-          }
-          if (toto[0][position] === "Recherche active") {
-            statusClass = "client-welcome-statut1";
-          }
-          if (toto[0][position] === "Ouvert(e) aux opportunités") {
-            statusClass = "client-welcome-statut2";
-          }
-          if (toto[0][position] === "Ne pas être contacté(e)") {
-            statusClass = "client-welcome-statut3";
-          }
-          if (toto[0][position] === "Embauché(e) par Erneste") {
-            statusClass = "client-welcome-statut4";
-          }
-
-          return (
-            <li
-              key={element}
-              className="client-welcome-leftBlock-talentBlock-list-column-element"
-            >
-              <div className={statusClass} />
-              {element}
-            </li>
-          );
-        } else {
-          // Other case
-          // Case title
-          if (position === 0) {
-            return (
-              <li
-                className="client-welcome-leftBlock-talentBlock-list-column-title"
-                key={element}
-              >
-                {element}
-                <i className="fas fa-sort-down" />
-              </li>
-            );
-          }
-          return (
-            <li
-              key={element}
-              className="client-welcome-leftBlock-talentBlock-list-column-element"
-            >
-              {element}
-            </li>
-          );
-        }
-      });
-    }
-    // Status column is removed because not displayed
-    toto.splice(0, 1);
-    // Map on the array we want to display
-    return toto.map((element, index) => {
-      return (
-        <ul
-          key={index}
-          className="client-welcome-leftBlock-talentBlock-list-column"
-        >
-          {element}
-        </ul>
-      );
-    });
-  };
-    */
