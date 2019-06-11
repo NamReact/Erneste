@@ -20,6 +20,8 @@ import HeaderAdmin from "./components/HeaderAdmin";
 import Admin from "./pages/Admin";
 import ClientWelcome from "./pages/ClientWelcome";
 import ClientMail from "./pages/ClientMail";
+import ResetPassword from "./pages/ResetPassword";
+import ForgottenPassword from "./pages/ForgottenPassword";
 
 class App extends React.Component {
   constructor(props) {
@@ -231,6 +233,18 @@ class App extends React.Component {
                 />
               );
             }}
+          />
+          <Route
+            exact={true}
+            path="/reset-password/:token"
+            render={props => {
+              return <ResetPassword match={props.match} />;
+            }}
+          />
+          <Route
+            exact={true}
+            path="/forgotten-password"
+            component={ForgottenPassword}
           />
         </Switch>
       </Router>

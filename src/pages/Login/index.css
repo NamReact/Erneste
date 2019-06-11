@@ -134,6 +134,14 @@
   font-size: 13.5px;
 }
 
+.login-input-container a {
+  text-decoration: none;
+}
+
+.login-input-container a:visited {
+  color: var(--dark-blue);
+}
+
 .login-redirect div {
   margin-left: 5px;
   font-weight: 600;
