@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import "./index.css";
 import box from "../../features/icons/check_24px.svg";
-import checkedbox from "../../features/icons/check_24px copy.svg";
+
 import ReactFileReader from "react-file-reader";
 import ContactPopUp from "../../components/ClientWelcome/ContactPopUp";
 
@@ -13,11 +13,13 @@ class ClientWelcome extends React.Component {
     clientData: null,
     talentList: null,
     wantedTitleList: null,
+    tagList: null,
     talentShown: [],
-    talentOnScreen: null,
     positionShown: 0,
     hoverContact: false,
-    contactPopUp: false
+    contactPopUp: false,
+    popUpObjectInputValue: "",
+    popUpMessageInputValue: ""
   };
 
   getTalentList = async () => {
@@ -50,6 +52,16 @@ class ClientWelcome extends React.Component {
       { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     await this.setState({ wantedTitleList: response.data });
+    this.setState({ isLoading: false });
+  };
+
+  getTagList = async () => {
+    this.setState({ isLoading: true });
+    const response = await axios.get(
+      "https://ernest-server.herokuapp.com/tag/",
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    await this.setState({ tagList: response.data });
     this.setState({ isLoading: false });
   };
   // Function that displays the list of selected Talent
@@ -245,6 +257,34 @@ class ClientWelcome extends React.Component {
     this.setState({ contactPopUp: false });
   };
 
+  // PopUp - Message Title
+  setPopUpObjectValue = toto => {
+    this.setState({ popUpObjectInputValue: toto });
+  };
+
+  // PopUp - Message
+  setPopUpMessageInputValue = toto => {
+    this.setState({ popUpMessageInputValue: toto });
+  };
+
+  handlePopUpSendMessageClick = async talentMail => {
+    console.log("test", {
+      from: "renault@gmail.com",
+      to: talentMail,
+      message: this.state.popUpMessageInputValue
+    });
+    const response = await axios.post(
+      "https://ernest-server.herokuapp.com/user/message",
+      {
+        from: "admin@ad.min",
+        to: talentMail,
+        message: this.state.popUpMessageInputValue
+      },
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    this.setState({ contactPopUp: false });
+  };
+
   render() {
     /* Test of Loading... */
 
@@ -288,7 +328,6 @@ class ClientWelcome extends React.Component {
     // Change the ID of the wantedTitle into its value
 
     if (this.state.wantedTitleList) {
-      console.log();
       for (let i = 0; i < selectedTalent.length; i++) {
         for (
           let j = 0;
@@ -310,12 +349,38 @@ class ClientWelcome extends React.Component {
       }
     }
 
-    console.log(selectedTalent);
+    // Change the ID of the tag into its value
+    if (this.state.tagList) {
+      for (let i = 0; i < selectedTalent.length; i++) {
+        for (let j = 0; j < selectedTalent[i].skills.length; j++) {
+          let tagTested = selectedTalent[i].skills[j];
+          let position = this.state.tagList
+            .map(e => {
+              return e._id;
+            })
+            .indexOf(tagTested);
+          if (position !== -1) {
+            selectedTalent[i].skills[j] = this.state.tagList[position];
+          }
+        }
+      }
+    }
+
     return (
       <div className="client-welcome-content">
         <div className="client-welcome-body-container">
           {this.state.contactPopUp && (
-            <ContactPopUp cancelPopUp={this.cancelPopUp} />
+            <ContactPopUp
+              cancelPopUp={this.cancelPopUp}
+              objectValue={this.state.popUpObjectInput}
+              messageValue={this.state.messageInputValue}
+              setObject={this.setPopUpObjectValue}
+              setMessage={this.setPopUpMessageInputValue}
+              sendMessage={contactMail =>
+                this.handlePopUpSendMessageClick(contactMail)
+              }
+              talent={this.state.talentShown[this.state.positionShown]}
+            />
           )}
           <div className="client-welcome-leftBlock">
             <div className="client-welcome-leftBlock-title">Accueil</div>
@@ -491,7 +556,28 @@ class ClientWelcome extends React.Component {
                     }
                   </div>
                 </div>
-                <div className="client-welcome-rightBlock-skills">skills</div>
+                <div className="client-welcome-rightBlock-skills">
+                  <h3 className="client-welcome-rightBlock-title">Skills</h3>
+                  <div className="client-welcome-rightBlock-tagBlock">
+                    {this.state.talentShown[
+                      this.state.positionShown
+                    ].profil.skills.map(tag => {
+                      return (
+                        <div
+                          style={{
+                            backgroundColor:
+                              tag.type === "hard" ? "#333266" : "#EF6364"
+                          }}
+                          className="client-welcome-tag"
+                        >
+                          <div className="client-welcome-tag-name">
+                            {tag.name}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -505,6 +591,7 @@ class ClientWelcome extends React.Component {
     this.getTitleList();
     this.getClientData();
     this.getTalentList();
+    this.getTagList();
   }
 }
 

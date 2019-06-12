@@ -2,25 +2,46 @@ import React from "react";
 import "./ContactPopUp.css";
 
 function ContactPopUp(props) {
-  const { cancelPopUp } = props;
+  const {
+    cancelPopUp,
+    objectValue,
+    messageValue,
+    setObject,
+    setMessage,
+    sendMessage,
+    talent
+  } = props;
   return (
     <div className="contactPopUp-background">
       <div className="contactPopUp">
         <div className="contactPopUp-header">
           <span className="contactPopUp-header-title">Contacter</span>
           <i
-            class="fas fa-times contactPopUp-header-cancel"
+            className="fas fa-times contactPopUp-header-cancel"
             onClick={cancelPopUp}
           />
         </div>
         <div className="contactPopUp-body">
           <span className="contactPopUp-subtitle">Objet</span>
-          <input className="contactPopUp-input" />
+          <input
+            className="contactPopUp-input"
+            value={objectValue}
+            onChange={event => {
+              setObject(event.target.value);
+            }}
+          />
           <span className="contactPopUp-subtitle">Messages</span>
-          <textarea className="contactPopUp-textArea" placeholder="Messages" />
+          <textarea
+            className="contactPopUp-textArea"
+            value={messageValue}
+            placeholder="Messages"
+            onChange={event => {
+              setMessage(event.target.value);
+            }}
+          />
           <div className="contactPopUp-add">
             <div className="contactPopUp-addButton">
-              <i class="fas fa-paperclip contactPopUp-add-attachment" />
+              <i className="fas fa-paperclip contactPopUp-add-attachment" />
               <span>Ajouter pièce jointe</span>
             </div>
           </div>
@@ -29,7 +50,12 @@ function ContactPopUp(props) {
             <div className="contactPopUp-cancel" onClick={cancelPopUp}>
               Annuler
             </div>
-            <div className="contactPopUp-send">Envoyer</div>
+            <div
+              className="contactPopUp-send"
+              onClick={() => sendMessage(talent.profil.informations.email)}
+            >
+              Envoyer
+            </div>
           </div>
         </div>
       </div>

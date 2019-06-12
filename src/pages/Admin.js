@@ -47,6 +47,9 @@ class Admin extends React.Component {
       </div>
     );
   }
+  componentDidMount = async () => {
+    this.props.setPageActive("admin/config");
+  };
 }
 
 export default Admin;

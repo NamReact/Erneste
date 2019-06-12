@@ -22,6 +22,7 @@ import ClientWelcome from "./pages/ClientWelcome";
 import ClientMail from "./pages/ClientMail";
 import ResetPassword from "./pages/ResetPassword";
 import ForgottenPassword from "./pages/ForgottenPassword";
+import TalentOpportunities from "./pages/TalentOpportunities";
 
 class App extends React.Component {
   constructor(props) {
@@ -72,7 +73,7 @@ class App extends React.Component {
                 }
 
                 if (this.state.userData.permission === "Client") {
-                  const clientLink = `/client/${this.state.userData.id}`;
+                  const clientLink = `/client/${this.state.userData.idCompany}`;
                   return <Redirect to={clientLink} />;
                 }
               }
@@ -199,6 +200,23 @@ class App extends React.Component {
               );
             }}
           />
+          <Route
+            exact={true}
+            path="/talent/opportunities/:id"
+            render={props => {
+              if (!this.state.userData) {
+                return <Redirect to={"/"} />;
+              }
+              return (
+                <TalentOpportunities
+                  match={props.match}
+                  permission={this.state.userData.permission}
+                  setPageActive={this.setPageActive}
+                  token={this.state.userData.token}
+                />
+              );
+            }}
+          />
           {/* ------CLIENT ROADS ----- */}
           <Route
             exact={true}
@@ -213,6 +231,7 @@ class App extends React.Component {
                   permission={this.state.userData.permission}
                   setPageActive={this.setPageActive}
                   token={this.state.userData.token}
+                  userMail={this.state.userData.email}
                 />
               );
             }}

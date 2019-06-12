@@ -32,12 +32,10 @@ function HeaderAdmin(props) {
   // ------ TALENT ------ //
   if (props.pageType === "talent") {
     classNameTalentProfil = "headerAdmin-tools-active";
-  } else {
     classNameTalentOpportunities = "headerAdmin-tools-inactive";
   }
   if (props.pageType === "talent/opportunities") {
     classNameTalentProfil = "headerAdmin-tools-inactive";
-  } else {
     classNameTalentOpportunities = "headerAdmin-tools-active";
   }
 
@@ -45,13 +43,11 @@ function HeaderAdmin(props) {
 
   if (props.pageType === "client") {
     classNameClientWelcome = "headerAdmin-tools-active";
-  } else {
     classNameClientMail = "headerAdmin-tools-inactive";
   }
   if (props.pageType === "client/mail") {
-    classNameClientWelcome = "headerAdmin-tools-active";
-  } else {
-    classNameClientMail = "headerAdmin-tools-inactive";
+    classNameClientWelcome = "headerAdmin-tools-inactive";
+    classNameClientMail = "headerAdmin-tools-active";
   }
   return (
     <header>
@@ -92,10 +88,14 @@ function HeaderAdmin(props) {
         {/* ------ TALENT PAGES ----- */}
         {/* ------------------------- */}
 
-        {props.pageType === "talent" && (
+        {(props.pageType === "talent" ||
+          props.pageType === "talent/opportunities") && (
           <div className="headerAdmin-tools">
             {/* Link to Opportunities */}
-            <Link className="linkDecoration" to={`/talent/opportunities/`}>
+            <Link
+              className="linkDecoration"
+              to={`/talent/opportunities/${props.userID}`}
+            >
               <i
                 className={`fas fa-envelope ${classNameTalentOpportunities} `}
               />
@@ -118,7 +118,7 @@ function HeaderAdmin(props) {
         {/* ------ CLIENT PAGES ----- */}
         {/* ------------------------- */}
 
-        {props.pageType === "client" && (
+        {(props.pageType === "client" || props.pageType === "client/mail") && (
           <div className="headerAdmin-tools">
             {/* Link to Welcome page */}
             <Link className="linkDecoration" to={`/client/${props.userID}`}>

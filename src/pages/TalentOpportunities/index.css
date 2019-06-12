@@ -1,6 +1,6 @@
-/* CSS for Client Mail Page */
+/* CSS for Talent Opportunities Page */
 
-.client-mail-content {
+.talent-opportunities-content {
   --input-padding: 10px;
   --input-margin: 10px;
   --input-width: 200px;
@@ -14,7 +14,7 @@
   background-color: rgb(250, 250, 252);
 }
 
-.client-mail-body-container {
+.talent-opportunities-body-container {
   display: flex;
   justify-content: space-between;
   /* align-items: center; */
@@ -25,13 +25,13 @@
 }
 
 /* ------ LEFT BLOCK ------- */
-.client-mail-leftBlock {
+.talent-opportunities-leftBlock {
   width: 49%;
   overflow: scroll;
 }
 
 /* LEFT BLOCK - TITLE */
-.client-mail-leftBlock-title {
+.talent-opportunities-leftBlock-title {
   font-size: 40px;
   font-family: var(--title-font);
   color: #333366;
@@ -39,24 +39,24 @@
 }
 
 /* LEFT BLOCK - CONTACT BLOCK */
-.client-mail-leftBlock-contactBlock {
+.talent-opportunities-leftBlock-contactBlock {
   background-color: var(--container-background);
   box-shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
   padding: 15px;
 }
 
 /* LEFT BLOCK - CONTACT BLOCK - TITLE */
-.client-mail-leftBlock-contactBlock-title {
+.talent-opportunities-leftBlock-contactBlock-title {
   color: var(--dark-blue);
   font-size: 29px;
   margin-bottom: 20px;
 }
 /* LEFT BLOCK - CONTACT BLOCK - SEARCHLINE */
-.client-mail-leftBlock-contactBlock-searchLine {
+.talent-opportunities-leftBlock-contactBlock-searchLine {
   margin-bottom: 20px;
 }
 
-.client-mail-leftBlock-contactBlock-searchLine-searchBlock {
+.talent-opportunities-leftBlock-contactBlock-searchLine-searchBlock {
   border: 1px solid var(--input-border-color);
   border-radius: 5px;
   width: 300px;
@@ -66,7 +66,7 @@
   align-items: center;
   justify-content: flex-start;
 }
-.client-mail-leftBlock-contactBlock-searchLine-searchBlock > input {
+.talent-opportunities-leftBlock-contactBlock-searchLine-searchBlock > input {
   padding: 5px;
   border: none;
   text-decoration: none;
@@ -77,13 +77,13 @@
 }
 
 /* LEFT BLOCK - CONTACT BLOCK - LIST */
-.client-mail-leftBlock-contactBlock-list {
+.talent-opportunities-leftBlock-contactBlock-list {
   display: flex;
   flex-direction: column;
 }
 
 /* LEFT BLOCK - contact BLOCK - LIST - TITLE */
-.client-mail-leftBlock-contactBlock-list-title > ul {
+.talent-opportunities-leftBlock-contactBlock-list-title > ul {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -96,7 +96,7 @@
   transition: background-color 0.5s;
 }
 
-.client-mail-leftBlock-contactBlock-list-title > ul > li {
+.talent-opportunities-leftBlock-contactBlock-list-title > ul > li {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -104,91 +104,37 @@
   padding: 0;
 }
 
-.client-mail-leftBlock-contactBlock-list-checkBox {
+.talent-opportunities-leftBlock-contactBlock-list-checkBox {
   min-width: 30px;
   display: flex;
   align-items: center;
   margin-right: 10px;
 }
 
-.client-mail-leftBlock-contactBlock-list-talent {
+.talent-opportunities-leftBlock-contactBlock-list-talent {
   min-width: 160px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
 }
-.client-mail-leftBlock-contactBlock-list-objet {
+.talent-opportunities-leftBlock-contactBlock-list-objet {
   min-width: 160px;
   display: flex;
   align-items: center;
 }
 
-.client-mail-leftBlock-contactBlock-list-statut {
+.talent-opportunities-leftBlock-contactBlock-list-statut {
   min-width: 160px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-}
-
-/* LEFT BLOCK - CONTACT BLOCK - LIST - TALENT */
-.client-mail-leftBlock-contactBlock-list-contact {
-  display: flex;
-  flex-direction: column;
-}
-
-/* LEFT BLOCK - CONTACT BLOCK - LIST - TALENT - TALENTILNE  */
-.client-mail-leftBlock-contactBlock-list-contact > ul {
-  display: flex;
-  flex-direction: row;
-  list-style-type: none;
-  margin: 0;
-  padding: 10px 0px;
-  border-bottom: solid 1px var(--placeholder-grey);
-  background-color: var(--container-background);
-  transition: background-color 0.5s;
-}
-.client-mail-leftBlock-contactBlock-list-contact > ul:hover {
-  background-color: #fafafc;
-}
-
-/* LEFT BLOCK - CONTACT BLOCK - LIST - TALENT -TALENTLINE - ELEMENT */
-.client-mail-leftBlock-contactBlock-list-contact > ul > li {
-  margin: 0;
-  padding: 0;
 }
 
 /* ------ RIGHT BLOCK ------- */
-.client-mail-rightBlock {
+.talent-opportunities-rightBlock {
   width: 49%;
   box-shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
   background-color: var(--container-background);
   height: 500px;
-}
-
-.client-mail-conversationShown-container {
-  padding: 20px;
-}
-.client-mail-conversationShown-name {
-  margin-bottom: 30px;
-  font-weight: 500;
-}
-
-.client-mail-conversationShown-object {
-  margin-bottom: 20px;
-  font-weight: 600;
-}
-.client-mail-conversationShown-firstMessage {
-  margin-bottom: 20px;
-}
-.client-mail-conversationShown-link {
-  margin-bottom: 20px;
-}
-
-.client-mail-conversationShown-messageBlock {
-  display: flex;
-  margin-bottom: 20px;
-}
-.client-mail-conversationShown-picture {
-  margin-right: 20px;
 }
