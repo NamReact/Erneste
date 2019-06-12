@@ -1,0 +1,61 @@
+.client-information-container {
+  --input-padding: 10px;
+  --input-margin: 10px;
+  --input-width: 200px;
+  --input-height: 35px;
+  --container-background: rgb(254, 254, 254);
+  --input-border-color: rgba(168, 176, 208, 0.3);
+  --dark-blue: #333266;
+  --soft-skill-color: #ef6364;
+  padding: 35px 25px;
+  background-color: var(--container-background);
+  margin: 50px 0;
+  border-radius: 2px;
+  box-shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
+  flex: 2;
+  height: 100%;
+  /* width: 600px; */
+}
+
+.client-information-detail-container {
+  display: flex;
+}
+
+.client-information-empty-picture {
+  width: 150px;
+  height: 150px;
+  border: 2px solid var(--input-border-color);
+}
+
+.client-information-detail {
+  margin-left: 20px;
+}
+
+.client-information-name {
+  margin: 0;
+  font-size: 30px;
+}
+
+/* Talent container */
+
+.client-information-talent-container > input {
+  margin: 30px 0;
+}
+
+.client-information-talent-list-title {
+  display: flex;
+  border-bottom: 2px solid var(--input-border-color);
+  padding-bottom: 10px;
+}
+
+.client-information-talent {
+  flex: 2;
+}
+
+.client-information-state {
+  flex: 2;
+}
+
+.client-information-rating {
+  flex: 1;
+}

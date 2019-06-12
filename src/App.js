@@ -14,7 +14,7 @@ import TalentListPage from "./components/TalentList/TalentListPage";
 import ClientList from "./components/ClientList/ClientList";
 import TalentforTalent from "./pages/TalentPage/TalentforTalent";
 import Login from "../src/pages/Login";
-import ClientforAdmin from "./components/ClientforAdmin/ClientforAdmin";
+import ClientforAdmin from "./pages/ClientForAdmin/index";
 import Cookies from "js-cookie";
 import HeaderAdmin from "./components/HeaderAdmin";
 import Admin from "./pages/Admin";
