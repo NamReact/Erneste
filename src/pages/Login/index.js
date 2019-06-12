@@ -8,8 +8,10 @@ class Login extends React.Component {
   state = {
     email: "",
     password: "",
+    key: "",
     wrong: false,
-    showPassword: false
+    showPassword: false,
+    login: false
   };
 
   setEmail = e => {
@@ -18,6 +20,14 @@ class Login extends React.Component {
 
   setPassword = e => {
     this.setState({ password: e.target.value });
+  };
+
+  setKey = e => {
+    this.setState({ key: e.target.value });
+  };
+
+  setLogin = () => {
+    this.setState({ login: !this.state.login });
   };
 
   showPassword = () => {
@@ -55,9 +65,40 @@ class Login extends React.Component {
     }
   };
 
+  clientLogin = async () => {
+    try {
+      const response = await axios.post(
+        "https://ernest-server.herokuapp.com/login/client",
+        {
+          email: this.state.email,
+          password: this.state.password,
+          key: this.state.key
+        }
+      );
+      Cookies.set("erneste", {
+        token: response.data.token,
+        permission: response.data.permission,
+        id: response.data.id,
+        clientId: response.data.clientId,
+        email: response.data.email
+      });
+      this.props.onLogIn({
+        token: response.data.token,
+        permission: response.data.permission,
+        id: response.data.id
+      });
+      this.setState({ wrong: false });
+    } catch (error) {
+      this.setState({ wrong: true, password: "" });
+    }
+  };
+
   render() {
     return (
       <div className="login-container">
+        <div className="login-client-login" onClick={this.setLogin}>
+          {this.state.login ? "Connexion Talent" : "Connexion RH"}
+        </div>
         <div className="login-img">
           <div className="login-left-side">
             <div className="login-circle" />
@@ -72,6 +113,7 @@ class Login extends React.Component {
             </div>
           </div>
         </div>
+
         <div className="login-input-container">
           <h3 className="login-h3">Connectez vous</h3>
           <input
@@ -81,6 +123,15 @@ class Login extends React.Component {
             onChange={this.setEmail}
             placeholder="Votre email"
           />
+          {this.state.login && (
+            <input
+              name="key"
+              className="login-input"
+              value={this.state.key}
+              onChange={this.setKey}
+              placeholder="Clé d'activation"
+            />
+          )}
           <div className="login-password-container">
             <input
               name="password"
@@ -99,8 +150,11 @@ class Login extends React.Component {
             </span>
           </div>
 
-          {this.state.wrong && <div>Wrong email / password</div>}
-          <div onClick={this.login} className="login-button">
+          {this.state.wrong && <div>Mauvais email ou mot de passe</div>}
+          <div
+            onClick={this.state.login ? this.clientLogin : this.login}
+            className="login-button"
+          >
             C'est parti !
           </div>
           <Link to="/forgotten-password">
