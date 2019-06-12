@@ -165,6 +165,7 @@ class TalentforTalent extends React.Component {
               setStatus={this.setStatus}
               setSector={this.setSector}
               deleteSector={this.deleteSector}
+              token={this.props.token}
             />
           ) : (
             <TalentInfoDisplay
@@ -179,6 +180,7 @@ class TalentforTalent extends React.Component {
           <TalentDescription
             description={this.state.description}
             skills={this.state.skills}
+            token={this.props.token}
           />
         </div>
       </div>

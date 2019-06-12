@@ -1,7 +1,7 @@
 import React from "react";
-import "./ContactPopUp.css";
+import "./index.css";
 
-function ContactPopUp(props) {
+function PopUpClientWelcome(props) {
   const {
     cancelPopUp,
     objectValue,
@@ -63,4 +63,4 @@ function ContactPopUp(props) {
   );
 }
 
-export default ContactPopUp;
+export default PopUpClientWelcome;

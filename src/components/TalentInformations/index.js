@@ -485,12 +485,12 @@ class TalentInformations extends React.Component {
   async componentDidMount() {
     const response1 = await axios.get(
       "https://ernest-server.herokuapp.com/sector",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
 
     const response2 = await axios.get(
       "https://ernest-server.herokuapp.com/title",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
 
     this.setState({

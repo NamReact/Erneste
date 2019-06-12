@@ -45,7 +45,7 @@ class AdminInformations extends React.Component {
           email: this.state.email,
           newPassword: this.state.password
         },
-        { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+        { headers: { authorization: `Bearer ${this.props.token}` } }
       );
       this.setState({ passwordChangeReturn: response.data });
     }

@@ -32,7 +32,7 @@ class PopUpClient extends React.Component {
         email: this.state.email,
         clientEmail: this.props.clientEmail
       },
-      { headers: { authorization: `Bearer GFhOYeUPB2CA6TKZ` } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     this.props.setPopUp();
   };

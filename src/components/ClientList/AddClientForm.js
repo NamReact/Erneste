@@ -68,7 +68,7 @@ class AddClientForm extends React.Component {
         { name: this.state.addNewSector },
         {
           headers: {
-            authorization: "Bearer GFhOYeUPB2CA6TKZ"
+            authorization: `Bearer ${this.props.token}`
           }
         }
       );
@@ -95,7 +95,7 @@ class AddClientForm extends React.Component {
       },
       {
         headers: {
-          authorization: "Bearer GFhOYeUPB2CA6TKZ"
+          authorization: `Bearer ${this.props.token}`
         }
       }
     );
@@ -318,7 +318,7 @@ class AddClientForm extends React.Component {
     this.setState({ isLoading: true });
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/sector/",
-      { headers: { authorization: "Bearer " + "GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     this.setState({
       isLoading: false,

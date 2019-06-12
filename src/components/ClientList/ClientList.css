@@ -161,7 +161,10 @@ button:focus {
 
 /* .hover-clientList-right-block {
   /* display: flex; */
-
+.hover-clientList-right-block {
+  text-decoration: none;
+  color: #333366;
+}
 .hover-clientList-right-block:hover {
   /* background: #3a87be; */
   /* background: #687ec779; */

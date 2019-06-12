@@ -33,7 +33,6 @@ class App extends React.Component {
     this.state = {
       userData: null || userData,
       pageActive: null
-      /* mettre dans le state un token qui permet d'identifeir qui consulte la fiche, qui peut modifier quoi*/
     };
 
     this.handleClickLogOut = () => {

@@ -167,6 +167,7 @@ class TalentforAdmin extends React.Component {
             setDescription={this.setDescription}
             setSkills={this.setSkills}
             deleteSkills={this.deleteSkills}
+            token={this.props.token}
           />
         </div>
       </div>

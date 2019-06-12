@@ -4,7 +4,7 @@ import "./index.css";
 import box from "../../features/icons/check_24px.svg";
 
 import ReactFileReader from "react-file-reader";
-import ContactPopUp from "../../components/ClientWelcome/ContactPopUp";
+import PopUpClientWelcome from "../../components/PopUpClientWelcome";
 
 class ClientWelcome extends React.Component {
   state = {
@@ -370,7 +370,7 @@ class ClientWelcome extends React.Component {
       <div className="client-welcome-content">
         <div className="client-welcome-body-container">
           {this.state.contactPopUp && (
-            <ContactPopUp
+            <PopUpClientWelcome
               cancelPopUp={this.cancelPopUp}
               objectValue={this.state.popUpObjectInput}
               messageValue={this.state.messageInputValue}

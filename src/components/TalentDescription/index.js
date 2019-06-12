@@ -124,7 +124,7 @@ class TalentDescriptions extends React.Component {
                     : "Fermer la liste"}
                 </div>
                 {this.state.tagList === true ? (
-                  <TagList setTag={this.setTag} />
+                  <TagList setTag={this.setTag} token={this.props.token} />
                 ) : null}
               </div>
             )}

@@ -34,7 +34,7 @@ class TagList extends React.Component {
       const response = await axios.post(
         "https://ernest-server.herokuapp.com/tag/create",
         { name: this.state.search, type: "soft" },
-        { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+        { headers: { authorization: `Bearer ${this.props.token}` } }
       );
       this.setState({ data: response.data });
     }
@@ -52,7 +52,7 @@ class TagList extends React.Component {
       const response = await axios.post(
         "https://ernest-server.herokuapp.com/tag/create",
         { name: this.state.search, type: "hard" },
-        { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+        { headers: { authorization: `Bearer ${this.props.token}` } }
       );
       this.setState({ data: response.data });
     }
@@ -120,7 +120,7 @@ class TagList extends React.Component {
   async componentDidMount() {
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/tag",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     this.setState({ data: response.data });
   }

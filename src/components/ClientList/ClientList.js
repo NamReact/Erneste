@@ -4,6 +4,7 @@ import axios from "axios";
 import AddClientForm from "./AddClientForm";
 import box from "../../features/icons/check_24px.svg";
 import checkedbox from "../../features/icons/check_24px copy.svg";
+import { Link } from "react-router-dom";
 
 import "./ClientList.css";
 
@@ -461,6 +462,7 @@ class ClientList extends React.Component {
                   className="popUpWindow"
                   text="Close Me"
                   closePopup={this.togglePopup}
+                  token={this.props.token}
                 />
               ) : null}
             </div>
@@ -486,7 +488,10 @@ class ClientList extends React.Component {
                 const Secteur = { ...client.Secteur };
 
                 return (
-                  <div className="hover-clientList-right-block">
+                  <Link
+                    to={`/admin/client/${client._id}`}
+                    className="hover-clientList-right-block"
+                  >
                     <ul key={client._id} className="clientListItem">
                       <li>
                         {/* <button className="deleteAll" /> */}
@@ -501,7 +506,7 @@ class ClientList extends React.Component {
                       <li>{client.numberOfUser ? client.numberOfUser : "0"}</li>
                       <li>{client.recruited ? client.recruited : "0"}</li>
                     </ul>
-                  </div>
+                  </Link>
                 );
               })}
             </div>

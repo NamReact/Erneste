@@ -42,18 +42,19 @@ class ClientforAdmin extends React.Component {
           <PopUpClient
             setPopUp={this.setPopUp}
             clientEmail={this.state.data.email}
+            token={this.props.token}
           />
         )}
       </div>
     );
   }
   async componentDidMount() {
+    this.props.setPageActive("admin/client");
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/client/" +
         this.props.match.params.id,
-      { headers: { authorization: `Bearer GFhOYeUPB2CA6TKZ` } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
-    console.log(response.data);
     this.setState({ data: response.data });
   }
 }
