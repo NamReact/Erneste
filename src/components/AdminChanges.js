@@ -10,52 +10,87 @@ class AdminChanges extends React.Component {
     loadingtag: true,
     loadingsector: true,
     loadingtitle: true,
-    status: null,
+    status: 1,
+    itemToDisplayName: "",
+    itemToDisplayId: "",
+    itemToDisplayType: "",
     elementstodelete: [],
-    itemtodisplay: {},
+    sectorToDelete: [],
+    titleToDelete: [],
+    name: "",
     newTag: "",
     newTagType: "",
     newTagName: "",
     tagTypeToDisplay: false,
     newSector: null,
     newTitle: null,
-    statusInput: null
+    statusInput: null,
+    setType: false
   };
 
-  onTagClick = e => {
-    this.setState({ status: 1 });
+  onButtonClick = e => {
+    this.setState({
+      status: Number(e.target.id),
+      itemToDisplayName: "",
+      itemToDisplayId: "",
+      itemToDisplayType: ""
+    });
   };
 
-  onSecteurClick = e => {
-    this.setState({ status: 2 });
+  setType = () => {
+    this.setState({ setType: !this.state.setType });
   };
 
-  onFonctionClick = e => {
-    this.setState({ status: 3 });
+  typeChange = e => {
+    this.setState({ itemToDisplayType: e.target.id, setType: false });
   };
 
+  removeSelectedTag = id => {
+    const deleteArray = this.state.elementstodelete;
+    deleteArray.splice(deleteArray.indexOf(id), 1);
+    this.setState({ elementstodelete: deleteArray });
+  };
+
+  removeSelectedSector = id => {
+    const deleteArray = this.state.sectorToDelete;
+    deleteArray.splice(deleteArray.indexOf(id), 1);
+    this.setState({ sectorToDelete: deleteArray });
+  };
+
+  removeSelectedTitle = id => {
+    const deleteArray = this.state.titleToDelete;
+    deleteArray.splice(deleteArray.indexOf(id), 1);
+    this.setState({ titleToDelete: deleteArray });
+  };
   /* DELETE */
 
   /* Fonction to select tags to delete  */
-  onSelectedTag = e => {
-    for (let i = 0; i < this.state.tag.length; i++) {
-      if (e === this.state.tag[i]._id) {
-        this.state.elementstodelete.push(this.state.tag[i]._id);
-        break;
-      }
-    }
+  onSelectedTag = id => {
     const newTab = [...this.state.elementstodelete];
+    newTab.push(id);
     this.setState({ elementstodelete: newTab });
-    console.log(this.state.elementstodelete);
   };
 
-  /* Function to delete */
-  deleteElement = async () => {
-    const tags = this.state.elementstodelete;
+  onSelectedSector = id => {
+    const newTab = [...this.state.sectorToDelete];
+    newTab.push(id);
+    this.setState({ sectorToDelete: newTab });
+  };
 
+  onSelectedTitle = id => {
+    const newTab = [...this.state.titleToDelete];
+    newTab.push(id);
+    this.setState({ titleToDelete: newTab });
+  };
+
+  setName = e => {
+    this.setState({ itemToDisplayName: e.target.value });
+  };
+  /* Function to delete */
+  deleteTag = async () => {
     await axios.post(
       "https://ernest-server.herokuapp.com/tag/delete",
-      { tags },
+      { tags: this.state.elementstodelete },
       {
         headers: { authorization: `Bearer ${this.props.token}` }
       }
@@ -66,7 +101,170 @@ class AdminChanges extends React.Component {
     );
     this.setState({
       tag: response.data,
+      loadingtag: false
+    });
+  };
 
+  deleteSector = async () => {
+    await axios.post(
+      "https://ernest-server.herokuapp.com/sector/delete",
+      { sectors: this.state.sectorToDelete },
+      {
+        headers: { authorization: `Bearer ${this.props.token}` }
+      }
+    );
+    const response = await axios.get(
+      "https://ernest-server.herokuapp.com/sector",
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    this.setState({
+      sector: response.data,
+      loadingtag: false
+    });
+  };
+
+  deleteTitle = async () => {
+    await axios.post(
+      "https://ernest-server.herokuapp.com/title/delete",
+      { titles: this.state.titleToDelete },
+      {
+        headers: { authorization: `Bearer ${this.props.token}` }
+      }
+    );
+    const response = await axios.get(
+      "https://ernest-server.herokuapp.com/title",
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    this.setState({
+      title: response.data,
+      loadingtag: false
+    });
+  };
+
+  addTags = async () => {
+    if (!this.state.itemToDisplayId) {
+      return;
+    }
+    await axios.post(
+      "https://ernest-server.herokuapp.com/tag/create",
+      {
+        name: this.state.itemToDisplayName,
+        type: this.state.itemToDisplayType
+      },
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    const response = await axios.get(
+      "https://ernest-server.herokuapp.com/tag",
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    this.setState({
+      tag: response.data,
+      loadingtag: false,
+      itemToDisplayName: "",
+      itemToDisplayType: ""
+    });
+  };
+
+  addSector = async () => {
+    await axios.post(
+      "https://ernest-server.herokuapp.com/sector/create",
+      {
+        name: this.state.itemToDisplayName
+      },
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    const response = await axios.get(
+      "https://ernest-server.herokuapp.com/sector",
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    this.setState({
+      sector: response.data,
+      loadingtag: false,
+      itemToDisplayName: "",
+      itemToDisplayType: ""
+    });
+  };
+
+  addTitle = async () => {
+    await axios.post(
+      "https://ernest-server.herokuapp.com/title/create",
+      {
+        name: this.state.itemToDisplayName
+      },
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    const response = await axios.get(
+      "https://ernest-server.herokuapp.com/title",
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    this.setState({
+      title: response.data,
+      loadingtag: false,
+      itemToDisplayName: "",
+      itemToDisplayType: ""
+    });
+  };
+
+  modifyTags = async () => {
+    await axios.post(
+      "https://ernest-server.herokuapp.com/tag/update",
+      {
+        tag: {
+          id: this.state.itemToDisplayId,
+          name: this.state.itemToDisplayName,
+          type: this.state.itemToDisplayType
+        }
+      },
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    const response = await axios.get(
+      "https://ernest-server.herokuapp.com/tag",
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    this.setState({
+      tag: response.data,
+      loadingtag: false
+    });
+  };
+
+  modifySector = async () => {
+    await axios.post(
+      "https://ernest-server.herokuapp.com/sector/update",
+      {
+        sector: {
+          id: this.state.itemToDisplayId,
+          name: this.state.itemToDisplayName
+        }
+      },
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    const response = await axios.get(
+      "https://ernest-server.herokuapp.com/sector",
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    this.setState({
+      sector: response.data,
+      loadingtag: false
+    });
+  };
+
+  modifyTitle = async () => {
+    await axios.post(
+      "https://ernest-server.herokuapp.com/title/update",
+      {
+        title: {
+          id: this.state.itemToDisplayId,
+          name: this.state.itemToDisplayName
+        }
+      },
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    const response = await axios.get(
+      "https://ernest-server.herokuapp.com/title",
+      { headers: { authorization: `Bearer ${this.props.token}` } }
+    );
+    this.setState({
+      title: response.data,
       loadingtag: false
     });
   };
@@ -76,129 +274,70 @@ class AdminChanges extends React.Component {
   /* fonction to select item to modify */
   onSelectedItem = e => {
     this.setState({
-      itemtodisplay: {
-        id: e._id,
-        name: e.name,
-        type: e.type
-      },
+      itemToDisplayName: e.name,
+      itemToDisplayId: e._id,
+      itemToDisplayType: e.type,
       statusInput: null
     });
   };
 
-  /* Functions to modify tag name and type*/
-
-  handleChange = e => {
-    const newTag = this.state.itemtodisplay;
-
-    newTag.name = e.target.value;
-
-    this.setState({ itemtodisplay: newTag });
-  };
-
-  onTagTypeClick = () => {
-    this.setState({ tagTypeToDisplay: true });
-  };
-
-  setTagType = type => {
-    const newTag = this.state.itemtodisplay;
-    newTag.type = type;
-
-    this.setState({ itemtodisplay: newTag });
-  };
-
-  modifyElement = async () => {
-    let tag = this.state.itemtodisplay;
-
-    await axios.post(
-      "https://ernest-server.herokuapp.com/tag/update",
-      {
-        tag
-      },
-      { headers: { authorization: `Bearer ${this.props.token}` } }
-    );
-    const response = await axios.get(
-      "https://ernest-server.herokuapp.com/tag",
-      { headers: { authorization: `Bearer ${this.props.token}` } }
-    );
-    this.setState({
-      tag: response.data,
-
-      loadingtag: false
-    });
-  };
-
-  /* ADD */
-
-  /* entrer une nouvelle valeur */
-  /* display the input to add a new tag rather than the input to modify */
-  inputElement = () => {
-    this.setState({ statusInput: this.state.status });
-  };
-
-  handleChangeAdd = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  /* poster la nouvelle valeur */
-
-  addElement = async () => {
-    await axios.post(
-      "https://ernest-server.herokuapp.com/tag/create",
-      {
-        name: this.state.newTagName,
-        type: this.state.newTagType
-      },
-      { headers: { authorization: `Bearer ${this.props.token}` } }
-    );
-    const response = await axios.get(
-      "https://ernest-server.herokuapp.com/tag",
-      { headers: { authorization: `Bearer ${this.props.token}` } }
-    );
-    this.setState({
-      tag: response.data,
-
-      loadingtag: false
-    });
-  };
-
   render() {
-    if (
-      this.state.loadingtag ||
-      this.state.loadingtitle ||
-      this.state.loadingsector
-    ) {
-      return <div>loading</div>;
-    }
-
     return (
-      <div className="container-for-admin">
-        <div className="left-changes-bdd">
-          <div className="button-for-admin" onClick={this.onTagClick}>
+      <div className="admin-changes-container">
+        <div className="admin-changes-left-container">
+          <div
+            id="1"
+            className="admin-changes-button"
+            onClick={e => this.onButtonClick(e)}
+          >
             Tags
           </div>
-          <div className="button-for-admin" onClick={this.onSecteurClick}>
+          <div
+            id="2"
+            className="admin-changes-button"
+            onClick={e => this.onButtonClick(e)}
+          >
             Secteurs
           </div>
-          <div className="button-for-admin" onClick={this.onFonctionClick}>
+          <div
+            id="3"
+            className="admin-changes-button"
+            onClick={e => this.onButtonClick(e)}
+          >
             Fonctions
           </div>
         </div>
-        <div className="right-changes-bdd">
-          <div className="list-to-change">
-            {/* status 1 : display of the tags */}
+
+        <div className="admin-changes-right-container">
+          <div className="admin-changes-items-list">
             {this.state.status === 1
               ? this.state.tag.map(item => {
                   return (
-                    <div className="display-tag-to-change">
+                    <div
+                      className="admin-changes-items-to-change"
+                      key={item._id}
+                    >
+                      {this.state.elementstodelete.indexOf(item._id) === -1 ? (
+                        <div
+                          className="admin-changes-check-box"
+                          onClick={() => {
+                            this.onSelectedTag(item._id);
+                          }}
+                        >
+                          <i className="far fa-square" />
+                        </div>
+                      ) : (
+                        <div
+                          className="admin-changes-check-box"
+                          onClick={() => {
+                            this.removeSelectedTag(item._id);
+                          }}
+                        >
+                          <i className="fas fa-check-square" />
+                        </div>
+                      )}
                       <div
-                        className="selector"
-                        onClick={() => {
-                          this.onSelectedTag(item._id);
-                        }}
-                      />
-                      <div
-                        className="items-to-change"
-                        key={item._id}
+                        className="admin-changes-item-name"
                         onClick={() => this.onSelectedItem(item)}
                       >
                         {item.name}
@@ -207,123 +346,169 @@ class AdminChanges extends React.Component {
                   );
                 })
               : false}
-            {/* status 2 : display of the sectors */}
             {this.state.status === 2
               ? this.state.sector.map(item => {
                   return (
-                    <div className="items-to-change" key={item._id}>
-                      {item.name}
+                    <div
+                      className="admin-changes-items-to-change"
+                      key={item._id}
+                    >
+                      {this.state.sectorToDelete.indexOf(item._id) === -1 ? (
+                        <div
+                          className="admin-changes-check-box"
+                          onClick={() => {
+                            this.onSelectedSector(item._id);
+                          }}
+                        >
+                          <i className="far fa-square" />
+                        </div>
+                      ) : (
+                        <div
+                          className="admin-changes-check-box"
+                          onClick={() => {
+                            this.removeSelectedSector(item._id);
+                          }}
+                        >
+                          <i className="fas fa-check-square" />
+                        </div>
+                      )}
+                      <div
+                        className="admin-changes-item-name"
+                        onClick={() => this.onSelectedItem(item)}
+                      >
+                        {item.name}
+                      </div>
                     </div>
                   );
                 })
               : false}
-            {/* status 3 : display of the titles */}
             {this.state.status === 3
               ? this.state.title.map(item => {
                   return (
-                    <div className="items-to-change" key={item._id}>
-                      {item.name}
+                    <div
+                      className="admin-changes-items-to-change"
+                      key={item._id}
+                    >
+                      {this.state.titleToDelete.indexOf(item._id) === -1 ? (
+                        <div
+                          className="admin-changes-check-box"
+                          onClick={() => {
+                            this.onSelectedTitle(item._id);
+                          }}
+                        >
+                          <i className="far fa-square" />
+                        </div>
+                      ) : (
+                        <div
+                          className="admin-changes-check-box"
+                          onClick={() => {
+                            this.removeSelectedTitle(item._id);
+                          }}
+                        >
+                          <i className="fas fa-check-square" />
+                        </div>
+                      )}
+                      <div
+                        className="admin-changes-item-name"
+                        onClick={() => this.onSelectedItem(item)}
+                      >
+                        {item.name}
+                      </div>
                     </div>
                   );
                 })
               : false}
           </div>
-          {/* Display to modify tag name and type*/}
-          <div className="tag-modification-container">
-            {this.state.statusInput !== 1 ? (
-              this.state.itemtodisplay.id ? (
-                <div className="input-to-modify-tag">
-                  <input
-                    type="string"
-                    name="name"
-                    value={this.state.itemtodisplay.name}
-                    onChange={this.handleChange}
-                    className="input-tag-type-to-modify"
-                  />
-                  <div className="input-to-modify-tag-type">
-                    <input
-                      type="string"
-                      name="type"
-                      value={this.state.itemtodisplay.type}
-                      onClick={this.onTagTypeClick}
-                      className="input-tag-type-to-modify"
-                    />
-                    {/* Display of types to select from for tag update*/}
-                    {this.state.tagTypeToDisplay === true ? (
-                      <div>
-                        <div
-                          className="type-display-hard"
-                          onClick={e => {
-                            this.setTagType("hard");
-                          }}
-                        >
-                          hard
-                        </div>
-                        <div
-                          className="type-display-soft"
-                          onClick={e => {
-                            this.setTagType("soft");
-                          }}
-                        >
-                          soft
-                        </div>
-                      </div>
-                    ) : (
-                      false
-                    )}
+          <div className="admin-changes-modification-container">
+            <div className="admin-changes-modification-area">
+              <div className="admin-changes-input-title">Intitulé</div>
+              <input
+                value={this.state.itemToDisplayName}
+                className="admin-changes-input"
+                onChange={this.setName}
+                placeholder="Text..."
+              />
+              {this.state.status === 1 ? (
+                <div>
+                  <div>Type</div>
+                  <div
+                    className="admin-changes-type-change"
+                    onClick={this.setType}
+                  >
+                    {this.state.itemToDisplayType}
                   </div>
+                  {this.state.setType ? (
+                    <div className="admin-changes-type-list">
+                      <div
+                        id="hard"
+                        className="admin-changes-item-name"
+                        style={{ margin: "0" }}
+                        onClick={this.typeChange}
+                      >
+                        hard
+                      </div>
+                      <div
+                        id="soft"
+                        className="admin-changes-item-name"
+                        style={{ margin: "0" }}
+                        onClick={this.typeChange}
+                      >
+                        soft
+                      </div>
+                    </div>
+                  ) : (
+                    false
+                  )}
                 </div>
               ) : (
                 false
-              )
-            ) : (
-              false
-            )}
-            {/* Display to add tag name and tag type */}
-            {this.state.status !== null && (
-              <div className="add-element">
-                <div className="add-element-button" onClick={this.inputElement}>
-                  Ajouter un tag
-                </div>
-                {this.state.statusInput === 1 && (
-                  <div className="input-to-modify-tag">
-                    <div className="title">Name</div>
-                    <input
-                      name="newTagName"
-                      type="string"
-                      value={this.state.newTagName}
-                      onChange={this.handleChangeAdd}
-                      className="input-tag-type-to-modify"
-                    />
-                    <div className="title">Type</div>
-                    <input
-                      name="newTagType"
-                      type="string"
-                      value={this.state.newTagType}
-                      onChange={this.handleChangeAdd}
-                      className="input-tag-type-to-modify"
-                    />
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-
-          {this.state.status === null ? (
-            false
-          ) : (
-            <div className="buttons-for-action">
-              <div className="button-for-action" onClick={this.addElement}>
+              )}
+            </div>
+            <div className="admin-changes-button-container">
+              <div
+                className="admin-changes-modification-button"
+                onClick={
+                  this.state.status === 1
+                    ? this.addTags
+                    : this.state.status === 2
+                    ? this.addSector
+                    : this.state.status === 3
+                    ? this.addTitle
+                    : false
+                }
+              >
                 Ajouter
               </div>
-              <div className="button-for-action" onClick={this.modifyElement}>
+              <div
+                className="admin-changes-modification-button"
+                onClick={
+                  this.state.status === 1
+                    ? this.modifyTags
+                    : this.state.status === 2
+                    ? this.modifySector
+                    : this.state.status === 3
+                    ? this.modifyTitle
+                    : false
+                }
+              >
                 Modifier
               </div>
-              <div className="button-for-action" onClick={this.deleteElement}>
+              <div
+                className="admin-changes-modification-button"
+                onClick={
+                  this.state.status === 1
+                    ? this.deleteTag
+                    : this.state.status === 2
+                    ? this.deleteSector
+                    : this.state.status === 3
+                    ? this.deleteTitle
+                    : false
+                }
+              >
                 Effacer
               </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
     );
@@ -332,15 +517,15 @@ class AdminChanges extends React.Component {
   async componentDidMount() {
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/tag",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     const response2 = await axios.get(
       "https://ernest-server.herokuapp.com/sector",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
     const response3 = await axios.get(
       "https://ernest-server.herokuapp.com/title",
-      { headers: { authorization: "Bearer GFhOYeUPB2CA6TKZ" } }
+      { headers: { authorization: `Bearer ${this.props.token}` } }
     );
 
     this.setState({

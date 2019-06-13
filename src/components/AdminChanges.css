@@ -1,4 +1,4 @@
-.container-for-admin {
+.admin-changes-container {
   --margin-left: 15px;
   --center-body: 1200px;
   --input-border-color: rgba(168, 176, 208, 0.3);
@@ -14,29 +14,23 @@
   display: flex;
   background-color: var(--background-color);
   width: 1200px;
-  margin: auto;
+  margin: 50px auto;
+  justify-content: space-evenly;
 }
 
-.left-changes-bdd {
-  width: 200px;
-  border: solid 1px var(--input-border-color);
+.fas {
+  margin: 0;
+}
+
+.admin-changes-left-container {
+  border-radius: 5px;
   box-shadow: var(--shadow);
   background-color: var(--container-background);
-  margin: 50px 30px 0 auto;
+  height: 187px;
+  margin-right: 20px;
 }
 
-.right-changes-bdd {
-  width: 800px;
-  border: solid 1px var(--input-border-color);
-  box-shadow: var(--shadow);
-  background-color: var(--container-background);
-  margin-top: 50px;
-  margin-right: auto;
-  display: flex;
-  justify-content: space-around;
-}
-
-.button-for-admin {
+.admin-changes-button {
   height: var(--input-height);
   background-color: var(--dark-blue);
   color: white;
@@ -49,11 +43,31 @@
   border-radius: 3px;
 }
 
-.list-to-change {
+.admin-changes-right-container {
+  /*  width: 800px; */
+  max-height: 550px;
+  border-radius: 5px;
+  box-shadow: var(--shadow);
+  background-color: var(--container-background);
+  display: flex;
+  padding: 5px;
+  /*   justify-content: space-around; */
+}
+
+.admin-changes-items-list {
+  max-height: 530px;
+  overflow: scroll;
   margin: 20px;
 }
 
-.items-to-change {
+.admin-changes-items-to-change {
+  display: flex;
+  width: 200px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.admin-changes-item-name {
   margin: 0 10px;
   width: 150px;
   height: var(--input-height);
@@ -61,29 +75,79 @@
   padding-left: 10px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
-.button-for-action {
-  margin: 20px;
-  height: var(--input-height);
-  background-color: var(--soft-skill-color);
-  color: white;
-  width: 150px;
-  margin: 20px;
+.admin-changes-item-name:hover {
+  background-color: var(--background-color);
+}
+
+.admin-changes-check-box {
+  cursor: pointer;
+}
+
+.admin-changes-modification-container {
+  margin-top: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-changes-button-container {
+  display: flex;
+  margin-top: 80px;
+}
+
+.admin-changes-modification-button {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100px;
+  height: 30px;
+  margin: 20px 20px;
   cursor: pointer;
+  background-color: var(--soft-skill-color);
   border-radius: 3px;
+  color: white;
 }
 
-/* Display of the tags */
-.display-tag-to-change {
-  display: flex;
-  width: 300px;
-  align-items: center;
-  margin-bottom: 5px;
+.admin-changes-input-title {
+  margin: 10px 0;
 }
+
+.admin-changes-input {
+  display: block;
+  font-weight: 400;
+  height: 30px;
+  border: 1px solid var(--input-border-color);
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
+
+.admin-changes-type-change {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  font-weight: 400;
+  height: 30px;
+  border: 1px solid var(--input-border-color);
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 0 10px;
+  width: 147px;
+  cursor: pointer;
+}
+
+.admin-changes-type-list {
+  position: absolute;
+  border: 1px solid var(--input-border-color);
+}
+
+/* ******* */
+
+/* Display of the tags */
 
 .selector {
   width: 10px;
