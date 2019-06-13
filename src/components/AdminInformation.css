@@ -3,6 +3,8 @@
   width: 1200px;
   display: flex;
   margin: auto;
+  align-items: center;
+  justify-content: center;
   margin-top: 50px;
   --input-border-color: rgba(168, 176, 208, 0.3);
   --dark-blue: #333266;

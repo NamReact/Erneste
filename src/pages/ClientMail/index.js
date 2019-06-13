@@ -144,8 +144,6 @@ class ClientMail extends React.Component {
   };
 
   render() {
-    console.log("conversationmontrée", this.state.conversationShown);
-    console.log("conversations", this.state.conversations);
     /* Test of Loading... */
 
     if (this.state.isLoading === true) {

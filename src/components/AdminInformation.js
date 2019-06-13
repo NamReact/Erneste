@@ -141,7 +141,6 @@ class AdminInformations extends React.Component {
             </div>
           </div>
         )}
-        <div className="admin-information-right-side"> KPI here</div>
       </div>
     );
   }

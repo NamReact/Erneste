@@ -20,13 +20,10 @@
 }
 
 .talent-description-container textarea {
-  font-family: "Playfair Display";
   border: 1px solid var(--input-border-color);
   border-radius: 5px;
   margin: var(--input-margin) 0;
-  /* padding: var(--input-padding); */
   resize: none;
-  /*   padding: 10px; */
   height: 80px;
   outline: none;
   overflow: scroll;

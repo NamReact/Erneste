@@ -46,7 +46,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.userData);
     return (
       <Router>
         {this.state.userData && (

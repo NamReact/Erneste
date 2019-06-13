@@ -268,12 +268,6 @@ class ClientWelcome extends React.Component {
   };
 
   handlePopUpSendMessageClick = async talentMail => {
-    console.log("test", {
-      from: this.props.userMail,
-      to: talentMail,
-      message: this.state.popUpMessageInputValue,
-      title: this.state.popUpObjectInputValue
-    });
     await axios.post(
       "https://ernest-server.herokuapp.com/user/message",
       {

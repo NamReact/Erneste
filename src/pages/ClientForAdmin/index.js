@@ -62,7 +62,6 @@ class ClientforAdmin extends React.Component {
         this.props.match.params.id,
       { headers: { authorization: `Bearer ${this.props.token}` } }
     );
-    console.log(response.data);
     this.setState({ data: response.data });
   }
 }

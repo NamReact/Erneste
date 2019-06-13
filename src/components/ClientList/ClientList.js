@@ -211,9 +211,6 @@ class ClientList extends React.Component {
   /* ----- Array displayed in box ----- */
   chevronBoxArray = (toto, arrayOfList) => {
     let chevronBoxArray = [];
-    console.log(arrayOfList);
-    console.log(this.state.chevronFilterChosen);
-
     // We look for the position of the filter type
     let position = this.state.chevronFilterChosen
       .map(e => {
