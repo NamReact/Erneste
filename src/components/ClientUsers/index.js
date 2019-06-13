@@ -4,11 +4,12 @@ import "./index.css";
 class ClientUsers extends React.Component {
   render() {
     let users = [];
-    if (this.props.users) {
+    if (this.props.users.length > 0) {
       users = this.props.users.map(user => {
         return <div key={user._id}>{user.email}</div>;
       });
     }
+    console.log(users);
     return (
       <div className="client-users-container">
         <div>

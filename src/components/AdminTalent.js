@@ -28,38 +28,39 @@ class AdminTalent extends React.Component {
         </div>
       );
     }
+
+    const messageArray = this.state.messages.map((item, index) => {
+      return (
+        <div key={item._id} className="admin-talent-message">
+          <div>
+            <span>Profile : </span>
+            <span>{item.firstName} </span>
+            <span>{item.lastName}</span>
+          </div>
+
+          <div>
+            <span>Email : </span>
+            {item.email}
+          </div>
+          <div>
+            <span>Mot de passe : </span>
+            {item.password}
+          </div>
+          <div
+            id={index}
+            className="admin-talent-delete-button"
+            onClick={this.delete}
+          >
+            X
+          </div>
+        </div>
+      );
+    });
+    messageArray.reverse();
     return (
       <div className="admin-talent-container">
         {this.state.messages.length > 0 ? (
-          <div className="admin-talent-liste">
-            {this.state.messages.map((item, index) => {
-              return (
-                <div key={item._id} className="admin-talent-message">
-                  <div>
-                    <span>Profile : </span>
-                    <span>{item.firstName} </span>
-                    <span>{item.lastName}</span>
-                  </div>
-
-                  <div>
-                    <span>Email : </span>
-                    {item.email}
-                  </div>
-                  <div>
-                    <span>Mot de passe : </span>
-                    {item.password}
-                  </div>
-                  <div
-                    id={index}
-                    className="admin-talent-delete-button"
-                    onClick={this.delete}
-                  >
-                    X
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <div className="admin-talent-liste">{messageArray}</div>
         ) : (
           <div className="admin-talent-liste">Aucun message</div>
         )}

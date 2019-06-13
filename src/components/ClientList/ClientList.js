@@ -334,7 +334,7 @@ class ClientList extends React.Component {
     // *------ SORT LIST ------* //
     if (this.state.filterOrder.length > 0) {
       for (let i = 0; i < this.state.sortList.length; i++) {
-        let title = this.state.sortList[i].title;
+        /* let title = this.state.sortList[i].title; */
         if (this.state.sortList[i].order === "ascending") {
           result = result
             .map(element => {
@@ -525,9 +525,12 @@ class ClientList extends React.Component {
     );
 
     /* ----- On change le Name en Entreprise le field en Secteur le Size en Taille ----- */
-    let responseCopie = [...response.data];
-    const keys = Object.keys(response.data); // [ 'name', 'age' ]
-    for (let i = 0; i < response.data.length; i++) {
+    let responseCopie = [...response.data]; // [ 'name', 'age' ]
+    /* const keys = Object.keys(response.data); */ for (
+      let i = 0;
+      i < response.data.length;
+      i++
+    ) {
       responseCopie[i].Entreprise = response.data[i].name;
       responseCopie[i].Secteur = response.data[i].field;
       responseCopie[i].Taille = response.data[i].size;

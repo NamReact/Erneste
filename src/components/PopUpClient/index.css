@@ -27,12 +27,14 @@
 }
 
 .popup-client-top-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: 500;
   font-size: 16px;
 }
 
 .popup-client-close {
-  margin-right: 10px;
   cursor: pointer;
 }
 
@@ -64,7 +66,7 @@
 }
 
 .popup-client-email-container > input {
-  width: 99%;
+  width: 97.5%;
 }
 
 .popup-client-buttons {

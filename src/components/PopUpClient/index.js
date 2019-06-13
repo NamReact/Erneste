@@ -34,6 +34,13 @@ class PopUpClient extends React.Component {
       },
       { headers: { authorization: `Bearer ${this.props.token}` } }
     );
+    this.props.handleUsers({
+      _id: Math.random(),
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email,
+      clientEmail: this.props.clientEmail
+    });
     this.props.setPopUp();
   };
 
@@ -43,7 +50,7 @@ class PopUpClient extends React.Component {
         <div className="popup-client-title">
           <div className="popup-client-top-title">Nouvel utilisateur</div>
           <div className="popup-client-close" onClick={this.props.setPopUp}>
-            X
+            <i className="fas fa-times" />
           </div>
         </div>
         <div className="popup-client-input-container">

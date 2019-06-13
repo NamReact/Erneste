@@ -102,6 +102,7 @@ class TalentDescriptions extends React.Component {
                                 ? require("../../features/icons/blue-cross.svg")
                                 : require("../../features/icons/pink-cross.svg")
                             }
+                            alt="close-icon"
                           />
                         </div>
                       )}

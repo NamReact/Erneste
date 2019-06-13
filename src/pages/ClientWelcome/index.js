@@ -274,7 +274,7 @@ class ClientWelcome extends React.Component {
       message: this.state.popUpMessageInputValue,
       title: this.state.popUpObjectInputValue
     });
-    const response = await axios.post(
+    await axios.post(
       "https://ernest-server.herokuapp.com/user/message",
       {
         from: this.props.userMail,

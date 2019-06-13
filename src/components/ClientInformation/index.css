@@ -9,12 +9,11 @@
   --soft-skill-color: #ef6364;
   padding: 35px 25px;
   background-color: var(--container-background);
-  margin: 50px 0;
+  margin-top: 50px;
   border-radius: 2px;
   box-shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
-  flex: 2;
-  height: 100%;
-  /* width: 600px; */
+  flex: 1.5;
+  /*  height: 100%; */
 }
 
 .client-information-detail-container {
@@ -28,7 +27,34 @@
 }
 
 .client-information-detail {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   margin-left: 20px;
+}
+
+.client-information-field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  padding: 0 20px;
+  background-color: rgb(153, 166, 204);
+  color: white;
+  border-radius: 3px;
+  margin: 5px 0;
+}
+
+.client-information-size {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  padding: 0 20px;
+  background-color: var(--soft-skill-color);
+  color: white;
+  border-radius: 3px;
+  margin: 5px 0;
 }
 
 .client-information-name {
@@ -38,8 +64,26 @@
 
 /* Talent container */
 
-.client-information-talent-container > input {
+.client-information-talent-search {
+  display: flex;
   margin: 30px 0;
+  height: 30px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 4px;
+  width: 45%;
+}
+
+.client-information-magnifier {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+
+.client-information-talent-search > input {
+  flex: 1;
+  border: none;
+  font-size: 14px;
 }
 
 .client-information-talent-list-title {

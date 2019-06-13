@@ -147,7 +147,10 @@ class Login extends React.Component {
               onMouseDown={this.showPassword}
               onMouseUp={this.hidePassword}
             >
-              <img src={require("../../features/icons/oeil.svg")} />
+              <img
+                src={require("../../features/icons/oeil.svg")}
+                alt="eye-icon"
+              />
             </span>
           </div>
 

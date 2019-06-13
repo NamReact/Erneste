@@ -1,5 +1,5 @@
 .client-for-admin-container {
-  width: 1200px;
+  max-width: 1200px;
   height: 90vh;
   display: flex;
   margin: auto;

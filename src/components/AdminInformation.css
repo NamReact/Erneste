@@ -1,8 +1,6 @@
 .admin-information-container {
   --container-background: rgb(254, 254, 254);
-  /*  background-color: #ffff00; */
   width: 1200px;
-  /* box-shadow: 0 6px 12px rgba(28, 28, 28, 0.1); */
   display: flex;
   margin: auto;
   margin-top: 50px;
@@ -30,6 +28,10 @@
   box-shadow: 0 6px 12px rgba(28, 28, 28, 0.1);
   border-radius: 5px;
   padding: 20px;
+}
+
+.admin-information-left-side input {
+  font-size: 14px;
 }
 
 .admin-informations-button {

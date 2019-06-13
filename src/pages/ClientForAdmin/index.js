@@ -13,7 +13,7 @@ class ClientforAdmin extends React.Component {
       name: "",
       field: {},
       size: "",
-      users: null,
+      users: [],
       activationKey: "",
       email: ""
     },
@@ -22,6 +22,12 @@ class ClientforAdmin extends React.Component {
 
   setPopUp = () => {
     this.setState({ popup: !this.state.popup });
+  };
+
+  handleUsers = user => {
+    const users = this.state.data.users;
+    users.push(user);
+    this.setState({ users });
   };
 
   render() {
@@ -43,6 +49,7 @@ class ClientforAdmin extends React.Component {
             setPopUp={this.setPopUp}
             clientEmail={this.state.data.email}
             token={this.props.token}
+            handleUsers={this.handleUsers}
           />
         )}
       </div>
@@ -55,6 +62,7 @@ class ClientforAdmin extends React.Component {
         this.props.match.params.id,
       { headers: { authorization: `Bearer ${this.props.token}` } }
     );
+    console.log(response.data);
     this.setState({ data: response.data });
   }
 }

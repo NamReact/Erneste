@@ -157,7 +157,6 @@ class TalentforTalent extends React.Component {
               lastUpdate={this.state.lastUpdate}
               informations={this.state.informations}
               setInformations={this.setInformations}
-              lastUpdate={this.state.lastUpdate}
               setPhoto={this.setPhoto}
               setTitle={this.setTitle}
               deleteTitle={this.deleteTitle}
@@ -172,7 +171,6 @@ class TalentforTalent extends React.Component {
               setUpdate={this.setUpdate}
               informations={this.state.informations}
               lastUpdate={this.state.lastUpdate}
-              setUpdate={this.setUpdate}
               isUpdating={this.state.isUpdating}
             />
           )}
