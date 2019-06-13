@@ -57,7 +57,7 @@ class TalentDescriptions extends React.Component {
             <h3 className="talent-description-h3">Mes conditions idéales</h3>
             <textarea
               id="workingEnvironment"
-              readOnly={this.props.update}
+              readOnly={!this.props.isUpdating}
               name="ideal environment"
               value={description.workingEnvironment}
               onChange={e => this.props.setDescription(e)}

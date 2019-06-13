@@ -169,7 +169,6 @@ class CreateNewTalent extends React.Component {
     if (this.props.permission !== "Admin") {
       return <Redirect to={"/"} />;
     }
-
     return (
       <div>
         <div className="content">
@@ -188,6 +187,7 @@ class CreateNewTalent extends React.Component {
               setStatus={this.setStatus}
               setSector={this.setSector}
               deleteSector={this.deleteSector}
+              token={this.props.token}
             />
 
             <TalentDescription
@@ -209,7 +209,7 @@ class CreateNewTalent extends React.Component {
   async componentDidMount() {
     this.props.setPageActive("admin/talent");
     const response = await axios.get(
-      "https://ernest-server.herokuapp.com/sector",
+      "https://ernest-server.herokuapp.com/sector/",
       { headers: { authorization: `Bearer ${this.props.token}` } }
     );
 

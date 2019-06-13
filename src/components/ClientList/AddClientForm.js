@@ -209,6 +209,7 @@ class AddClientForm extends React.Component {
     );
   }
   async componentDidMount() {
+    console.log(`Bearer ${this.props.token}`);
     this.setState({ isLoading: true });
     const response = await axios.get(
       "https://ernest-server.herokuapp.com/sector/",

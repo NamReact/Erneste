@@ -555,14 +555,6 @@ class TalentListPage extends React.Component {
                 j < this.state.chevronFilter[i].filter.length;
                 j++
               ) {
-                console.log(
-                  "element",
-                  element[this.state.chevronFilter[i].title]
-                );
-                console.log(
-                  "chevronFilter",
-                  this.state.chevronFilter[i].filter[j]
-                );
                 if (
                   element[this.state.chevronFilter[i].title].toString() ===
                   this.state.chevronFilter[i].filter[j]

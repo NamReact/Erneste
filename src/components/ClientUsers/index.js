@@ -9,7 +9,6 @@ class ClientUsers extends React.Component {
         return <div key={user._id}>{user.email}</div>;
       });
     }
-    console.log(users);
     return (
       <div className="client-users-container">
         <div>
