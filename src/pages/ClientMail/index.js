@@ -84,7 +84,7 @@ class ClientMail extends React.Component {
             conversation.contactFirstName
           } ${conversation.contactLastName}`}</li>
           <li className="client-mail-leftBlock-contactBlock-list-objet">
-            Projet stratégique
+            {conversation.title}
           </li>
           <li className="client-mail-leftBlock-contactBlock-list-statut">
             Accepté
@@ -115,7 +115,7 @@ class ClientMail extends React.Component {
           }`}
         </div>
         <div className="client-mail-conversationShown-object">
-          Projets Stratégiques
+          {conversationShown.title}
         </div>
         <div className="client-mail-conversationShown-firstMessage">
           {conversationShown.messages[0].body}
@@ -144,6 +144,8 @@ class ClientMail extends React.Component {
   };
 
   render() {
+    console.log("conversationmontrée", this.state.conversationShown);
+    console.log("conversations", this.state.conversations);
     /* Test of Loading... */
 
     if (this.state.isLoading === true) {

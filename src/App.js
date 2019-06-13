@@ -46,13 +46,19 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.state.userData);
     return (
       <Router>
         {this.state.userData && (
           <HeaderAdmin
             pageType={this.state.pageActive}
             /* userID is the talent's profile page ID / user ID id the client's profile page ID */
-            userID={this.state.userData.profile}
+            userID={
+              this.state.userData.profile
+                ? this.state.userData.profile
+                : this.state.userData.clientId
+            }
+            clientID
             handleClickLogOut={this.handleClickLogOut}
           />
         )}
@@ -72,7 +78,7 @@ class App extends React.Component {
                 }
 
                 if (this.state.userData.permission === "Client") {
-                  const clientLink = `/client/${this.state.userData.idCompany}`;
+                  const clientLink = `/client/${this.state.userData.clientId}`;
                   return <Redirect to={clientLink} />;
                 }
               }
