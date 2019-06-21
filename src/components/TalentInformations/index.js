@@ -80,6 +80,7 @@ class TalentInformations extends React.Component {
   };
 
   render() {
+    console.log(this.state.arrayOfSectors);
     const informations = this.props.informations;
     const lastUpdate = this.props.lastUpdate;
     let errorFirstName = false;
@@ -432,28 +433,28 @@ class TalentInformations extends React.Component {
             <div className="talent-informations-list">
               <div
                 id="Recherche active"
-                className="talent-information-list"
+                className="talent-informations-list-element"
                 onClick={this.handleAvailability}
               >
                 Recherche active
               </div>
               <div
                 id="Ouvert(e) aux opportunités"
-                className="talent-information-list"
+                className="talent-informations-list-element"
                 onClick={this.handleAvailability}
               >
                 Ouvert(e) aux opportunités
               </div>
               <div
                 id="Ne pas être contacté(e)"
-                className="talent-information-list"
+                className="talent-informations-list-element"
                 onClick={this.handleAvailability}
               >
                 Ne pas être contacté(e)
               </div>
               <div
                 id="Embauché(e) par Erneste"
-                className="talent-information-list"
+                className="talent-informations-list-element"
                 onClick={this.handleAvailability}
               >
                 Embauché(e) par Erneste

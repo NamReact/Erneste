@@ -146,6 +146,7 @@ class TalentforAdmin extends React.Component {
               setStatus={this.setStatus}
               setSector={this.setSector}
               deleteSector={this.deleteSector}
+              token={this.props.token}
             />
           ) : (
             <TalentInfoDisplay
