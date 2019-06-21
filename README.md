@@ -74,4 +74,4 @@ https://erneste-nam.herokuapp.com
 
 ## Status
 
-Project is _finished_ for my part.
+Project is _no longer continue_ for my part.
