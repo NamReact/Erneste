@@ -53,27 +53,6 @@ class TalentListPage extends React.Component {
       "https://ernest-server.herokuapp.com/talent/",
       { headers: { authorization: `Bearer ${this.props.token}` } }
     );
-    // We switch the wantedTitle ID by its name
-
-    for (let i = 0; i < response.data.length; i++) {
-      for (
-        let j = 0;
-        j < response.data[i].informations.wantedTitle.length;
-        j++
-      ) {
-        for (let k = 0; k < this.state.titleList.length; k++) {
-          if (
-            this.state.titleList[k]._id ===
-            response.data[i].informations.wantedTitle[j]
-          ) {
-            response.data[i].informations.wantedTitle[j] = this.state.titleList[
-              k
-            ].name;
-            break;
-          }
-        }
-      }
-    }
 
     // We sort the array by lastUpdate
 
@@ -474,7 +453,9 @@ class TalentListPage extends React.Component {
         ) {
           for (let i = 0; i < element.informations.wantedTitle.length; i++) {
             if (
-              element.informations.wantedTitle[i].toLowerCase().includes(filter)
+              element.informations.wantedTitle[i].name
+                .toLowerCase()
+                .includes(filter)
             ) {
               bool = true;
             }
